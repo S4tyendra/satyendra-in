@@ -1,18 +1,42 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { ref, onMounted, onUnmounted } from 'vue'
 import BackgroundAtmosphere from './components/BackgroundAtmosphere.vue'
 import Header from './components/Header.vue'
 import TerminalBreadcrumb from './components/TerminalBreadcrumb.vue'
 import Footer from './components/Footer.vue'
 import './assets/home.css'
+
+const isScrolled = ref(false)
+const terminalRef = ref(null)
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
+
+const handleTerminalFocus = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  setTimeout(() => {
+    const input = document.getElementById('terminal-input')
+    if (input) input.focus()
+  }, 500)
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
   <div class="min-h-screen w-full flex flex-col justify-center py-12 px-4 relative bg-[#082026] text-[#E6DEC8] overflow-x-hidden selection:bg-text-muted/40 selection:text-text-main">
     <main class="w-full max-w-[420px] mx-auto relative z-10 flex flex-col gap-6">
       <BackgroundAtmosphere />
-      <Header />
-      <TerminalBreadcrumb />
+      <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" />
+      <TerminalBreadcrumb ref="terminalRef" />
       
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -20,7 +44,7 @@ import './assets/home.css'
         </transition>
       </router-view>
       
-      <Footer />
+      <Footer :is-scrolled="isScrolled" />
     </main>
   </div>
 </template>

@@ -22,6 +22,109 @@
       :tags="['Terraform', 'Kubernetes', 'CI/CD']"
       link="#"
     />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    <ProjectCard
+      title="Project Gamma"
+      description="Infrastructure automation and DevOps pipelines."
+      :tags="['Terraform', 'Kubernetes', 'CI/CD']"
+      link="#"
+    />
+    
   </section>
 </template>
 

@@ -26,13 +26,12 @@
           autocomplete="off"
         />
       </div>
-      <div 
+      <kbd 
         class="flex items-center gap-1 text-[10px] text-zinc-500 px-1.5 py-0.5 rounded-md border border-[#30363d]/60 bg-[#05070b]/70 hover:border-[#58a6ff]/50 cursor-pointer"
         @click.stop="focusInput"
       >
-        <kbd class="px-1 py-0.5 bg-transparent border border-[#30363d] rounded">/</kbd>
-        <span class="hidden sm:inline">focus</span>
-      </div>
+        <span class="px-1 py-0.5 bg-transparent">/</span>
+      </kbd>
     </div>
     <Transition 
       name="terminal-expand"
