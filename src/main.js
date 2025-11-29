@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './base.css'
 import App from './App.vue'
-import './store.js'
 
 const routes = [
     { path: '/', component: () => import('./pages/Home.vue') },
