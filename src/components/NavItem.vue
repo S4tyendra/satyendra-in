@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="href"
-    class="nav-item flex items-center justify-between hover:bg-[#E6DEC8]/10 text-xs py-2.5 px-3 rounded-md text-[#082026]/70 dark:text-[#E6DEC8]/70 hover:text-[#082026] dark:hover:text-[#E6DEC8] transition-all group/link"
+    class="nav-item flex items-center justify-between hover:bg-[#E6DEC8]/10 text-xs py-2.5 px-3 rounded-md text-[#E6DEC8]/70 hover:text-[#E6DEC8] transition-all group/link"
   >
     <div class="nav-bg"></div>
     <div class="flex items-center gap-3 relative z-10">
