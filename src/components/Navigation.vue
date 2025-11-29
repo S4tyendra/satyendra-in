@@ -1,23 +1,25 @@
 <template>
   <nav class="space-y-2 fade-in-up" style="animation-delay: 200ms;">
-    <NavGroup num="01" title="Engineering">
-      <NavItem :icon="CodeIcon" label="Projects" code="DIR_01" href="/projects" />
-      <NavItem :icon="FlaskIcon" label="Open Source" code="GIT_REPO" href="/opensource" />
+    <NavGroup ref="groupEngineering" num="01" title="Engineering">
+      <NavItem :icon="CodeIcon" label="Projects" code="DIR_01 [02]" href="/projects" />
+      <NavItem :icon="FlaskIcon" label="Open Source" code="GIT_REPO [03]" href="/opensource" />
     </NavGroup>
 
-    <NavGroup num="04" title="Knowledge">
-      <NavItem :icon="PenIcon" label="Writing" code="LOGS" href="/writing" />
-      <NavItem :icon="BookIcon" label="Docs" code="MAN" href="/docs" />
+    <NavGroup ref="groupKnowledge" num="04" title="Knowledge">
+      <NavItem :icon="PenIcon" label="Writing" code="LOGS [05]" href="/writing" />
+      <NavItem :icon="BookIcon" label="Docs" code="MAN [06]" href="/docs" />
     </NavGroup>
 
-    <NavGroup num="07" title="Studio">
-      <NavItem :icon="CameraIcon" label="Photography" code="RAW" href="/photography" />
-      <NavItem :icon="VideoIcon" label="Videos" code="EXEC" href="/videos" />
+    <NavGroup ref="groupStudio" num="07" title="Studio">
+      <NavItem :icon="CameraIcon" label="Photography" code="RAW [08]" href="/photography" />
+      <NavItem :icon="VideoIcon" label="Videos" code="EXEC [09]" href="/videos" />
     </NavGroup>
   </nav>
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import NavGroup from './NavGroup.vue'
 import NavItem from './NavItem.vue'
 import CodeIcon from './icons/CodeIcon.vue'
@@ -26,4 +28,51 @@ import PenIcon from './icons/PenIcon.vue'
 import BookIcon from './icons/BookIcon.vue'
 import CameraIcon from './icons/CameraIcon.vue'
 import VideoIcon from './icons/VideoIcon.vue'
+
+const router = useRouter()
+const groupEngineering = ref(null)
+const groupKnowledge = ref(null)
+const groupStudio = ref(null)
+
+const handleKeydown = (e) => {
+  if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return
+
+  switch(e.key) {
+    case '1':
+      groupEngineering.value?.toggle()
+      break
+    case '2':
+      router.push('/projects')
+      break
+    case '3':
+      router.push('/opensource')
+      break
+    case '4':
+      groupKnowledge.value?.toggle()
+      break
+    case '5':
+      router.push('/writing')
+      break
+    case '6':
+      router.push('/docs')
+      break
+    case '7':
+      groupStudio.value?.toggle()
+      break
+    case '8':
+      router.push('/photography')
+      break
+    case '9':
+      router.push('/videos')
+      break
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>

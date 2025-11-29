@@ -1,5 +1,7 @@
 <template>
-  <section class="flex flex-col gap-3 fade-in-up" style="animation-delay: 100ms;">
+  
+    <section class="flex flex-col gap-3 fade-in-up" style="animation-delay: 100ms;">
+      
     <BioCard>
       <p class="text-[13px] leading-relaxed">
         I break things to see how they work, then 

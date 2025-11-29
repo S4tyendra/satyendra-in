@@ -43,4 +43,22 @@ const handleClick = (e) => {
 const handleMouseLeave = () => {
   if (window.innerWidth > 768) isActive.value = false
 }
+
+const toggle = () => {
+  isActive.value = !isActive.value
+}
+
+const open = () => {
+  isActive.value = true
+}
+
+const close = () => {
+  isActive.value = false
+}
+
+defineExpose({
+  toggle,
+  open,
+  close
+})
 </script>
