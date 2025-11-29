@@ -2,17 +2,17 @@
   <nav class="space-y-2 fade-in-up" style="animation-delay: 200ms;">
     <NavGroup num="01" title="Engineering">
       <NavItem :icon="CodeIcon" label="Projects" code="DIR_01" href="/projects" />
-      <NavItem :icon="FlaskIcon" label="Open Source" code="GIT_REPO" />
+      <NavItem :icon="FlaskIcon" label="Open Source" code="GIT_REPO" href="/opensource" />
     </NavGroup>
 
-    <NavGroup num="02" title="Knowledge">
-      <NavItem :icon="PenIcon" label="Writing" code="LOGS" />
-      <NavItem :icon="BookIcon" label="Docs" code="MAN" />
+    <NavGroup num="04" title="Knowledge">
+      <NavItem :icon="PenIcon" label="Writing" code="LOGS" href="/writing" />
+      <NavItem :icon="BookIcon" label="Docs" code="MAN" href="/docs" />
     </NavGroup>
 
-    <NavGroup num="03" title="Studio">
-      <NavItem :icon="CameraIcon" label="Photography" code="RAW" />
-      <NavItem :icon="VideoIcon" label="Videos" code="EXEC" />
+    <NavGroup num="07" title="Studio">
+      <NavItem :icon="CameraIcon" label="Photography" code="RAW" href="/photography" />
+      <NavItem :icon="VideoIcon" label="Videos" code="EXEC" href="/videos" />
     </NavGroup>
   </nav>
 </template>
