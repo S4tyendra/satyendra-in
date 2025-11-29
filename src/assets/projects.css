@@ -1,0 +1,8 @@
+/* Projects specific styles */
+.project-card-hover {
+    transition: transform 0.3s cubic-bezier(0.2, 0.0, 0.2, 1);
+}
+
+.project-card-hover:hover {
+    transform: translateY(-2px);
+}
