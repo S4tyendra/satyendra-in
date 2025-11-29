@@ -2,17 +2,17 @@
   <nav class="space-y-2 fade-in-up" style="animation-delay: 200ms;">
     <NavGroup ref="groupEngineering" num="01" title="Engineering">
       <NavItem :icon="CodeIcon" label="Projects" code="DIR_01 [02]" href="/projects" />
-      <NavItem :icon="FlaskIcon" label="Open Source" code="GIT_REPO [03]" href="/opensource" />
+      <NavItem :icon="FlaskIcon" label="Experience" code="GIT_REPO [03]" href="/experience" />
     </NavGroup>
 
     <NavGroup ref="groupKnowledge" num="04" title="Knowledge">
-      <NavItem :icon="PenIcon" label="Writing" code="LOGS [05]" href="/writing" />
+      <NavItem :icon="PenIcon" label="Blog" code="LOGS [05]" href="/blog" />
       <NavItem :icon="BookIcon" label="Docs" code="MAN [06]" href="/docs" />
     </NavGroup>
 
     <NavGroup ref="groupStudio" num="07" title="Studio">
       <NavItem :icon="CameraIcon" label="Photography" code="RAW [08]" href="/photography" />
-      <NavItem :icon="VideoIcon" label="Videos" code="EXEC [09]" href="/videos" />
+      <NavItem :icon="VideoIcon" label="Services" code="EXEC [09]" href="/services" />
     </NavGroup>
   </nav>
 </template>
@@ -45,13 +45,13 @@ const handleKeydown = (e) => {
       router.push('/projects')
       break
     case '3':
-      router.push('/opensource')
+      router.push('/experience')
       break
     case '4':
       groupKnowledge.value?.toggle()
       break
     case '5':
-      router.push('/writing')
+      router.push('/blog')
       break
     case '6':
       router.push('/docs')
@@ -63,7 +63,7 @@ const handleKeydown = (e) => {
       router.push('/photography')
       break
     case '9':
-      router.push('/videos')
+      router.push('/services')
       break
   }
 }

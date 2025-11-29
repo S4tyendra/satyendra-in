@@ -5,7 +5,7 @@
       <span class="text-zinc-600 lowercase">{{ inputValue ? `filter: "${inputValue}"` : "showing everything" }}</span>
     </div>
     
-    <div v-if="terminalOutput.length > 0" class="max-h-[260px] overflow-y-auto border-b border-[#1f232e] custom-scrollbar" ref="outputContainer">
+    <div v-if="terminalOutput.length > 0" class="max-h-[260px] overflow-y-auto border-b border-[#1f232e]" ref="outputContainer">
       <div v-for="item in terminalOutput" :key="item.id" class="border-b border-[#1f232e] last:border-0">
         <div class="px-3 py-1.5 text-[10px] uppercase tracking-widest text-zinc-500 border-b border-[#1f232e] bg-[#0d1117]/30">$ {{ item.label || "" }}</div>
         
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="max-h-[260px] overflow-y-auto custom-scrollbar" ref="suggestionsContainer">
+    <div class="max-h-[260px] overflow-y-auto" ref="suggestionsContainer">
       <template v-if="suggestions.length">
         <div 
           v-for="(item, idx) in suggestions" 

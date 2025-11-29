@@ -23,11 +23,11 @@
         </a>
       </div>
       <div class="flex flex-col items-end gap-1">
-        <div class="px-1.5 py-0.5 rounded border border-green-500/20 bg-green-500/5 text-[9px] font-mono text-[#E6DEC8]/80 flex items-center gap-1 cursor-help" title="Page is lighter than 14KB">
-          <div class="w-1.5 h-1.5 bg-[#E6DEC8]/50 rounded-sm animate-pulse"></div>
-          <span>&lt; TCP_INIT_CWND</span>
+        <div class="px-1.5 py-0.5 rounded border border-green-500/20 bg-green-500/5 text-[9px] font-mono text-text-main/80 flex items-center gap-1 cursor-help" title="Available for hire">
+          <div class="w-1.5 h-1.5 bg-text-main/50 rounded-sm animate-pulse"></div>
+          <span>HIRE ME</span>
         </div>
-        <div class="font-mono text-[9px] text-[#E6DEC8]/40">©2025 SATYA.LABS</div>
+        <div class="font-mono text-[9px] text-text-main/40">© {{ new Date().getFullYear() }} SATYENDRA</div>
       </div>
     </div>
   </footer>

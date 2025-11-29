@@ -50,3 +50,34 @@ body {
         transform: translateY(0);
     }
 }
+
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(230, 222, 200, 0.15);
+    border-radius: 99px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(230, 222, 200, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+
+
+.dot-bg {
+    background-image: radial-gradient(#e6dec81b 1px, transparent 1px);
+    background-size: 40px 40px;
+}
