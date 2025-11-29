@@ -33,7 +33,10 @@ onUnmounted(() => {
 
 <template>
   <div class="min-h-screen w-full flex flex-col justify-center py-12 px-4 relative bg-[#082026] text-[#E6DEC8] overflow-x-hidden selection:bg-text-muted/40 selection:text-text-main">
-    <main class="w-full max-w-[420px] mx-auto relative z-10 flex flex-col gap-6">
+    <main 
+      class="w-full mx-auto relative z-10 flex flex-col gap-6 transition-all duration-500 ease-in-out"
+      :class="isScrolled ? 'max-w-5xl' : 'max-w-[460px]'"
+    >
       <BackgroundAtmosphere />
       <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" />
       <TerminalBreadcrumb ref="terminalRef" />

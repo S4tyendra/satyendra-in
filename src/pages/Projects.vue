@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 fade-in-up min-h-[400px]">
-    <ProjectsSection />
+    <!-- <ProjectsSection /> -->
   </div>
 </template>
 
