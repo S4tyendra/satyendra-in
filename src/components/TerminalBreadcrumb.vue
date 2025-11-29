@@ -1,7 +1,11 @@
 <template>
   <div class="w-full font-mono text-xs relative select-none">
     <div 
-      :class="['flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-all cursor-text text-[#c9d1d9]', isFocused ? 'border-[#30363d] bg-[#0d1117]/70' : 'border-transparent bg-[#0d1117]/35 hover:border-[#30363d]/40']"
+      :class="['flex items-center gap-1.5 px-3 py-2 border transition-all cursor-text text-[#c9d1d9]', 
+        shouldShowPanel ? 'rounded-t-xl border-[#30363d] bg-[#0d1117]/90 border-b-0' : 'rounded-xl',
+        !shouldShowPanel && isFocused ? 'border-[#30363d] bg-[#0d1117]/70' : '',
+        !shouldShowPanel && !isFocused ? 'border-transparent bg-[#0d1117]/35 hover:border-[#30363d]/40' : ''
+      ]"
       @click="handleContainerClick"
     >
       <span class="text-[#7ee787] font-semibold text-[11px]">satya@web</span>
@@ -36,15 +40,19 @@
       @after-enter="onAfterEnter"
       @leave="onLeave"
     >
-      <SuggestionsPanel 
+      <div 
         v-if="shouldShowPanel" 
-        :inputValue="inputValue" 
-        :terminalOutput="terminalOutput" 
-        :suggestions="suggestions" 
-        :selectedIndex="selectedIndex"
-        @applySuggestion="applySuggestion"
-        @setSelectedIndex="setSelectedIndex"
-      />
+        class="border border-[#30363d] border-t-0 bg-[#0d1117]/90 rounded-b-xl overflow-hidden shadow-2xl backdrop-blur-sm"
+      >
+        <SuggestionsPanel 
+          :inputValue="inputValue" 
+          :terminalOutput="terminalOutput" 
+          :suggestions="suggestions" 
+          :selectedIndex="selectedIndex"
+          @applySuggestion="applySuggestion"
+          @setSelectedIndex="setSelectedIndex"
+        />
+      </div>
     </Transition>
     <Popover :hoveredDir="hoveredDir" @navigate="navigate" @clearHover="hoveredDir = null" />
   </div>
