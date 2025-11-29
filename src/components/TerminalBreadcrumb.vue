@@ -30,18 +30,39 @@
         <span class="hidden sm:inline">focus</span>
       </div>
     </div>
-    <SuggestionsPanel 
-      v-if="shouldShowPanel" 
-      :inputValue="inputValue" 
-      :terminalOutput="terminalOutput" 
-      :suggestions="suggestions" 
-      :selectedIndex="selectedIndex"
-      @applySuggestion="applySuggestion"
-      @setSelectedIndex="setSelectedIndex"
-    />
+    <Transition 
+      name="terminal-expand"
+      @enter="onEnter"
+      @after-enter="onAfterEnter"
+      @leave="onLeave"
+    >
+      <SuggestionsPanel 
+        v-if="shouldShowPanel" 
+        :inputValue="inputValue" 
+        :terminalOutput="terminalOutput" 
+        :suggestions="suggestions" 
+        :selectedIndex="selectedIndex"
+        @applySuggestion="applySuggestion"
+        @setSelectedIndex="setSelectedIndex"
+      />
+    </Transition>
     <Popover :hoveredDir="hoveredDir" @navigate="navigate" @clearHover="hoveredDir = null" />
   </div>
 </template>
+
+<style scoped>
+.terminal-expand-enter-active,
+.terminal-expand-leave-active {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.terminal-expand-enter-from,
+.terminal-expand-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+</style>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
@@ -408,5 +429,21 @@ const handleBlur = () => {
 
 const setSelectedIndex = (index) => {
     selectedIndex.value = index
+}
+
+const onEnter = (el) => {
+    el.style.height = '0'
+    el.offsetHeight // trigger reflow
+    el.style.height = el.scrollHeight + 'px'
+}
+
+const onAfterEnter = (el) => {
+    el.style.height = 'auto'
+}
+
+const onLeave = (el) => {
+    el.style.height = el.scrollHeight + 'px'
+    el.offsetHeight // trigger reflow
+    el.style.height = '0'
 }
 </script>
