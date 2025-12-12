@@ -1,73 +1,49 @@
 <template>
-  <div class="w-full font-mono text-xs relative select-none">
-    <div 
-      :class="['flex items-center gap-1.5 px-3 py-2 border transition-all cursor-text text-[#c9d1d9]', 
-        shouldShowPanel ? 'rounded-t-xl border-[#30363d] bg-[#0d1117]/90 border-b-0' : 'rounded-xl',
-        !shouldShowPanel && isFocused ? 'border-[#30363d] bg-[#0d1117]/70' : '',
-        !shouldShowPanel && !isFocused ? 'border-transparent bg-[#0d1117]/35 hover:border-[#30363d]/40' : ''
-      ]"
-      @click="handleContainerClick"
-    >
-      <span class="text-[#7ee787] font-semibold text-[11px]">satya@web</span>
-      <span class="text-zinc-600 text-[11px]">:</span>
-      <PathBreadcrumb />
-      <span class="text-zinc-600">$</span>
-      <div class="flex-1 min-w-[90px]">
-        <input
-          id="terminal-input"
-          class="w-full bg-transparent border-none outline-none text-[#c9d1d9] placeholder-zinc-600 text-[11px]"
-          placeholder="type help for commands"
-          v-model="inputValue"
-          @input="handleInput"
-          @keydown="handleKeyDown"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          spellcheck="false"
-          autocomplete="off"
-        />
-      </div>
-      <kbd 
-        class="flex items-center gap-1 text-[10px] text-zinc-500 px-1.5 py-0.5 rounded-md border border-[#30363d]/60 bg-[#05070b]/70 hover:border-[#58a6ff]/50 cursor-pointer"
-        @click.stop="focusInput"
-      >
-        <span class="px-1 py-0.5 bg-transparent">/</span>
-      </kbd>
+    <div class="w-full font-mono text-xs relative select-none">
+        <div :class="['flex items-center gap-1.5 px-3 py-2 border transition-all cursor-text text-[#c9d1d9]',
+            shouldShowPanel ? 'rounded-t-xl border-[#30363d] bg-[#0d1117]/90 border-b-0' : 'rounded-xl',
+            !shouldShowPanel && isFocused ? 'border-[#30363d] bg-[#0d1117]/70' : '',
+            !shouldShowPanel && !isFocused ? 'border-transparent bg-[#0d1117]/35 hover:border-[#30363d]/40' : ''
+        ]" @click="handleContainerClick">
+            <span class="text-[#7ee787] font-semibold text-[11px]">satya@web</span>
+            <span class="text-zinc-600 text-[11px]">:</span>
+            <PathBreadcrumb />
+            <span class="text-zinc-600">$</span>
+            <div class="flex-1 min-w-[90px]">
+                <input id="terminal-input"
+                    class="w-full bg-transparent border-none outline-none text-[#c9d1d9] placeholder-zinc-600 text-[11px]"
+                    placeholder="type help for commands" v-model="inputValue" @input="handleInput"
+                    @keydown="handleKeyDown" @focus="handleFocus" @blur="handleBlur" spellcheck="false"
+                    autocomplete="off" />
+            </div>
+            <kbd class="flex items-center gap-1 text-[10px] text-zinc-500 px-1.5 py-0.5 rounded-md border border-[#30363d]/60 bg-[#05070b]/70 hover:border-[#58a6ff]/50 cursor-pointer"
+                @click.stop="focusInput">
+                <span class="px-1 py-0.5 bg-transparent">/</span>
+            </kbd>
+        </div>
+        <Transition name="terminal-expand" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
+            <div v-if="shouldShowPanel"
+                class="border border-[#30363d] border-t-0 bg-[#0d1117]/90 rounded-b-xl overflow-hidden shadow-2xl backdrop-blur-sm">
+                <SuggestionsPanel :inputValue="inputValue" :terminalOutput="terminalOutput" :suggestions="suggestions"
+                    :selectedIndex="selectedIndex" @applySuggestion="applySuggestion"
+                    @setSelectedIndex="setSelectedIndex" />
+            </div>
+        </Transition>
+        <Popover :hoveredDir="hoveredDir" @navigate="navigate" @clearHover="hoveredDir = null" />
     </div>
-    <Transition 
-      name="terminal-expand"
-      @enter="onEnter"
-      @after-enter="onAfterEnter"
-      @leave="onLeave"
-    >
-      <div 
-        v-if="shouldShowPanel" 
-        class="border border-[#30363d] border-t-0 bg-[#0d1117]/90 rounded-b-xl overflow-hidden shadow-2xl backdrop-blur-sm"
-      >
-        <SuggestionsPanel 
-          :inputValue="inputValue" 
-          :terminalOutput="terminalOutput" 
-          :suggestions="suggestions" 
-          :selectedIndex="selectedIndex"
-          @applySuggestion="applySuggestion"
-          @setSelectedIndex="setSelectedIndex"
-        />
-      </div>
-    </Transition>
-    <Popover :hoveredDir="hoveredDir" @navigate="navigate" @clearHover="hoveredDir = null" />
-  </div>
 </template>
 
 <style scoped>
 .terminal-expand-enter-active,
 .terminal-expand-leave-active {
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow: hidden;
 }
 
 .terminal-expand-enter-from,
 .terminal-expand-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
+    opacity: 0;
+    transform: translateY(-8px);
 }
 </style>
 
@@ -82,7 +58,7 @@ import Popover from './terminal/Popover.vue'
 const router = useRouter()
 const route = useRoute()
 
-const currentPath = ref(window.location.pathname)
+const currentPath = ref(route.path)
 const inputValue = ref("")
 const suggestions = ref([])
 const selectedIndex = ref(0)
@@ -105,7 +81,7 @@ const NAV_SHORTCUTS = [
 ]
 
 const updatePath = () => {
-    currentPath.value = window.location.pathname
+    currentPath.value = route.path
 }
 
 watch(() => route.path, () => {
