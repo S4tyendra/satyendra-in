@@ -6,7 +6,7 @@
     </div>
     <div v-if="projects.length" class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
       <ProjectCard v-for="project in projects" :key="project.link" :title="project.title" :description="project.desc"
-        :tags="project.tags" :link="`/project/${getRepoName(project.link)}`" />
+        :tags="project.tags" :link="`/projects/${getRepoName(project.link)}`" />
     </div>
     <div v-else class="text-text-muted text-sm italic py-4">
       No projects match your search.

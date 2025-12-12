@@ -10,7 +10,7 @@ import closedData from './data/closedSrcProjects.js'
 const routes = [
     { path: '/', component: Home },
     { path: '/projects', component: Projects },
-    { path: '/project/:repo', component: ProjectDetail, props: true }
+    { path: '/projects/:repo', component: ProjectDetail, props: true }
 ]
 
 // Export for SSG

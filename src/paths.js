@@ -7,8 +7,27 @@ export const fileSystem = {
                 type: "dir",
                 path: "/projects",
                 children: {
-                    "web-experiments": { type: "file", path: "/projects/web-experiments" },
-                    "ai-agents": { type: "file", path: "/projects/ai-agents" }
+                    // Open Source Projects
+                    "generate-gitignore": { type: "file", path: "/projects/generate-gitignore" },
+                    "newscan-ai": { type: "file", path: "/projects/newscan-ai" },
+                    "multifeatures": { type: "file", path: "/projects/multifeatures" },
+                    "stress-test": { type: "file", path: "/projects/stress-test" },
+                    "envman": { type: "file", path: "/projects/envman" },
+                    "url-shortener": { type: "file", path: "/projects/url-shortener" },
+                    "whatsapp-decryptor": { type: "file", path: "/projects/whatsapp-decryptor" },
+                    "lancall": { type: "file", path: "/projects/lancall" },
+                    "latex-compiler": { type: "file", path: "/projects/latex-compiler" },
+                    "attend": { type: "file", path: "/projects/attend" },
+                    "pdf-chat": { type: "file", path: "/projects/pdf-chat" },
+                    "iiitk-resources": { type: "file", path: "/projects/iiitk-resources" },
+                    "nfc-gatekeeper": { type: "file", path: "/projects/nfc-gatekeeper" },
+                    "nlp-unit-converter": { type: "file", path: "/projects/nlp-unit-converter" },
+                    "iiitk-docker-manager": { type: "file", path: "/projects/iiitk-docker-manager" },
+                    "s-devh-in": { type: "file", path: "/projects/s-devh-in" },
+                    // Closed Source Projects
+                    "devh-api-gateway": { type: "file", path: "/projects/devh-api-gateway" },
+                    "iiitk-web-infrastructure": { type: "file", path: "/projects/iiitk-web-infrastructure" },
+                    "edge-proxy-image-cache": { type: "file", path: "/projects/edge-proxy-image-cache" }
                 }
             },
             "blog": {
