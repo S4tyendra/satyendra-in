@@ -1,7 +1,8 @@
 <template>
-  <div class="flex flex-col gap-3 fade-in-up min-h-[200px]">
+  <div class="flex flex-col gap-3 fade-in-up">
     <BioSection />
-    <Navigation class="space-y-2 fade-in-up min-h-[300px]" />
+    <Navigation class="space-y-2 fade-in-up" />
+    <GithubGraph />
   </div>
 </template>
 
@@ -9,4 +10,5 @@
 import { defineAsyncComponent } from 'vue'
 import BioSection from '../components/BioSection.vue'
 import Navigation from '../components/Navigation.vue'
+import GithubGraph from '../components/GithubGraph.vue'
 </script>
