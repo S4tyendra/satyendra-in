@@ -89,8 +89,9 @@
                         </div>
                         <div class="flex justify-between items-center">
                             <dt class="text-text-muted">Type</dt>
-                            <dd class="text-text-main text-right break-words max-w-[50%]">{{
-                                project.link.includes('github.com') ? 'Open Source' : 'Closed Source' }}</dd>
+                            <dd class="text-text-main text-right wrap-break-word max-w-[50%]">
+                                {{ project.link.includes('github.com') ? 'Open Source' : 'Closed Source' }}
+                            </dd>
                         </div>
                     </dl>
                 </div>

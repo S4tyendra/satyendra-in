@@ -4,6 +4,8 @@ import App from './App.vue'
 import Home from './pages/Home.vue'
 import Projects from './pages/Projects.vue'
 import ProjectDetail from './pages/ProjectDetail.vue'
+import projectsData from './data/projects.js'
+import closedData from './data/closedSrcProjects.js'
 
 const routes = [
     { path: '/', component: Home },
@@ -19,3 +21,19 @@ export const createApp = ViteSSG(
         // Custom setup hooks can go here
     },
 )
+
+export const includedRoutes = (paths, routes) => {
+    const allProjects = [...projectsData, ...closedData]
+    const projectRoutes = allProjects.map(p => {
+        if (!p.link) return null
+        const parts = p.link.split('/')
+        const name = parts[parts.length - 1] || parts[parts.length - 2]
+        return `/project/${name}`
+    }).filter(p => p !== null)
+
+    return routes.flatMap(route => {
+        return route.path === '/project/:repo'
+            ? projectRoutes
+            : route.path
+    })
+}
