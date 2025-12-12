@@ -1,5 +1,4 @@
-<script lang="js">
-export default projects = [
+const projects = [
     {
         "link": "https://github.com/s4tyendra/generate.gitignore",
         "title": "generate.gitignore",
@@ -194,4 +193,5 @@ export default projects = [
         "tags": ["Nuxt 3", "TypeScript", "MongoDB", "Tailwind CSS", "Shadcn Vue", "Full Stack"]
     }
 ];
-</script>
+
+export default projects;

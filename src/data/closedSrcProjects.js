@@ -1,5 +1,4 @@
-<script lang="js">
-export default closedSrcProjects = [
+const closedSrcProjects = [
     {
         "link": "https://devh.in",
         "deployment_url": "https://devh.in",
@@ -42,4 +41,5 @@ export default closedSrcProjects = [
         "tags": ["Proxy", "CORS", "Caching", "Edge Computing", "Performance", "Infrastructure"]
     }
 ]
-</script>
+
+export default closedSrcProjects;
