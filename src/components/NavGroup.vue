@@ -1,6 +1,6 @@
 <template>
   <div 
-    :class="['nav-group rounded-lg border transition-all duration-300 bg-zinc-900/20 backdrop-blur-sm border-[#E6DEC8]/10', { active: isActive }]"
+    :class="['nav-group rounded-lg border transition-all duration-300 bg-zinc-900/20 backdrop-blur-sm border-text-main/10', { active: isActive }]"
     @mouseleave="handleMouseLeave"
   >
     <button 
@@ -8,8 +8,8 @@
       @click="handleClick"
     >
       <div class="flex items-center gap-4">
-        <span class="text-[#E6DEC8]/40 text-[10px] font-mono border border-[#E6DEC8]/20 rounded px-1.5 py-0.5 group-hover:text-green-500 group-hover:border-green-500/30 transition-colors">{{ num }}</span>
-        <span class="font-medium text-[13px] text-[#E6DEC8]/90 tracking-wide uppercase">{{ title }}</span>
+        <span class="text-text-main/40 text-[10px] font-mono border border-text-main/20 rounded px-1.5 py-0.5 group-hover:text-green-500 group-hover:border-green-500/30 transition-colors">{{ num }}</span>
+        <span class="font-medium text-[13px] text-text-main/90 tracking-wide uppercase">{{ title }}</span>
       </div>
       <ArrowIcon />
     </button>

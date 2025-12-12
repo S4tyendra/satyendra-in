@@ -6,7 +6,7 @@
       :class="[
         'transition-all duration-300 ease-in-out',
         isScrolled 
-          ? 'fixed top-0 left-0 w-full z-50 bg-[#082026]/95 backdrop-blur-md border-b border-[#E6DEC8]/10 px-4 h-12 flex justify-between items-center shadow-lg' 
+          ? 'fixed top-0 left-0 w-full z-50 bg-[#082026]/95 backdrop-blur-md border-b border-text-main/10 px-4 h-12 flex justify-between items-center shadow-lg' 
           : 'flex items-center gap-6 fade-in-up relative'
       ]"
     >
@@ -40,7 +40,7 @@
       <button 
         v-if="isScrolled"
         @click="$emit('focus-terminal')"
-        class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#E6DEC8]/10 text-[#E6DEC8]/80 transition-colors border border-[#E6DEC8]/10 bg-[#082026]/50 text-xs font-mono"
+        class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-text-main/10 text-text-main/80 transition-colors border border-text-main/10 bg-[#082026]/50 text-xs font-mono"
         title="Open Terminal"
       >
         <CodeIcon class="w-3.5 h-3.5" />
