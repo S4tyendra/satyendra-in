@@ -8,7 +8,7 @@ export const fileSystem = {
                 path: "/projects",
                 children: {
                     // Open Source Projects
-                    "generate-gitignore": { type: "file", path: "/projects/generate-gitignore" },
+                    "generate.gitignore": { type: "file", path: "/projects/generate.gitignore" },
                     "newscan-ai": { type: "file", path: "/projects/newscan-ai" },
                     "multifeatures": { type: "file", path: "/projects/multifeatures" },
                     "stress-test": { type: "file", path: "/projects/stress-test" },
@@ -23,24 +23,28 @@ export const fileSystem = {
                     "nfc-gatekeeper": { type: "file", path: "/projects/nfc-gatekeeper" },
                     "nlp-unit-converter": { type: "file", path: "/projects/nlp-unit-converter" },
                     "iiitk-docker-manager": { type: "file", path: "/projects/iiitk-docker-manager" },
-                    "s-devh-in": { type: "file", path: "/projects/s-devh-in" },
+                    "s.devh.in": { type: "file", path: "/projects/s.devh.in" },
                     // Closed Source Projects
                     "devh-api-gateway": { type: "file", path: "/projects/devh-api-gateway" },
                     "iiitk-web-infrastructure": { type: "file", path: "/projects/iiitk-web-infrastructure" },
-                    "edge-proxy-image-cache": { type: "file", path: "/projects/edge-proxy-image-cache" }
+                    "edge-proxy-image-cache": { type: "file", path: "/projects/edge-proxy-image-cache" },
+                    "gemhub": { type: "file", path: "/projects/gemhub" }
                 }
             },
             "blog": {
-                type: "dir",
+                type: "file",
                 path: "/blog",
-                children: {
-                    "docker-best-practices": { type: "file", path: "/blog/docker-best-practices" },
-                    "future-of-web": { type: "file", path: "/blog/future-of-web" }
-                }
+                // children: {
+                //     "docker-best-practices": { type: "file", path: "/blog/docker-best-practices" },
+                //     "future-of-web": { type: "file", path: "/blog/future-of-web" }
+                // }
             },
             "about": { type: "file", path: "/about" },
             "contact": { type: "file", path: "/contact" },
-            "experience": { type: "file", path: "/experience" }
+            "experience": { type: "file", path: "/experience" },
+            "docs": { type: "file", path: "/docs" },
+            "photography": { type: "file", path: "/photography" },
+            "services": { type: "file", path: "/services" }
         }
     }
 };
