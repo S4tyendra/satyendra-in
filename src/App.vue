@@ -28,7 +28,7 @@ useHead({
   ],
   link: [
     { rel: 'canonical', href: 'https://satyendra.in' },
-    { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
   ]
 })
 
