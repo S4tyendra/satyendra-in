@@ -4,7 +4,14 @@ import { useHead } from '@vueuse/head'
 useHead({
     title: 'Documentation | Satyendra',
     meta: [
-        { name: 'description', content: 'Technical documentation, guides, and references for my projects.' }
+        { name: 'description', content: 'Technical documentation, guides, and references for my projects.' },
+        { property: 'og:title', content: 'Documentation | Satyendra' },
+        { property: 'og:description', content: 'Technical documentation, guides, and references for my projects.' },
+        { property: 'og:url', content: 'https://satyendra.in/docs' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/docs.png' },
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://satyendra.in/docs' }
     ]
 })
 </script>

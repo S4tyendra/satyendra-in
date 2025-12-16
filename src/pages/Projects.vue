@@ -45,7 +45,14 @@ const selectedTags = ref([])
 useHead({
   title: 'Projects | Satyendra',
   meta: [
-    { name: 'description', content: 'Showcase of my open source and closed source projects.' }
+    { name: 'description', content: 'Showcase of my open source and closed source projects.' },
+    { property: 'og:title', content: 'Projects | Satyendra' },
+    { property: 'og:description', content: 'Showcase of my open source and closed source projects.' },
+    { property: 'og:url', content: 'https://satyendra.in/projects' },
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/projects.png' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://satyendra.in/projects' }
   ]
 })
 

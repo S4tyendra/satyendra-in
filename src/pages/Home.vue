@@ -19,7 +19,11 @@ useHead({
     { name: 'description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast. Explore my projects, skills, and experience.' },
     { property: 'og:title', content: 'Satyendra | Full Stack Developer' },
     { property: 'og:description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast.' },
-    { property: 'og:image', content: '/favicon.png' },
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/home.png' },
+    { property: 'og:url', content: 'https://satyendra.in' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://satyendra.in' }
   ]
 })
 </script>

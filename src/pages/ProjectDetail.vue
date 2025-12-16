@@ -134,6 +134,46 @@ useHead({
         {
             name: 'description',
             content: computed(() => project.value?.desc || 'Project details')
+        },
+        {
+            name: 'keywords',
+            content: computed(() => project.value?.tags?.join(', ') || 'Project, Satyendra, Portfolio')
+        },
+        // Open Graph
+        {
+            property: 'og:title',
+            content: computed(() => project.value?.title || 'Project Not Found')
+        },
+        {
+            property: 'og:description',
+            content: computed(() => project.value?.desc || 'Project details')
+        },
+        {
+            property: 'og:image',
+            content: computed(() => project.value ? `https://og-images-cdn.satyendra.in/og-image/project/${project.value.title.toLowerCase().replace(/\s+/g, '-')}.png` : 'https://og-images-cdn.satyendra.in/og-image/default.png')
+        },
+        {
+            property: 'og:url',
+            content: computed(() => `https://satyendra.in/projects/${repoName}`)
+        },
+        // Twitter
+        {
+            name: 'twitter:title',
+            content: computed(() => project.value?.title || 'Project Not Found')
+        },
+        {
+            name: 'twitter:description',
+            content: computed(() => project.value?.desc || 'Project details')
+        },
+        {
+            name: 'twitter:image',
+            content: computed(() => project.value ? `https://og-images-cdn.satyendra.in/og-image/project/${project.value.title.toLowerCase().replace(/\s+/g, '-')}.png` : 'https://og-images-cdn.satyendra.in/og-image/default.png')
+        }
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: computed(() => `https://satyendra.in/projects/${repoName}`)
         }
     ]
 })

@@ -9,6 +9,11 @@ useHead({
         { name: 'description', content: 'My professional experience and journey in software development and cybersecurity.' },
         { property: 'og:title', content: 'Experience | Satyendra' },
         { property: 'og:description', content: 'My professional experience and journey in software development and cybersecurity.' },
+        { property: 'og:url', content: 'https://satyendra.in/experience' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/experience.png' },
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://satyendra.in/experience' }
     ]
 })
 

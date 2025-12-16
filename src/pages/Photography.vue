@@ -4,7 +4,14 @@ import { useHead } from '@vueuse/head'
 useHead({
     title: 'Photography | Satyendra',
     meta: [
-        { name: 'description', content: 'A collection of moments and perspectives captured through my lens.' }
+        { name: 'description', content: 'A collection of moments and perspectives captured through my lens.' },
+        { property: 'og:title', content: 'Photography | Satyendra' },
+        { property: 'og:description', content: 'A collection of moments and perspectives captured through my lens.' },
+        { property: 'og:url', content: 'https://satyendra.in/photography' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/photography.png' },
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://satyendra.in/photography' }
     ]
 })
 </script>

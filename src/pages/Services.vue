@@ -4,7 +4,14 @@ import { useHead } from '@vueuse/head'
 useHead({
     title: 'Services | Satyendra',
     meta: [
-        { name: 'description', content: 'Professional services and collaboration opportunities.' }
+        { name: 'description', content: 'Professional services and collaboration opportunities.' },
+        { property: 'og:title', content: 'Services | Satyendra' },
+        { property: 'og:description', content: 'Professional services and collaboration opportunities.' },
+        { property: 'og:url', content: 'https://satyendra.in/services' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/services.png' },
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://satyendra.in/services' }
     ]
 })
 </script>

@@ -1,6 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useHead } from '@vueuse/head'
 import BackgroundAtmosphere from './components/BackgroundAtmosphere.vue'
 import Header from './components/Header.vue'
 import TerminalBreadcrumb from './components/TerminalBreadcrumb.vue'
@@ -9,6 +10,28 @@ import './assets/home.css'
 
 const isScrolled = ref(false)
 const terminalRef = ref(null)
+
+useHead({
+  title: 'Satyendra | Full Stack Developer',
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'author', content: 'Bongi Satyendra' },
+    { name: 'keywords', content: 'Satyendra, Full Stack Developer, Cybersecurity, Vue.js, Node.js, Go' },
+    { name: 'application-name', content: 'Satyendra Portfolio' },
+    { name: 'theme-color', content: '#082026' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://satyendra.in/' },
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/default.png' }, // Fallback global image
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: '@s4tyendra' },
+    { name: 'twitter:creator', content: '@s4tyendra' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://satyendra.in' },
+    { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+  ]
+})
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
