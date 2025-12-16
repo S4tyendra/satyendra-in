@@ -5,6 +5,10 @@ import Home from './pages/Home.vue'
 import Projects from './pages/Projects.vue'
 import ProjectDetail from './pages/ProjectDetail.vue'
 import Experience from './pages/Experience.vue'
+import Blog from './pages/Blog.vue'
+import Docs from './pages/Docs.vue'
+import Photography from './pages/Photography.vue'
+import Services from './pages/Services.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 
@@ -12,7 +16,11 @@ const routes = [
     { path: '/', component: Home },
     { path: '/projects', component: Projects },
     { path: '/projects/:repo', component: ProjectDetail, props: true },
-    { path: '/experience', component: Experience }
+    { path: '/experience', component: Experience },
+    { path: '/blog', component: Blog },
+    { path: '/docs', component: Docs },
+    { path: '/photography', component: Photography },
+    { path: '/services', component: Services }
 ]
 
 // Export for SSG
@@ -30,11 +38,11 @@ export const includedRoutes = (paths, routes) => {
         if (!p.link) return null
         const parts = p.link.split('/')
         const name = parts[parts.length - 1] || parts[parts.length - 2]
-        return `/project/${name}`
+        return `/projects/${name}`
     }).filter(p => p !== null)
 
     return routes.flatMap(route => {
-        return route.path === '/project/:repo'
+        return route.path === '/projects/:repo'
             ? projectRoutes
             : route.path
     })

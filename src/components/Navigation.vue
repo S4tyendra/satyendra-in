@@ -37,7 +37,7 @@ const groupStudio = ref(null)
 const handleKeydown = (e) => {
   if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return
 
-  switch(e.key) {
+  switch (e.key) {
     case '1':
       groupEngineering.value?.toggle()
       break

@@ -46,7 +46,7 @@ onMounted(() => {
             clearInterval(typeInterval)
             isTypingDone.value = true
         }
-    }, 40)
+    }, 30)
 
     // Scroll Observer
     const observer = new IntersectionObserver((entries) => {
@@ -73,45 +73,51 @@ onUnmounted(() => {
 <template>
     <div class="flex flex-col gap-12 pb-20">
         <!-- Hero Section -->
-        <header class="relative flex flex-col gap-6 p-6 rounded-xl overflow-hidden group scroll-reveal delay-100">
-            <!-- Subtle Background -->
-            <div class="absolute inset-0 bg-surface-card/20 backdrop-blur-sm border border-white/5 rounded-xl z-0">
-            </div>
-            <div
-                class="absolute -top-32 -right-32 w-96 h-96 bg-accent-primary/5 rounded-full blur-[100px] group-hover:bg-accent-primary/10 transition-colors duration-1000">
-            </div>
+        <!-- Hero Section -->
+        <header class="relative flex flex-col gap-6 pt-8 pb-4 group scroll-reveal delay-100 pl-2">
 
-            <div class="relative z-10 flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-2 mb-1">
-                        <div class="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse"></div>
+            <div
+                class="relative z-10 flex flex-col gap-6 bg-linear-to-b from-text-muted/5 via-transparent to-transparent p-2 rounded-md">
+                <!-- ID Badge -->
+                <div class="flex items-center gap-3">
+                    <span class="relative flex h-2 w-2">
                         <span
-                            class="text-accent-primary font-mono text-xs tracking-wider uppercase opacity-80">System.Identity</span>
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-text-main tracking-tight">
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+
+                    <span
+                        class="text-accent-primary font-mono text-xs tracking-[0.2em] uppercase opacity-80">System.Identity</span>
+                </div>
+
+                <div class="flex flex-col gap-10">
+                    <h1 class="text-4xl md:text-5xl font-bold text-text-main tracking-tight">
                         {{ introData.title }}
                     </h1>
                     <div class="h-8 flex items-center">
-                        <h2 class="text-lg md:text-xl text-accent-secondary font-mono">
+                        <h2
+                            class="text-lg md:text-xl text-text-muted bg-linear-to-r from-text-muted/20 to-transparent font-mono border-l-2 border-accent-primary pl-2 ml-2">
                             {{ typeWriterText }}<span class="animate-pulse"
-                                :class="{ 'opacity-0': isTypingDone }">_</span>
+                                :class="{ 'opacity-0': isTypingDone }">|</span>
                         </h2>
                     </div>
                 </div>
 
-                <p
-                    class="text-base text-text-muted/90 leading-relaxed max-w-3xl border-l-2 border-accent-primary/30 pl-4 py-1">
+                <p class="text-base text-text-muted/80 leading-relaxed max-w-2xl mt-2">
                     {{ introData.description }}
                 </p>
 
+                <!-- Minimal Availability Indicator -->
                 <div
-                    class="flex items-center gap-2 text-accent-primary font-mono text-xs bg-accent-primary/5 w-fit px-3 py-1.5 rounded border border-accent-primary/20 backdrop-blur-md mt-2">
+                    class="flex items-center gap-3 mt-4 backdrop-blur-lg p-2 bg-linear-to-r from-text-muted/10 via-transparent to-transparent rounded-2xl">
                     <span class="relative flex h-2 w-2">
                         <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    {{ introData.availability }}
+                    <span class="text-text-muted font-mono text-xs tracking-wide">
+                        {{ introData.availability }}
+                    </span>
                 </div>
             </div>
         </header>
@@ -149,7 +155,7 @@ onUnmounted(() => {
 
                     <div class="mt-2 text-accent-primary opacity-90">
                         <span class="text-accent-secondary opacity-50 mr-3 select-none">5</span>
-                        <span class="tracking-wide">-> {{ aboutData.philosophy }}</span>
+                        <span class="tracking-wide"> -> {{ aboutData.philosophy }}</span>
                     </div>
                 </div>
             </div>
@@ -191,9 +197,9 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Content Card -->
-                    <div class="flex-1 w-full min-w-0">
+                    <div class="flex-1 w-full min-w-0 ">
                         <div
-                            class="relative bg-surface-card/10 border border-white/5 rounded-lg p-5 hover:border-accent-primary/30 hover:bg-surface-card/20 transition-all duration-300 group-hover:translate-x-1">
+                            class="relative bg-surface-card/10 hover:bg-text-muted/5 backdrop-blur-xs border border-white/5 rounded-lg p-5 hover:border-accent-primary/30 transition-all duration-300 group-hover:translate-x-1">
 
                             <!-- Mobile Date -->
                             <div class="md:hidden flex items-center gap-2 mb-3">
