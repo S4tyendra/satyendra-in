@@ -1,156 +1,228 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { introData, aboutData, experienceData } from '../data/experience.js'
+
+const typeWriterText = ref('')
+const fullText = introData.subtitle
+const isTypingDone = ref(false)
+const timelineRef = ref(null)
+const scrollProgress = ref(0)
+const timelineHeight = ref(0)
+
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+}
+
+const handleScroll = () => {
+    if (!timelineRef.value) return
+
+    const rect = timelineRef.value.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const elementTop = rect.top
+    const elementHeight = rect.height
+
+    // Calculate how much we've scrolled past the start of the element relative to viewport
+    // We start the dot when the element is halfway up the viewport (or slightly earlier)
+    const startOffset = viewportHeight * 0.8
+    const scrolled = startOffset - elementTop
+
+    // Clamp between 0 and 1
+    let progress = scrolled / elementHeight
+    progress = Math.max(0, Math.min(1, progress))
+
+    scrollProgress.value = progress
+    timelineHeight.value = elementHeight
+}
+
+onMounted(() => {
+    // Typewriter effect
+    let i = 0
+    const typeInterval = setInterval(() => {
+        if (i < fullText.length) {
+            typeWriterText.value += fullText.charAt(i)
+            i++
+        } else {
+            clearInterval(typeInterval)
+            isTypingDone.value = true
+        }
+    }, 40)
+
+    // Scroll Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view')
+                observer.unobserve(entry.target)
+            }
+        })
+    }, observerOptions)
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el))
+
+    // Scroll Listener for Dot
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial calculation
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-    <div class="flex flex-col gap-16 animate-fade-in pb-20">
+    <div class="flex flex-col gap-12 pb-20">
         <!-- Hero Section -->
-        <header class="relative flex flex-col gap-8 p-8 rounded-2xl overflow-hidden group">
-            <!-- Background Elements -->
-            <div class="absolute inset-0 bg-surface-card/30 backdrop-blur-sm border border-white/5 rounded-2xl z-0">
+        <header class="relative flex flex-col gap-6 p-6 rounded-xl overflow-hidden group scroll-reveal delay-100">
+            <!-- Subtle Background -->
+            <div class="absolute inset-0 bg-surface-card/20 backdrop-blur-sm border border-white/5 rounded-xl z-0">
             </div>
             <div
-                class="absolute -top-24 -right-24 w-64 h-64 bg-accent-primary/10 rounded-full blur-[80px] group-hover:bg-accent-primary/20 transition-colors duration-700">
+                class="absolute -top-32 -right-32 w-96 h-96 bg-accent-primary/5 rounded-full blur-[100px] group-hover:bg-accent-primary/10 transition-colors duration-1000">
             </div>
 
-            <div class="relative z-10 flex flex-col gap-6">
+            <div class="relative z-10 flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-2 rounded-full bg-accent-primary animate-pulse"></div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse"></div>
                         <span
-                            class="text-accent-primary font-mono text-sm tracking-wider uppercase opacity-80">System.Identity</span>
+                            class="text-accent-primary font-mono text-xs tracking-wider uppercase opacity-80">System.Identity</span>
                     </div>
-                    <h1
-                        class="text-4xl md:text-6xl font-bold bg-linear-to-r from-text-main via-text-main to-text-muted bg-clip-text text-transparent tracking-tight">
+                    <h1 class="text-3xl md:text-4xl font-bold text-text-main tracking-tight">
                         {{ introData.title }}
                     </h1>
-                    <h2 class="text-xl md:text-2xl text-accent-secondary font-mono">
-                        {{ introData.subtitle }}
-                    </h2>
+                    <div class="h-8 flex items-center">
+                        <h2 class="text-lg md:text-xl text-accent-secondary font-mono">
+                            {{ typeWriterText }}<span class="animate-pulse"
+                                :class="{ 'opacity-0': isTypingDone }">_</span>
+                        </h2>
+                    </div>
                 </div>
 
                 <p
-                    class="text-lg text-text-muted/90 leading-relaxed max-w-3xl border-l-2 border-accent-primary/30 pl-6 py-2">
+                    class="text-base text-text-muted/90 leading-relaxed max-w-3xl border-l-2 border-accent-primary/30 pl-4 py-1">
                     {{ introData.description }}
                 </p>
 
                 <div
-                    class="flex items-center gap-3 text-accent-primary font-mono text-sm bg-accent-primary/5 w-fit px-5 py-2.5 rounded-lg border border-accent-primary/20 backdrop-blur-md shadow-lg shadow-accent-primary/5 hover:shadow-accent-primary/10 transition-shadow">
-                    <span class="relative flex h-2.5 w-2.5">
+                    class="flex items-center gap-2 text-accent-primary font-mono text-xs bg-accent-primary/5 w-fit px-3 py-1.5 rounded border border-accent-primary/20 backdrop-blur-md mt-2">
+                    <span class="relative flex h-2 w-2">
                         <span
                             class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-primary"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
                     </span>
                     {{ introData.availability }}
                 </div>
             </div>
         </header>
 
-        <!-- About Section (Terminal Style) -->
-        <section class="flex flex-col gap-8">
-            <div class="flex items-center gap-4">
-                <span class="text-accent-primary font-mono text-lg">01.</span>
-                <h3 class="text-2xl font-bold text-text-main">Kernel / Philosophy</h3>
-                <div class="h-px flex-1 bg-linear-to-r from-border-main to-transparent"></div>
+        <!-- About Section (Clean Terminal) -->
+        <section class="flex flex-col gap-6 scroll-reveal delay-200">
+            <div class="flex items-center gap-4 group">
+                <span
+                    class="text-accent-primary font-mono text-sm opacity-60 group-hover:opacity-100 transition-opacity">01.</span>
+                <h3 class="text-xl font-bold text-text-main">Kernel / Philosophy</h3>
+                <div class="h-px flex-1 bg-linear-to-r from-border-main to-transparent opacity-50"></div>
             </div>
 
-            <div class="relative bg-[#0d1117] border border-border-main rounded-xl overflow-hidden shadow-2xl">
-                <!-- Terminal Header -->
-                <div class="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
-                    <div class="flex gap-2">
-                        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+            <div
+                class="relative bg-[#0d1117]/80 border border-white/10 rounded-lg overflow-hidden shadow-xl backdrop-blur-md transform transition-transform hover:scale-[1.01] duration-500">
+                <!-- Mac-like Header (Simplified) -->
+                <div class="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
                     </div>
-                    <div class="text-xs text-text-muted font-mono opacity-50">user@devh.in:~</div>
-                    <div class="w-12"></div>
+                    <div class="text-[10px] text-text-muted font-mono opacity-40">~/me/philosophy.txt</div>
+                    <div class="w-8"></div>
                 </div>
 
-                <div class="p-6 md:p-8 flex flex-col gap-6 font-mono text-sm md:text-base">
-                    <div class="flex flex-col gap-4 text-text-muted/90">
-                        <p v-for="(paragraph, index) in aboutData.content" :key="index" class="leading-relaxed">
-                            <span class="text-accent-secondary mr-2">$</span>
-                            <span :class="{ 'text-text-main font-semibold': index === 1 }">{{ paragraph }}</span>
+                <div class="p-6 flex flex-col gap-4 font-mono text-xs md:text-sm">
+                    <div class="flex flex-col gap-3 text-text-muted/90">
+                        <p v-for="(paragraph, index) in aboutData.content" :key="index"
+                            class="leading-relaxed flex gap-3">
+                            <span class="text-accent-secondary opacity-50 select-none">{{ index + 1 }}</span>
+                            <span :class="{ 'text-text-main font-medium': index === 1 }">{{ paragraph }}</span>
                         </p>
                     </div>
 
-                    <div
-                        class="mt-4 p-4 border border-accent-primary/20 rounded bg-accent-primary/5 text-accent-primary">
-                        <span class="mr-2">>>></span>
-                        <span class="tracking-wide font-bold">{{ aboutData.philosophy }}</span>
-                        <span class="animate-pulse">_</span>
+                    <div class="mt-2 text-accent-primary opacity-90">
+                        <span class="text-accent-secondary opacity-50 mr-3 select-none">5</span>
+                        <span class="tracking-wide">-> {{ aboutData.philosophy }}</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Timeline Section -->
-        <section class="flex flex-col gap-10">
-            <div class="flex items-center gap-4">
-                <span class="text-accent-primary font-mono text-lg">02.</span>
-                <h3 class="text-2xl font-bold text-text-main">System Logs</h3>
-                <div class="h-px flex-1 bg-linear-to-r from-border-main to-transparent"></div>
+        <section class="flex flex-col gap-8" ref="timelineRef">
+            <div class="flex items-center gap-4 group scroll-reveal delay-300">
+                <span
+                    class="text-accent-primary font-mono text-sm opacity-60 group-hover:opacity-100 transition-opacity">02.</span>
+                <h3 class="text-xl font-bold text-text-main">System Logs</h3>
+                <div class="h-px flex-1 bg-linear-to-r from-border-main to-transparent opacity-50"></div>
             </div>
 
-            <div class="flex flex-col gap-8 relative pl-4 md:pl-0">
-                <!-- Vertical Line (Connectors) -->
-                <div
-                    class="absolute left-[19px] md:left-[139px] top-6 bottom-6 w-px bg-linear-to-b from-accent-primary/50 via-border-main to-transparent hidden md:block">
+            <div class="flex flex-col gap-8 relative pl-2 md:pl-0">
+                <!-- Vertical Line (Subtler) -->
+                <div class="absolute left-[20px] md:left-[100px] top-6 bottom-6 w-px bg-white/5 hidden md:block"></div>
+
+                <!-- Glowing Scroll Dot -->
+                <div class="absolute left-[16px] md:left-[96px] w-[9px] h-[9px] rounded-full bg-accent-primary shadow-[0_0_10px_rgba(var(--color-accent-primary),0.8)] z-20 pointer-events-none transition-transform duration-75 hidden md:block"
+                    :style="{ transform: `translateY(${scrollProgress * (timelineHeight - 48)}px)` }">
+                    <div class="absolute inset-0 animate-ping rounded-full bg-accent-primary opacity-50"></div>
                 </div>
 
                 <div v-for="(item, index) in experienceData" :key="index"
-                    class="group relative flex flex-col md:flex-row gap-8 md:gap-16 items-start transition-all duration-300">
+                    class="group relative flex flex-col md:flex-row gap-6 items-start scroll-reveal"
+                    :style="{ transitionDelay: `${index * 100}ms` }">
 
                     <!-- Date Node (Desktop) -->
-                    <div class="hidden md:flex flex-col items-end min-w-[120px] pt-2 relative z-10">
+                    <!-- Fixed width container to prevent cutting off -->
+                    <div class="hidden md:flex flex-col items-end w-[80px] shrink-0 pt-1 relative z-10 mr-8">
                         <span
-                            class="font-mono text-accent-primary font-bold text-lg group-hover:text-white transition-colors">{{
+                            class="font-mono text-text-muted/60 text-sm group-hover:text-text-main transition-colors duration-300 w-full text-right">{{
                                 item.year }}</span>
                         <!-- Node Dot -->
                         <div
-                            class="absolute top-4 -right-[9px] w-[18px] h-[18px] rounded-full bg-bg-main border-2 border-accent-primary group-hover:scale-125 group-hover:shadow-[0_0_15px_rgba(var(--color-accent-primary),0.5)] transition-all duration-300">
-                            <div
-                                class="w-full h-full rounded-full bg-accent-primary/50 opacity-0 group-hover:opacity-100 transition-opacity">
-                            </div>
+                            class="absolute top-2.5 -right-[20px] w-[9px] h-[9px] rounded-full bg-border-main group-hover:bg-accent-primary transition-all duration-300 ring-4 ring-bg-main group-hover:ring-teal-500 transform translate-x-1/2 shadow-[0_0_8px_2px_rgba(59,130,246,0.5)] group-hover:shadow-[0_0_12px_4px_rgba(59,130,246,0.8)]">
                         </div>
                     </div>
 
                     <!-- Content Card -->
-                    <div class="flex-1 w-full group-hover:-translate-y-1 transition-transform duration-300">
+                    <div class="flex-1 w-full min-w-0">
                         <div
-                            class="relative bg-surface-card/40 backdrop-blur-md border border-white/5 rounded-xl p-6 md:p-7 hover:border-accent-primary/30 hover:bg-surface-card/60 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-accent-primary/5">
+                            class="relative bg-surface-card/10 border border-white/5 rounded-lg p-5 hover:border-accent-primary/30 hover:bg-surface-card/20 transition-all duration-300 group-hover:translate-x-1">
 
                             <!-- Mobile Date -->
-                            <div class="md:hidden flex items-center gap-3 mb-4">
-                                <div class="w-2 h-2 rounded-full bg-accent-primary"></div>
-                                <span class="font-mono text-accent-primary font-bold">{{ item.year }}</span>
+                            <div class="md:hidden flex items-center gap-2 mb-3">
+                                <div class="w-1.5 h-1.5 rounded-full bg-accent-primary"></div>
+                                <span class="font-mono text-accent-primary text-xs">{{ item.year }}</span>
                             </div>
 
-                            <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-2">
                                 <div>
                                     <h4
-                                        class="text-xl md:text-2xl font-bold text-text-main group-hover:text-accent-primary transition-colors">
+                                        class="text-lg font-bold text-text-main group-hover:text-accent-primary transition-colors duration-300">
                                         {{ item.title }}
                                     </h4>
-                                    <p
-                                        class="text-text-muted font-medium text-sm md:text-base mt-1 flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-accent-secondary"></span>
+                                    <p class="text-text-muted font-medium text-sm mt-0.5 flex items-center gap-2">
                                         {{ item.subtitle }}
                                     </p>
                                 </div>
 
-                                <p v-if="item.description"
-                                    class="text-text-muted/80 text-sm md:text-base leading-relaxed mt-2 border-l-2 border-white/5 pl-4">
+                                <p v-if="item.description" class="text-text-muted/80 text-sm leading-relaxed mt-1">
                                     {{ item.description }}
                                 </p>
 
-                                <div v-if="item.keyPoints && item.keyPoints.length" class="mt-4 grid gap-3">
+                                <div v-if="item.keyPoints && item.keyPoints.length" class="mt-3 grid gap-2">
                                     <div v-for="(point, pIndex) in item.keyPoints" :key="pIndex"
-                                        class="flex gap-3 text-sm bg-black/20 p-3 rounded border border-white/5 hover:border-white/10 transition-colors">
-                                        <span class="text-accent-primary font-mono mt-0.5">></span>
+                                        class="flex gap-2 text-xs md:text-sm text-text-muted/70 hover:text-text-muted transition-colors">
+                                        <span class="text-accent-primary mt-0.5">›</span>
                                         <span>
-                                            <strong class="text-text-main/90">{{ point.label }}:</strong>
-                                            <span class="text-text-muted/80 ml-1">{{ point.text }}</span>
+                                            <strong class="text-text-main/80 font-normal">{{ point.label }}:</strong>
+                                            <span class="ml-1">{{ point.text }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -164,19 +236,26 @@ import { introData, aboutData, experienceData } from '../data/experience.js'
 </template>
 
 <style scoped>
-.animate-fade-in {
-    animation: fadeIn 0.6s cubic-bezier(0.2, 0.0, 0.2, 1);
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.0, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.0, 0.2, 1);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+.scroll-reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.delay-100 {
+    transition-delay: 100ms;
+}
+
+.delay-200 {
+    transition-delay: 200ms;
+}
+
+.delay-300 {
+    transition-delay: 300ms;
 }
 </style>
