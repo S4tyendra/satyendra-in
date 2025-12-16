@@ -39,6 +39,21 @@ const closedSrcProjects = [
             "Designed to reduce latency and bandwidth usage for client-side apps."
         ],
         "tags": ["Proxy", "CORS", "Caching", "Edge Computing", "Performance", "Infrastructure"]
+    },
+    {
+        "link": "https://gems.devh.in",
+        "deployment_url": "https://gems.devh.in",
+        "title": "GemHub",
+        "desc": "A community-driven platform to discover, share, and manage custom Google Gemini 'Gems' (AI personas).",
+        "featured": true,
+        "detail": [
+            "Functions as a centralized repository for browsing and searching user-created Gemini Gems.",
+            "Features a 'Favorites' system allowing users to bookmark and organize useful prompts.",
+            "Includes submission functionality ('Add Gem') for the community to share their own creations.",
+            "Displays detailed metadata for each Gem, including creator attribution, creation date, and popularity metrics.",
+            "Hosts your personal suite of high-utility Gems like 'LinuxCommandAI', 'Lyra - Prompt Architect', and 'ESP Architect'."
+        ],
+        "tags": ["AI", "Google Gemini", "Prompt Engineering", "Community Platform", "Web App", "Repository"]
     }
 ]
 
