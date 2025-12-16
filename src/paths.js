@@ -39,7 +39,8 @@ export const fileSystem = {
                 }
             },
             "about": { type: "file", path: "/about" },
-            "contact": { type: "file", path: "/contact" }
+            "contact": { type: "file", path: "/contact" },
+            "experience": { type: "file", path: "/experience" }
         }
     }
 };
