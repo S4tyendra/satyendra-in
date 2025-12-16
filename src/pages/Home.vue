@@ -14,13 +14,14 @@ import Navigation from '../components/Navigation.vue'
 import GithubGraph from '../components/GithubGraph.vue'
 
 useHead({
-  title: 'Satyendra | Full Stack Developer',
+  title: 'Bongi Satyendra | Systems Engineer & Cloud Architect',
   meta: [
-    { name: 'description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast. Explore my projects, skills, and experience.' },
-    { property: 'og:title', content: 'Satyendra | Full Stack Developer' },
-    { property: 'og:description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast.' },
-    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/home.png' },
+    { name: 'description', content: 'Bongi Satyendra is a Systems Engineer specializing in Cloud Architecture, DevOps, Infrastructure Security, Go, and Linux systems.' },
+    { property: 'og:title', content: 'Bongi Satyendra | Systems Engineer & Cloud Architect' },
+    { property: 'og:description', content: 'Systems Engineer specializing in Cloud Architecture, DevOps, Infrastructure Security, Go, and Linux systems.' },
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/index.png' },
     { property: 'og:url', content: 'https://satyendra.in' },
+    { name: 'twitter:card', content: 'summary_large_image' },
   ],
   link: [
     { rel: 'canonical', href: 'https://satyendra.in' }

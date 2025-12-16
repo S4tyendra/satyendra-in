@@ -2,13 +2,16 @@
 import { useHead } from '@vueuse/head'
 
 useHead({
-    title: 'Blog | Satyendra',
+    title: 'Technical Blog | Satyendra',
     meta: [
-        { name: 'description', content: 'Read my thoughts, tutorials, and articles on technology, coding, and more.' },
-        { property: 'og:title', content: 'Blog | Satyendra' },
-        { property: 'og:description', content: 'Read my thoughts, tutorials, and articles on technology, coding, and more.' },
+        { name: 'description', content: 'Deep dives into DevOps, Linux internals, Go programming, and System Architecture. No-fluff technical articles and tutorials.' },
+        { property: 'og:title', content: 'Technical Blog | Satyendra' },
+        { property: 'og:description', content: 'Deep dives into DevOps, Linux internals, Go programming, and System Architecture.' },
         { property: 'og:url', content: 'https://satyendra.in/blog' },
-        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/blog.png' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/blog.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Technical Blog | Satyendra' },
+        { name: 'twitter:description', content: 'Deep dives into DevOps, Linux internals, and Go.' }
     ],
     link: [
         { rel: 'canonical', href: 'https://satyendra.in/blog' }

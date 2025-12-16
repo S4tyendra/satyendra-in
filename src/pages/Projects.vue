@@ -43,13 +43,14 @@ const searchQuery = ref('')
 const selectedTags = ref([])
 
 useHead({
-  title: 'Projects | Satyendra',
+  title: 'Engineering Projects | Satyendra',
   meta: [
-    { name: 'description', content: 'Showcase of my open source and closed source projects.' },
-    { property: 'og:title', content: 'Projects | Satyendra' },
-    { property: 'og:description', content: 'Showcase of my open source and closed source projects.' },
+    { name: 'description', content: 'A catalog of open-source tools, cloud infrastructure utilities, and system software built with Go, Vue, and Linux.' },
+    { property: 'og:title', content: 'Engineering Projects | Satyendra' },
+    { property: 'og:description', content: 'Open-source tools, cloud infrastructure utilities, and system software.' },
     { property: 'og:url', content: 'https://satyendra.in/projects' },
-    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/projects.png' },
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/projects/index.png' },
+    { name: 'twitter:card', content: 'summary_large_image' },
   ],
   link: [
     { rel: 'canonical', href: 'https://satyendra.in/projects' }

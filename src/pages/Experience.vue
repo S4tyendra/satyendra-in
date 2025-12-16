@@ -4,13 +4,14 @@ import { useHead } from '@vueuse/head'
 import { introData, aboutData, experienceData } from '../data/experience.js'
 
 useHead({
-    title: 'Experience | Satyendra',
+    title: 'Professional Experience | Satyendra',
     meta: [
-        { name: 'description', content: 'My professional experience and journey in software development and cybersecurity.' },
-        { property: 'og:title', content: 'Experience | Satyendra' },
-        { property: 'og:description', content: 'My professional experience and journey in software development and cybersecurity.' },
+        { name: 'description', content: 'Track record in Systems Engineering, Cloud Security, and SRE. History of managing large-scale infrastructure and DevOps pipelines.' },
+        { property: 'og:title', content: 'Professional Experience | Satyendra' },
+        { property: 'og:description', content: 'Track record in Systems Engineering, Cloud Security, and SRE.' },
         { property: 'og:url', content: 'https://satyendra.in/experience' },
-        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/experience.png' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/experience.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [
         { rel: 'canonical', href: 'https://satyendra.in/experience' }

@@ -128,29 +128,36 @@ const project = computed(() => {
     })
 })
 
+const defaultImage = 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/default.png';
+
 useHead({
-    title: computed(() => project.value ? `${project.value.title} | Satyendra` : 'Project Not Found'),
+    title: computed(() => project.value?.title ? `${project.value.title} | Satyendra` : 'Loading...'),
     meta: [
         {
             name: 'description',
-            content: computed(() => project.value?.desc || 'Project details')
+            content: computed(() => project.value?.desc || 'Detailed view of this engineering project.')
         },
         {
             name: 'keywords',
-            content: computed(() => project.value?.tags?.join(', ') || 'Project, Satyendra, Portfolio')
+            content: computed(() => project.value?.tags?.join(', ') || 'Go, Linux, Open Source')
         },
         // Open Graph
         {
             property: 'og:title',
-            content: computed(() => project.value?.title || 'Project Not Found')
+            content: computed(() => project.value?.title || 'Project Detail')
         },
         {
             property: 'og:description',
-            content: computed(() => project.value?.desc || 'Project details')
+            content: computed(() => project.value?.desc || 'Detailed view of this engineering project.')
         },
         {
             property: 'og:image',
-            content: computed(() => project.value ? `https://og-images-cdn.satyendra.in/og-image/project/${project.value.title.toLowerCase().replace(/\s+/g, '-')}.png` : 'https://og-images-cdn.satyendra.in/og-image/default.png')
+            content: computed(() => {
+                if (!project.value?.title) return defaultImage;
+                // Ensure slug safety
+                const slug = project.value.title.trim().toLowerCase().replace(/\s+/g, '-');
+                return `https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/projects/${slug}.png`;
+            })
         },
         {
             property: 'og:url',
@@ -158,16 +165,24 @@ useHead({
         },
         // Twitter
         {
+            name: 'twitter:card',
+            content: 'summary_large_image'
+        },
+        {
             name: 'twitter:title',
-            content: computed(() => project.value?.title || 'Project Not Found')
+            content: computed(() => project.value?.title || 'Project Detail')
         },
         {
             name: 'twitter:description',
-            content: computed(() => project.value?.desc || 'Project details')
+            content: computed(() => project.value?.desc || 'Detailed view of this engineering project.')
         },
         {
             name: 'twitter:image',
-            content: computed(() => project.value ? `https://og-images-cdn.satyendra.in/og-image/project/${project.value.title.toLowerCase().replace(/\s+/g, '-')}.png` : 'https://og-images-cdn.satyendra.in/og-image/default.png')
+            content: computed(() => {
+                if (!project.value?.title) return defaultImage;
+                const slug = project.value.title.trim().toLowerCase().replace(/\s+/g, '-');
+                return `https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/projects/${slug}.png`;
+            })
         }
     ],
     link: [

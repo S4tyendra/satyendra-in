@@ -2,13 +2,14 @@
 import { useHead } from '@vueuse/head'
 
 useHead({
-    title: 'Photography | Satyendra',
+    title: 'Visuals & Photography | Satyendra',
     meta: [
-        { name: 'description', content: 'A collection of moments and perspectives captured through my lens.' },
-        { property: 'og:title', content: 'Photography | Satyendra' },
-        { property: 'og:description', content: 'A collection of moments and perspectives captured through my lens.' },
+        { name: 'description', content: 'A gallery of perspectives. Street, landscape, and macro photography captured through my lens.' },
+        { property: 'og:title', content: 'Visuals & Photography | Satyendra' },
+        { property: 'og:description', content: 'A gallery of perspectives. Street, landscape, and macro photography.' },
         { property: 'og:url', content: 'https://satyendra.in/photography' },
-        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/photography.png' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/photography.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [
         { rel: 'canonical', href: 'https://satyendra.in/photography' }

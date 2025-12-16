@@ -2,13 +2,14 @@
 import { useHead } from '@vueuse/head'
 
 useHead({
-    title: 'Documentation | Satyendra',
+    title: 'Documentation & Guides | Satyendra',
     meta: [
-        { name: 'description', content: 'Technical documentation, guides, and references for my projects.' },
-        { property: 'og:title', content: 'Documentation | Satyendra' },
-        { property: 'og:description', content: 'Technical documentation, guides, and references for my projects.' },
+        { name: 'description', content: 'Technical manuals, API references, and deployment guides for my open-source tools and infrastructure projects.' },
+        { property: 'og:title', content: 'Documentation & Guides | Satyendra' },
+        { property: 'og:description', content: 'Technical manuals, API references, and deployment guides.' },
         { property: 'og:url', content: 'https://satyendra.in/docs' },
-        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/docs.png' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/docs.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [
         { rel: 'canonical', href: 'https://satyendra.in/docs' }

@@ -2,13 +2,14 @@
 import { useHead } from '@vueuse/head'
 
 useHead({
-    title: 'Services | Satyendra',
+    title: 'Services & Consulting | Satyendra',
     meta: [
-        { name: 'description', content: 'Professional services and collaboration opportunities.' },
-        { property: 'og:title', content: 'Services | Satyendra' },
-        { property: 'og:description', content: 'Professional services and collaboration opportunities.' },
+        { name: 'description', content: 'Freelance consulting for Cloud Architecture, DevOps automation, Security Auditing, and Backend Development.' },
+        { property: 'og:title', content: 'Services & Consulting | Satyendra' },
+        { property: 'og:description', content: 'Cloud Architecture, DevOps automation, Security Auditing, and Backend Development.' },
         { property: 'og:url', content: 'https://satyendra.in/services' },
-        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/og-image/services.png' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/services.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [
         { rel: 'canonical', href: 'https://satyendra.in/services' }
