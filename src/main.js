@@ -4,13 +4,15 @@ import App from './App.vue'
 import Home from './pages/Home.vue'
 import Projects from './pages/Projects.vue'
 import ProjectDetail from './pages/ProjectDetail.vue'
+import Experience from './pages/Experience.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 
 const routes = [
     { path: '/', component: Home },
     { path: '/projects', component: Projects },
-    { path: '/projects/:repo', component: ProjectDetail, props: true }
+    { path: '/projects/:repo', component: ProjectDetail, props: true },
+    { path: '/experience', component: Experience }
 ]
 
 // Export for SSG
