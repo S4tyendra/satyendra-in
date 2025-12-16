@@ -1,3 +1,14 @@
+<script setup>
+import { useHead } from '@vueuse/head'
+
+useHead({
+    title: 'Services | Satyendra',
+    meta: [
+        { name: 'description', content: 'Professional services and collaboration opportunities.' }
+    ]
+})
+</script>
+
 <template>
     <div class="flex flex-col items-center justify-center min-h-[60vh] text-center p-6">
         <div class="p-4 rounded-full bg-text-main/5 mb-6 animate-pulse">

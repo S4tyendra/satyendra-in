@@ -1,3 +1,14 @@
+<script setup>
+import { useHead } from '@vueuse/head'
+
+useHead({
+    title: 'Photography | Satyendra',
+    meta: [
+        { name: 'description', content: 'A collection of moments and perspectives captured through my lens.' }
+    ]
+})
+</script>
+
 <template>
     <div class="container mx-auto px-4 py-8">
         <div class="mb-8">
@@ -18,6 +29,6 @@
         <div class="text-center py-16">
             <p class="text-xl text-text-main/70">Adding new pictures.. coming soon</p>
         </div>
-        
+
     </div>
 </template>

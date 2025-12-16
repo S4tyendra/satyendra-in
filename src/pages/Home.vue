@@ -8,7 +8,18 @@
 
 <script setup>
 import { defineAsyncComponent } from 'vue'
+import { useHead } from '@vueuse/head'
 import BioSection from '../components/BioSection.vue'
 import Navigation from '../components/Navigation.vue'
 import GithubGraph from '../components/GithubGraph.vue'
+
+useHead({
+  title: 'Satyendra | Full Stack Developer',
+  meta: [
+    { name: 'description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast. Explore my projects, skills, and experience.' },
+    { property: 'og:title', content: 'Satyendra | Full Stack Developer' },
+    { property: 'og:description', content: 'Portfolio of Satyendra, a Full Stack Developer and Cybersecurity Enthusiast.' },
+    { property: 'og:image', content: '/favicon.png' },
+  ]
+})
 </script>

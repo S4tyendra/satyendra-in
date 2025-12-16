@@ -1,6 +1,16 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useHead } from '@vueuse/head'
 import { introData, aboutData, experienceData } from '../data/experience.js'
+
+useHead({
+    title: 'Experience | Satyendra',
+    meta: [
+        { name: 'description', content: 'My professional experience and journey in software development and cybersecurity.' },
+        { property: 'og:title', content: 'Experience | Satyendra' },
+        { property: 'og:description', content: 'My professional experience and journey in software development and cybersecurity.' },
+    ]
+})
 
 const typeWriterText = ref('')
 const fullText = introData.subtitle

@@ -43,7 +43,7 @@ const searchQuery = ref('')
 const selectedTags = ref([])
 
 useHead({
-  title: 'Projects - Satyendra',
+  title: 'Projects | Satyendra',
   meta: [
     { name: 'description', content: 'Showcase of my open source and closed source projects.' }
   ]

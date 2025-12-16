@@ -1,3 +1,14 @@
+<script setup>
+import { useHead } from '@vueuse/head'
+
+useHead({
+    title: 'Blog | Satyendra',
+    meta: [
+        { name: 'description', content: 'Read my thoughts, tutorials, and articles on technology, coding, and more.' }
+    ]
+})
+</script>
+
 <template>
     <div class="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
         <div class="space-y-2">

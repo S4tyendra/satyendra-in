@@ -1,3 +1,14 @@
+<script setup>
+import { useHead } from '@vueuse/head'
+
+useHead({
+    title: 'Documentation | Satyendra',
+    meta: [
+        { name: 'description', content: 'Technical documentation, guides, and references for my projects.' }
+    ]
+})
+</script>
+
 <template>
     <div class="container mx-auto max-w-4xl px-6 py-12 space-y-12">
         <div class="space-y-6">

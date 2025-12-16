@@ -17,7 +17,7 @@
                 </span>
             </div>
             <h1
-                class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-text-main to-text-muted">
+                class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-text-main to-text-muted">
                 {{ project.title }}</h1>
             <p class="text-xl text-text-muted leading-relaxed max-w-2xl">{{ project.desc }}</p>
 
@@ -65,7 +65,7 @@
                         <li v-for="(item, idx) in project.detail" :key="idx"
                             class="flex gap-3 text-text-muted/90 group">
                             <span
-                                class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-blue/50 flex-shrink-0 group-hover:bg-accent-blue transition-colors"></span>
+                                class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-blue/50 shrink-0 group-hover:bg-accent-blue transition-colors"></span>
                             <span class="leading-relaxed">{{ item }}</span>
                         </li>
                     </ul>
@@ -129,7 +129,7 @@ const project = computed(() => {
 })
 
 useHead({
-    title: computed(() => project.value ? `${project.value.title} - Satyendra` : 'Project Not Found'),
+    title: computed(() => project.value ? `${project.value.title} | Satyendra` : 'Project Not Found'),
     meta: [
         {
             name: 'description',
