@@ -10,6 +10,7 @@ import Docs from './pages/Docs.vue'
 import Photography from './pages/Photography.vue'
 import Services from './pages/Services.vue'
 import DevSecOps from './pages/DevSecOps.vue'
+import Tmp from './pages/Tmp.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 
@@ -22,7 +23,8 @@ const routes = [
     { path: '/docs', component: Docs },
     { path: '/photography', component: Photography },
     { path: '/services', component: Services },
-    { path: '/devsecops', component: DevSecOps }
+    { path: '/devsecops', component: DevSecOps },
+    { path: '/tmp', component: Tmp }
 ]
 
 // Export for SSG

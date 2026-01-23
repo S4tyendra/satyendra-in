@@ -209,7 +209,7 @@ const setSectionRef = (el) => {
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <!-- Feature 1 -->
                 <div
-                    class="group p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
                     <div
                         class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
@@ -227,7 +227,7 @@ const setSectionRef = (el) => {
 
                 <!-- Feature 2 -->
                 <div
-                    class="group p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
                     <div
                         class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
@@ -243,7 +243,7 @@ const setSectionRef = (el) => {
 
                 <!-- Feature 3 -->
                 <div
-                    class="group p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
                     <div
                         class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
@@ -339,7 +339,7 @@ const setSectionRef = (el) => {
             <a href="https://github.com/S4tyendra/Orchestr8" target="_blank"
                 class="block group relative rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-teal-500/50 transition-all duration-300 overflow-hidden">
                 <div
-                    class="absolute inset-0 bg-gradient-to-r from-teal-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    class="absolute inset-0 bg-linear-to-r from-teal-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-8 p-8 items-center">
