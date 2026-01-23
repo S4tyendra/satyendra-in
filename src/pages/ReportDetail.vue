@@ -43,6 +43,7 @@ async function fetchStatus() {
         const data = await res.json()
 
         isSecured.value = data.is_secured
+        mimeType.value = data.mime_type
 
         if (!isSecured.value) {
             await fetchContent()
@@ -151,27 +152,10 @@ onUnmounted(() => {
 <template>
     <div class="w-full min-h-[60vh] flex flex-col items-center py-12 px-6">
         <div class="max-w-5xl w-full">
-            <div class="mb-12 flex items-center gap-4">
-                <div class="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        class="text-teal-400">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <line x1="16" y1="13" x2="8" y2="13" />
-                        <line x1="16" y1="17" x2="8" y2="17" />
-                        <polyline points="10 9 9 9 8 9" />
-                    </svg>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-text-main line-clamp-1">Security Report: {{ reportId }}</h1>
-                    <p class="text-sm text-text-muted">Classified Infrastructure Audit Data</p>
-                </div>
-            </div>
-
             <!-- Loading -->
             <div v-if="isLoading" class="flex flex-col items-center justify-center py-20 gap-4">
                 <div class="w-10 h-10 border-2 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
-                <p class="text-teal-500/50 font-mono text-xs animate-pulse">DECRYPTING...</p>
+                <p class="text-teal-500/50 font-mono text-xs animate-pulse">Loading report...</p>
             </div>
 
             <!-- Error -->
@@ -183,12 +167,12 @@ onUnmounted(() => {
                         <path
                             d="M12 9v4m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 17c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    <p class="font-bold text-lg">Access Violation</p>
+                    <p class="font-bold text-lg">Failed to authenticate</p>
                 </div>
                 <p class="text-text-muted mb-6">{{ error }}</p>
                 <button v-if="error.includes('Denied') || error.includes('token')" @click="handleRetry"
                     class="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-sm">
-                    Retry Authentication
+                    Retry login?
                 </button>
             </div>
 
@@ -211,21 +195,21 @@ onUnmounted(() => {
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                             </svg>
                         </div>
-                        <h2 class="text-xl font-bold text-text-main mb-2">Restricted Access</h2>
+                        <h2 class="text-xl font-bold text-text-main mb-2">Failed to authenticate</h2>
                         <p class="text-sm text-text-muted">Enter credentials to unlock this security audit report.</p>
                     </div>
 
                     <form @submit.prevent="fetchContent" class="space-y-4">
                         <div class="space-y-2">
-                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Operator
-                                ID</label>
+                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Username
+                                Provided</label>
                             <input v-model="username" type="text" required placeholder="X-ID-029"
                                 class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-mono text-sm" />
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Secure
-                                Passkey</label>
+                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Password
+                                Provided</label>
                             <input v-model="password" type="password" required placeholder="••••••••"
                                 class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-mono text-sm" />
                         </div>
@@ -239,7 +223,7 @@ onUnmounted(() => {
 
                         <button type="submit" :disabled="isLoading || !turnstileToken"
                             class="w-full py-3 bg-teal-600 hover:bg-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-900/20 mt-4 flex items-center justify-center gap-2">
-                            <span>AUTHORIZE ACCESS</span>
+                            <span>Get Report</span>
                             <svg v-if="isLoading" class="animate-spin h-4 w-4" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
                                     fill="none"></circle>

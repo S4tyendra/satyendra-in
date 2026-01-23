@@ -391,72 +391,96 @@ const setSectionRef = (el) => {
         </div>
 
         <!-- SECTION 6: SECURITY AUDITS -->
-        <div :ref="setSectionRef" class="scroll-section py-24 px-6 max-w-5xl mx-auto w-full">
-            <div class="text-left mb-12 flex items-end justify-between">
-                <div>
-                    <div class="flex items-center gap-3 text-teal-400 font-mono text-sm tracking-wider mb-2">
-                        <span class="w-8 h-[2px] bg-teal-400"></span>
-                        TRANSPARENCY & COMPLIANCE
+        <div :ref="setSectionRef"
+            class="scroll-section flex justify-center items-center relative py-24 px-6 max-w-5xl mx-auto w-full">
+            <div class="w-full blur-sm opacity-40 pointer-events-none select-none grayscale-50">
+                <div class="text-left mb-12 flex items-end justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 text-teal-400 font-mono text-sm tracking-wider mb-2">
+                            <span class="w-8 h-[2px] bg-teal-400"></span>
+                            TRANSPARENCY & COMPLIANCE
+                        </div>
+                        <h2 class="text-4xl font-bold">Security Audit Logs</h2>
                     </div>
-                    <h2 class="text-4xl font-bold">Security Audit Logs</h2>
+                    <div class="hidden md:block text-right">
+                        <p class="text-text-muted text-sm font-mono">RETENTION: 90 DAYS</p>
+                        <p class="text-teal-500/50 text-xs font-mono">ENCRYPTED AT REST</p>
+                    </div>
                 </div>
-                <div class="hidden md:block text-right">
-                    <p class="text-text-muted text-sm font-mono">RETENTION: 90 DAYS</p>
-                    <p class="text-teal-500/50 text-xs font-mono">ENCRYPTED AT REST</p>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div
+                        class="group flex items-center justify-between p-6 rounded-xl bg-white/5 border border-white/5 transition-all">
+                        <div class="flex items-center gap-6">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 border border-teal-500/20">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                    <polyline points="10 9 9 9 8 9" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-text-main group-hover:text-teal-400 transition-colors">
+                                    Buyhatke
+                                    Application Audit</h3>
+                                <p class="text-sm text-text-muted font-mono uppercase tracking-tight">ID:
+                                    buyhatke-2026-01-23-22-00 • CLASSIFIED</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="hidden sm:inline-block px-3 py-1 rounded-full text-[10px] bg-teal-500/20 text-teal-400 border border-teal-500/30 font-bold uppercase tracking-widest">RESTRICTED</span>
+                            <div
+                                class="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-text-muted transition-all">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder for future reports -->
+                    <div
+                        class="opacity-30 group flex items-center justify-between p-6 rounded-xl bg-white/5 border border-white/5 italic">
+                        <div class="flex items-center gap-6">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center text-text-muted border border-white/5">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-text-muted">Next Scheduled Audit</h3>
+                                <p class="text-sm">SCHEDULED: 2026-02-15</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4">
-                <router-link to="/devsecops/reports/buyhatke-2026-01-23-22-00"
-                    class="group flex items-center justify-between p-6 rounded-xl bg-white/5 border border-white/5 hover:border-teal-500/30 hover:bg-white/10 transition-all">
-                    <div class="flex items-center gap-6">
-                        <div
-                            class="w-12 h-12 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 border border-teal-500/20">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                                <line x1="16" y1="13" x2="8" y2="13" />
-                                <line x1="16" y1="17" x2="8" y2="17" />
-                                <polyline points="10 9 9 9 8 9" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-text-main group-hover:text-teal-400 transition-colors">Buyhatke
-                                Application Audit</h3>
-                            <p class="text-sm text-text-muted font-mono uppercase tracking-tight">ID:
-                                buyhatke-2026-01-23-22-00 • CLASSIFIED</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span
-                            class="hidden sm:inline-block px-3 py-1 rounded-full text-[10px] bg-teal-500/20 text-teal-400 border border-teal-500/30 font-bold uppercase tracking-widest">RESTRICTED</span>
-                        <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-text-muted group-hover:text-teal-400 transition-all group-hover:translate-x-1">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                    </div>
-                </router-link>
-
-                <!-- Placeholder for future reports -->
+            <!-- Lock Overlay -->
+            <div class="absolute inset-0 z-20 flex items-center justify-center">
                 <div
-                    class="opacity-30 pointer-events-none group flex items-center justify-between p-6 rounded-xl bg-white/5 border border-white/5 italic">
-                    <div class="flex items-center gap-6">
-                        <div
-                            class="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center text-text-muted border border-white/5">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-text-muted">Next Scheduled Audit</h3>
-                            <p class="text-sm">SCHEDULED: 2026-02-15</p>
-                        </div>
+                    class="bg-[#0a0a0a]/80 backdrop-blur-xl px-10 py-8 rounded-2xl border border-white/10 shadow-2xl flex flex-col items-center gap-4 text-center transform hover:scale-105 transition-transform duration-300 group">
+                    <div
+                        class="p-4 rounded-full bg-white/5 border border-white/10 mb-2 group-hover:border-teal-500/50 transition-colors">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" class="text-text-muted group-hover:text-teal-400 transition-colors">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-mono text-sm tracking-widest text-white/90 font-bold uppercase">
+                            reports are not public yet. <span class="text-teal-500">(4)</span>
+                        </p>
                     </div>
                 </div>
             </div>
