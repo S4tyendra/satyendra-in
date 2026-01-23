@@ -81,7 +81,7 @@ function renderTurnstile() {
     }
 }
 
-async function fetchContent(token = '') {
+async function fetchContent() {
     isLoading.value = true
     error.value = ''
 
@@ -103,7 +103,7 @@ async function fetchContent(token = '') {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     login: loginPayload,
-                    cf_turnstile_response: token || turnstileToken.value
+                    cf_turnstile_response: turnstileToken.value
                 })
             }
         }
