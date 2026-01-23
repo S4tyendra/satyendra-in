@@ -20,7 +20,7 @@ useHead({
         { name: 'robots', content: 'noindex, nofollow' }
     ],
     script: [
-        { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true }
+        { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true }
     ]
 })
 
@@ -35,6 +35,7 @@ const mimeType = ref('')
 const username = ref('')
 const password = ref('')
 const turnstileToken = ref('')
+const turnstileWidgetId = ref(null)
 
 async function fetchStatus() {
     try {
@@ -47,11 +48,36 @@ async function fetchStatus() {
 
         if (!isSecured.value) {
             await fetchContent()
+        } else {
+            // Wait for DOM and render Turnstile
+            setTimeout(renderTurnstile, 100)
         }
     } catch (e) {
         error.value = e.message
     } finally {
         isLoading.value = false
+    }
+}
+
+function renderTurnstile() {
+    if (window.turnstile) {
+        const container = document.querySelector('.cf-turnstile-container')
+        if (container && !turnstileWidgetId.value) {
+            try {
+                turnstileWidgetId.value = window.turnstile.render(container, {
+                    sitekey: '0x4AAAAAACLPGzri6Ijzvw5D',
+                    theme: 'dark',
+                    callback: (token) => {
+                        turnstileToken.value = token
+                    },
+                })
+            } catch (e) {
+                console.error('Turnstile render failed:', e)
+            }
+        }
+    } else {
+        // Retry if script not loaded yet
+        setTimeout(renderTurnstile, 250)
     }
 }
 
@@ -101,22 +127,14 @@ async function fetchContent(token = '') {
     }
 }
 
-function handleTurnstileCallback(token) {
-    turnstileToken.value = token
-}
-
 onMounted(() => {
     fetchStatus()
-
-    // Register global callback for Turnstile if needed, 
-    // but better to use data-callback
-    window.onTurnstileSuccess = (token) => {
-        turnstileToken.value = token
-    }
 })
 
 onUnmounted(() => {
-    delete window.onTurnstileSuccess
+    if (turnstileWidgetId.value && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.value)
+    }
 })
 </script>
 
@@ -220,9 +238,8 @@ onUnmounted(() => {
                         </div>
 
                         <div class="flex justify-center pt-4">
-                            <!-- Cloudflare Turnstile -->
-                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAA-8N7z_rL5X3_G"
-                                data-callback="onTurnstileSuccess" data-theme="dark"></div>
+                            <!-- Cloudflare Turnstile (Manually Rendered) -->
+                            <div class="cf-turnstile-container"></div>
                         </div>
 
                         <p v-if="error" class="text-red-400 text-xs text-center font-mono">{{ error }}</p>
