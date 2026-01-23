@@ -192,29 +192,11 @@ onUnmounted(() => {
                 </button>
             </div>
 
-            <!-- Content -->
-            <div v-else-if="isAuthenticated" class="relative group">
-                <div
-                    class="absolute -inset-1 bg-linear-to-r from-teal-500/20 to-emerald-500/20 rounded-2xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity">
-                </div>
-                <div
-                    class="relative bg-bg-main/60 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-                    <div class="flex items-center justify-between px-6 py-3 bg-white/5 border-b border-white/5">
-                        <div class="flex gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
-                        </div>
-                        <div class="text-[10px] font-mono text-text-muted uppercase tracking-widest">
-                            {{ fileKey.endsWith('.data') ? 'Encrypted Audit Data' : 'Plaintext Record' }}
-                        </div>
-                    </div>
-                    <div class="p-8 max-h-[70vh] overflow-auto custom-scrollbar">
-                        <div v-if="fileKey.endsWith('.data')" v-html="content"></div>
-                        <pre v-else
-                            class="font-mono text-sm leading-relaxed text-teal-50/90 whitespace-pre-wrap">{{ content }}</pre>
-                    </div>
-                </div>
+            <!-- Content (renders inline with parent scroll) -->
+            <div v-else-if="isAuthenticated" class="w-full">
+                <div v-if="fileKey.endsWith('.data')" v-html="content" class="report-content"></div>
+                <pre v-else
+                    class="font-mono text-sm leading-relaxed text-teal-50/90 whitespace-pre-wrap p-6 bg-white/5 rounded-xl border border-white/10">{{ content }}</pre>
             </div>
 
             <!-- Login Form -->
