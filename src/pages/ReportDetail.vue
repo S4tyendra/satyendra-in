@@ -1,6 +1,6 @@
 <script setup>
 import { useHead } from '@vueuse/head'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -29,7 +29,6 @@ const isSecured = ref(false)
 const isAuthenticated = ref(false)
 const content = ref('')
 const error = ref('')
-const mimeType = ref('')
 
 // Login form
 const username = ref('')
@@ -44,7 +43,6 @@ async function fetchStatus() {
         const data = await res.json()
 
         isSecured.value = data.is_secured
-        mimeType.value = data.mime_type
 
         if (!isSecured.value) {
             await fetchContent()
@@ -73,12 +71,24 @@ function renderTurnstile() {
                 })
             } catch (e) {
                 console.error('Turnstile render failed:', e)
+                turnstileWidgetId.value = null
+                setTimeout(renderTurnstile, 1000)
             }
         }
     } else {
         // Retry if script not loaded yet
         setTimeout(renderTurnstile, 250)
     }
+}
+
+async function handleRetry() {
+    error.value = ''
+    isAuthenticated.value = false
+    turnstileToken.value = ''
+    turnstileWidgetId.value = null
+
+    await nextTick()
+    setTimeout(renderTurnstile, 150)
 }
 
 async function fetchContent() {
@@ -176,8 +186,7 @@ onUnmounted(() => {
                     <p class="font-bold text-lg">Access Violation</p>
                 </div>
                 <p class="text-text-muted mb-6">{{ error }}</p>
-                <button v-if="error.includes('Denied') || error.includes('token')"
-                    @click="error = ''; isAuthenticated = false"
+                <button v-if="error.includes('Denied') || error.includes('token')" @click="handleRetry"
                     class="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-sm">
                     Retry Authentication
                 </button>
@@ -196,11 +205,13 @@ onUnmounted(() => {
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
                         </div>
-                        <div class="text-[10px] font-mono text-text-muted uppercase tracking-widest">{{ mimeType ||
-                            'text/plain' }}</div>
+                        <div class="text-[10px] font-mono text-text-muted uppercase tracking-widest">
+                            {{ fileKey.endsWith('.data') ? 'Encrypted Audit Data' : 'Plaintext Record' }}
+                        </div>
                     </div>
                     <div class="p-8 max-h-[70vh] overflow-auto custom-scrollbar">
-                        <pre
+                        <div v-if="fileKey.endsWith('.data')" v-html="content"></div>
+                        <pre v-else
                             class="font-mono text-sm leading-relaxed text-teal-50/90 whitespace-pre-wrap">{{ content }}</pre>
                     </div>
                 </div>
