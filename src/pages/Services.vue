@@ -4,9 +4,9 @@ import { useHead } from '@vueuse/head'
 useHead({
     title: 'Services & Consulting | Satyendra',
     meta: [
-        { name: 'description', content: 'Freelance consulting for Cloud Architecture, DevOps automation, Security Auditing, and Backend Development.' },
+        { name: 'description', content: 'Freelance consulting for Cloud Architecture, DevSecOps automation, Security Auditing, and Backend Development.' },
         { property: 'og:title', content: 'Services & Consulting | Satyendra' },
-        { property: 'og:description', content: 'Cloud Architecture, DevOps automation, Security Auditing, and Backend Development.' },
+        { property: 'og:description', content: 'Cloud Architecture, DevSecOps automation, Security Auditing, and Backend Development.' },
         { property: 'og:url', content: 'https://satyendra.in/services' },
         { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/services.png' },
         { name: 'twitter:card', content: 'summary_large_image' },

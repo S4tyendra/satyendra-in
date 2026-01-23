@@ -1,32 +1,28 @@
 <template>
     <div class="w-full">
-        <!-- Loading State -->
-        <div v-if="loading"
-            class="w-full h-[155px] bg-[#161b22]/50 border border-[#30363d] rounded-xl p-4 flex items-center justify-center animate-pulse">
-            <div class="text-xs font-mono text-gray-500 flex flex-col items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-gray-700/50"></div>
-                <span>Loading contribution data...</span>
-            </div>
-        </div>
-
         <!-- Error State -->
-        <div v-else-if="error"
+        <div v-if="error"
             class="flex items-center gap-2 bg-red-900/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-md text-sm">
             <span class="text-xs">{{ error }}</span>
         </div>
 
-        <!-- Graph Container -->
+        <!-- Graph Container (Always rendered, blurred when loading) -->
         <div v-else
             class="w-full bg-[#161b22]/20 backdrop-blur-md border border-[#30363d] rounded-xl shadow-2xl overflow-hidden relative fade-in group transition-all duration-300 hover:border-text-main/20">
 
-            <!-- Header (Always Visible) -->
-            <div class="px-4 py-3 flex justify-between items-baseline cursor-default">
+            <!-- Shimmer Overlay when loading -->
+            <div v-if="loading" class="absolute inset-0 z-50 pointer-events-none overflow-hidden rounded-xl">
+                <div class="shimmer-overlay"></div>
+            </div>
+
+            <!-- Header -->
+            <div class="px-4 py-3 flex justify-between items-baseline cursor-default transition-all duration-500"
+                :class="{ 'blur-sm': loading }">
                 <h2 class="text-xs font-normal text-gray-400">
-                    <span class="text-white font-semibold text-sm">{{ totalContributions?.toLocaleString() || 0
-                        }}</span>
+                    <span class="text-white font-semibold text-sm">{{ displayContributions.toLocaleString() }}</span>
                     contributions last year
                 </h2>
-                <span class="text-[10px] text-gray-500 font-mono">{{ yearRange }}</span>
+                <span class="text-[10px] text-gray-500 font-mono">{{ displayYearRange }}</span>
             </div>
 
             <!-- Collapsible Body -->
@@ -34,7 +30,7 @@
                 <div class="accordion-inner">
                     <div class="px-4 pb-4 space-y-4 accordion-content">
                         <!-- Scrollable Container -->
-                        <div class="relative group/graph">
+                        <div class="relative group/graph transition-all duration-500" :class="{ 'blur-sm': loading }">
                             <!-- Left/Right Fade Indicators -->
                             <div
                                 class="absolute left-0 top-0 bottom-0 w-4 bg-linear-to-r from-[#161b22] to-transparent z-10 pointer-events-none">
@@ -46,10 +42,8 @@
                             <!-- The Graph -->
                             <div class="overflow-x-auto graph-scroll pb-2">
                                 <div class="flex gap-[3px] min-w-max p-1 items-center mx-auto w-fit">
-                                    <!-- Loop through week pairs instead of single weeks -->
-                                    <div v-for="(pair, pIndex) in weekPairs" :key="pIndex"
+                                    <div v-for="(pair, pIndex) in displayWeekPairs" :key="pIndex"
                                         class="flex flex-col gap-[3px]">
-                                        <!-- Render each week in the pair -->
                                         <div v-for="(week, wIndex) in pair" :key="wIndex"
                                             class="flex flex-col gap-[3px]">
                                             <div v-for="(day, dIndex) in week.contributionDays" :key="day.date"
@@ -57,7 +51,7 @@
                                                 :style="{
                                                     backgroundColor: getColor(day),
                                                     border: day.contributionCount === 0 ? '1px solid rgba(255,255,255,0.04)' : undefined,
-                                                    animationDelay: `${(pIndex * 5) + (wIndex * 2 + dIndex) * 5}ms`
+                                                    animationDelay: loading ? '0ms' : `${(pIndex * 5) + (wIndex * 2 + dIndex) * 5}ms`
                                                 }" @mouseenter="showTooltip($event, day)" @mouseleave="hideTooltip"
                                                 @touchstart="showTooltip($event, day)"></div>
                                         </div>
@@ -65,8 +59,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -94,16 +86,40 @@ const yearRange = ref('')
 const tooltipRef = ref(null)
 const tooltipContent = ref({ count: '', date: '' })
 
-// API Endpoint
 const API_URL = 'https://portfoliogo3apiforai.satyendra.in/github-graph'
+
+// Generate random placeholder data
+const generatePlaceholderData = () => {
+    const weeks = []
+    const now = new Date()
+    const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+
+    for (let w = 0; w < 53; w++) {
+        const days = []
+        for (let d = 0; d < 7; d++) {
+            const date = new Date(now)
+            date.setDate(date.getDate() - (52 - w) * 7 - (6 - d))
+            const count = Math.random() > 0.6 ? Math.floor(Math.random() * 15) : 0
+            days.push({
+                date: date.toISOString().split('T')[0],
+                contributionCount: count,
+                color: colors[Math.min(Math.floor(count / 3), 4)]
+            })
+        }
+        weeks.push({ contributionDays: days })
+    }
+    return { weeks, totalContributions: Math.floor(Math.random() * 800) + 200 }
+}
+
+const placeholderData = generatePlaceholderData()
 
 // Color Map
 const colorMap = {
-    '#ebedf0': '#161b22', // Empty (Light) -> Empty (Dark)
-    '#9be9a8': '#0e4429', // L1 (Light) -> L1 (Dark)
-    '#40c463': '#006d32', // L2 (Light) -> L2 (Dark)
-    '#30a14e': '#26a641', // L3 (Light) -> L3 (Dark)
-    '#216e39': '#39d353'  // L4 (Light) -> L4 (Dark)
+    '#ebedf0': '#161b22',
+    '#9be9a8': '#0e4429',
+    '#40c463': '#006d32',
+    '#30a14e': '#26a641',
+    '#216e39': '#39d353'
 }
 
 const getColor = (day) => {
@@ -111,6 +127,31 @@ const getColor = (day) => {
     if (day.contributionCount === 0) finalColor = '#161b22'
     return finalColor
 }
+
+// Display values - show placeholder when loading, real data when loaded
+const displayContributions = computed(() => {
+    return loading.value ? placeholderData.totalContributions : totalContributions.value
+})
+
+const displayYearRange = computed(() => {
+    if (loading.value) {
+        const now = new Date()
+        const past = new Date(now)
+        past.setFullYear(past.getFullYear() - 1)
+        const opts = { month: 'short', day: 'numeric' }
+        return `${past.toLocaleDateString('en-US', opts)} - ${now.toLocaleDateString('en-US', opts)}`
+    }
+    return yearRange.value
+})
+
+const displayWeekPairs = computed(() => {
+    const weeks = loading.value ? placeholderData.weeks : (calendar.value.weeks || [])
+    const pairs = []
+    for (let i = 0; i < weeks.length; i += 2) {
+        pairs.push(weeks.slice(i, i + 2))
+    }
+    return pairs
+})
 
 const fetchGraph = async () => {
     try {
@@ -131,27 +172,17 @@ const fetchGraph = async () => {
             const opts = { month: 'short', day: 'numeric' }
             yearRange.value = `${first.toLocaleDateString('en-US', opts)} - ${last.toLocaleDateString('en-US', opts)}`
         }
+
+        loading.value = false
     } catch (err) {
         error.value = err.message
-    } finally {
-        // Intentional delay of 1.5 seconds after data is ready (or error) to match request
-        setTimeout(() => {
-            loading.value = false
-        }, 1500)
+        loading.value = false
     }
 }
 
-// Compute week pairs for vertical stacking
-const weekPairs = computed(() => {
-    const pairs = []
-    const weeks = calendar.value.weeks || []
-    for (let i = 0; i < weeks.length; i += 2) {
-        pairs.push(weeks.slice(i, i + 2))
-    }
-    return pairs
-})
-
 const showTooltip = (e, day) => {
+    if (loading.value) return
+
     const dateStr = new Date(day.date).toLocaleDateString(undefined, {
         weekday: 'long',
         year: 'numeric',
@@ -162,16 +193,10 @@ const showTooltip = (e, day) => {
     const countStr = day.contributionCount === 0 ? 'No contributions' :
         `${day.contributionCount} contribution${day.contributionCount === 1 ? '' : 's'}`
 
-    tooltipContent.value = {
-        count: countStr,
-        date: dateStr
-    }
+    tooltipContent.value = { count: countStr, date: dateStr }
 
-    // Use interaction to set position, but ensure ref is available
-    // We use nextTick or just direct DOM manipulation if needed, but ref is safest
     if (tooltipRef.value) {
-        tooltipRef.value.style.display = 'block' // Ensure it's visible to measure
-
+        tooltipRef.value.style.display = 'block'
         const target = e.target
         const rect = target.getBoundingClientRect()
         const tooltipRect = tooltipRef.value.getBoundingClientRect()
@@ -179,7 +204,6 @@ const showTooltip = (e, day) => {
         let top = rect.top - tooltipRect.height - 10
         let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2)
 
-        // Boundary checks
         if (left < 10) left = 10
         if (left + tooltipRect.width > window.innerWidth - 10) left = window.innerWidth - tooltipRect.width - 10
         if (top < 10) top = rect.bottom + 10
@@ -236,6 +260,27 @@ onMounted(() => {
     border-color: rgba(110, 118, 129, 0.95) transparent transparent transparent;
 }
 
+.shimmer-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 @keyframes popIn {
     0% {
         transform: scale(0);
@@ -269,7 +314,6 @@ onMounted(() => {
     }
 }
 
-/* Accordion Logic */
 .accordion-wrapper {
     display: grid;
     grid-template-rows: 0fr;
@@ -287,7 +331,6 @@ onMounted(() => {
     transition: all 0.3s ease-out;
 }
 
-/* On specific group hover, expand */
 .group:hover .accordion-wrapper {
     grid-template-rows: 1fr;
 }

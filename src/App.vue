@@ -17,7 +17,7 @@ useHead({
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'author', content: 'Bongi Satyendra' },
-    { name: 'keywords', content: 'Satyendra, Systems Engineer, Cloud Architect, DevOps, SRE, Golang, Linux, Cybersecurity, Infrastructure' }, { name: 'application-name', content: 'Satyendra Portfolio' },
+    { name: 'keywords', content: 'Satyendra, Systems Engineer, Cloud Architect, DevSecOps, SRE, Golang, Linux, Cybersecurity, Infrastructure' }, { name: 'application-name', content: 'Satyendra Portfolio' },
     { name: 'theme-color', content: '#082026' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://satyendra.in/' },

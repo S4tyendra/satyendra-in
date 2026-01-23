@@ -30,7 +30,7 @@ export const experienceData = [
     },
     {
         year: "2024",
-        title: "DevOps & Infrastructure Scale",
+        title: "DevSecOps & Infrastructure Scale",
         subtitle: "The \"99.9% Uptime\" Era",
         description: "Transitioned from writing code to owning the metal it runs on. Mastered the art of keeping servers alive when traffic spikes.",
         keyPoints: [

@@ -6,7 +6,7 @@ import { introData, aboutData, experienceData } from '../data/experience.js'
 useHead({
     title: 'Professional Experience | Satyendra',
     meta: [
-        { name: 'description', content: 'Track record in Systems Engineering, Cloud Security, and SRE. History of managing large-scale infrastructure and DevOps pipelines.' },
+        { name: 'description', content: 'Track record in Systems Engineering, Cloud Security, and SRE. History of managing large-scale infrastructure and DevSecOps pipelines.' },
         { property: 'og:title', content: 'Professional Experience | Satyendra' },
         { property: 'og:description', content: 'Track record in Systems Engineering, Cloud Security, and SRE.' },
         { property: 'og:url', content: 'https://satyendra.in/experience' },

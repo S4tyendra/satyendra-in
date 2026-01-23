@@ -57,7 +57,7 @@ const projects = [
             "Streamlines workflow for multiple deployment environments.",
             "Built in Go with simple curl installation."
         ],
-        "tags": ["Go", "CLI", "Linux", "DevOps", "Productivity"]
+        "tags": ["Go", "CLI", "Linux", "DevSecOps", "Productivity"]
     },
     {
         "link": "https://github.com/s4tyendra/url-shortner",
@@ -177,7 +177,7 @@ const projects = [
             "Manages persistent env vars and container lifecycles.",
             "Built with Bun and Hono as a single-binary service."
         ],
-        "tags": ["Bun", "Hono", "Docker", "Nginx", "DevOps", "GHCR"]
+        "tags": ["Bun", "Hono", "Docker", "Nginx", "DevSecOps", "GHCR"]
     },
     {
         "link": "https://github.com/S4tyendra/s.devh.in",
