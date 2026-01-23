@@ -43,7 +43,6 @@ async function fetchStatus() {
         const data = await res.json()
 
         isSecured.value = data.is_secured
-        mimeType.value = data.mime_type
 
         if (!isSecured.value) {
             await fetchContent()
