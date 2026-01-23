@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent } from 'vue'
 import { useHead } from '@vueuse/head'
 import BioSection from '../components/BioSection.vue'
 import Navigation from '../components/Navigation.vue'

@@ -4,9 +4,15 @@ import ShieldIcon from '../components/icons/ShieldIcon.vue'
 import { ref, onMounted } from 'vue'
 
 useHead({
-    title: 'DevSecOps & Cloud | Satyendra',
+    title: 'DevSecOps, Cloud Engineering & Security Automation | Satyendra',
     meta: [
-        { name: 'description', content: 'Advanced DevSecOps: Kernel-level security, Infrastructure as Code, and High-Performance Orchestration.' },
+        { name: 'description', content: 'Expert DevSecOps architecture: Kernel-level security (eBPF), Kubernetes Orchestration, Infrastructure as Code (Terraform), and Zero-Downtime Deployments. Automating security from code to cloud.' },
+        { name: 'keywords', content: 'DevSecOps, Cloud Security, Kubernetes, Terraform, eBPF, Tetragon, Orchestr8, Blue-Green Deployment, CI/CD, Container Security, AWS, GCP' },
+        { property: 'og:title', content: 'DevSecOps & Cloud Engineering | Satyendra' },
+        { property: 'og:description', content: 'Security is not a checkbox. Implementing kernel-level defense, automated pipelines, and immutable infrastructure.' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/devsecops.png' },
+        { property: 'og:url', content: 'https://satyendra.in/devsecops' },
+        { name: 'twitter:card', content: 'summary_large_image' },
     ]
 })
 
@@ -317,12 +323,72 @@ const setSectionRef = (el) => {
                                 <div class="text-sm">Standardized blueprints for AWS, GCP & VPS</div>
                             </div>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SECTION 5: FEATURED TOOLS -->
+        <div :ref="setSectionRef" class="scroll-section py-24 px-6 max-w-5xl mx-auto w-full">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Open Source Engineering</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">Building tools to solve complex orchestration
+                    challenges.</p>
+            </div>
+
+            <a href="https://github.com/S4tyendra/Orchestr8" target="_blank"
+                class="block group relative rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-teal-500/50 transition-all duration-300 overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-teal-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 p-8 items-center">
+                    <!-- Icon/Visual -->
+                    <div
+                        class="w-16 h-16 rounded-xl bg-teal-900/20 flex items-center justify-center border border-teal-500/20 group-hover:scale-110 transition-transform duration-300">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" class="text-teal-400">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex-1 text-left">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-2xl font-bold text-text-main group-hover:text-teal-400 transition-colors">
+                                Orchestr8</h3>
+                            <span
+                                class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded border border-white/10 bg-white/5 text-text-muted">Orchestration</span>
+                        </div>
+
+                        <p class="text-text-muted mb-4 leading-relaxed">
+                            A lightweight container orchestrator enabling <strong class="text-teal-200">multiple
+                                Docker containers on a single instance</strong>.
+                            Features automated Nginx reverse proxy configuration and <strong
+                                class="text-teal-200">Blue-Green zero-downtime</strong> deployment strategies.
+                        </p>
+
+                        <div class="flex gap-4 text-sm font-mono text-teal-500/80">
+                            <span class="flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span> Zero Downtime
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span> Auto-Proxy
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div
+                        class="text-white/20 group-hover:text-teal-400 transform group-hover:translate-x-1 transition-all">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </template>
 
