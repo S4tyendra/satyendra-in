@@ -38,7 +38,7 @@ const turnstileToken = ref('')
 
 async function fetchStatus() {
     try {
-        const res = await fetch(`/iframestatus/${fileKey}`)
+        const res = await fetch(`https://portfoliogo3apiforai.satyendra.in/iframestatus/${fileKey}`)
         if (!res.ok) throw new Error('Report not found')
         const data = await res.json()
 
@@ -82,7 +82,7 @@ async function fetchContent(token = '') {
             }
         }
 
-        const res = await fetch(`/iframe/${fileKey}`, options)
+        const res = await fetch(`https://portfoliogo3apiforai.satyendra.in/iframe/${fileKey}`, options)
 
         if (res.status === 403) {
             const errData = await res.json()
