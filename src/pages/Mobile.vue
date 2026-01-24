@@ -5,10 +5,17 @@ import { ref, onMounted } from 'vue'
 useHead({
     title: 'Mobile Architecture & Android Systems | Satyendra',
     meta: [
-        { name: 'description', content: 'Advanced Android Systems Engineering, Flutter Architecture, and Security Research. Building performant, secure, and resilient mobile experiences.' },
-        { name: 'keywords', content: 'Android, Kotlin, Flutter, NDK, Security, Reverse Engineering, BLE, Systems Programming' },
+        { name: 'description', content: 'Advanced Android Systems Engineering, Flutter Architecture, and Security Research by Satyendra. Building performant, secure, and resilient mobile experiences.' },
+        { name: 'keywords', content: 'Android, Kotlin, Flutter, NDK, Security, Reverse Engineering, BLE, Systems Programming, Bongi Satyendra' },
         { property: 'og:title', content: 'Mobile Systems Engineering | Satyendra' },
         { property: 'og:description', content: 'Architecting the bridge between silicon and soul. Android internals, Flutter performance, and security research.' },
+        { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/android-flutter.png' },
+        { property: 'og:url', content: 'https://satyendra.in/mobile' },
+        { property: 'og:type', content: 'website' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://satyendra.in/mobile' }
     ]
 })
 
@@ -99,7 +106,8 @@ const setSectionRef = (el) => {
             </div>
 
             <!-- SKILLS MATRIX -->
-            <div :ref="setSectionRef" class="scroll-section grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 w-full text-left">
+            <div :ref="setSectionRef"
+                class="scroll-section grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 w-full text-left">
                 <!-- Android Native -->
                 <div
                     class="skill-card group p-8 rounded-2xl bg-gradient-to-br from-white/[0.08] to-transparent border border-white/10 hover:border-emerald-500/40 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden backdrop-blur-sm">
