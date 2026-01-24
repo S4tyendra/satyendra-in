@@ -12,6 +12,7 @@ import Services from './pages/Services.vue'
 import DevSecOps from './pages/DevSecOps.vue'
 import ReportDetail from './pages/ReportDetail.vue'
 import Mobile from './pages/Mobile.vue'
+import Contact from './pages/Contact.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 
@@ -26,7 +27,8 @@ const routes = [
     { path: '/services', component: Services },
     { path: '/devsecops', component: DevSecOps },
     { path: '/devsecops/reports/:id', component: ReportDetail, props: true },
-    { path: '/mobile', component: Mobile }
+    { path: '/mobile', component: Mobile },
+    { path: '/contact', component: Contact }
 ]
 
 // Export for SSG
