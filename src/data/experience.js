@@ -1,107 +1,63 @@
 export const introData = {
-    title: "The Zero-Day Architect",
-    subtitle: "Full-Stack Backend Security Engineer & Researcher",
-    description: "I don't just build applications; I harden them. From reverse-engineering APIs to securing LLMs against prompt injection, I bridge the gap between theoretical computer science and production warfare. I specialize in high-availability infrastructure, AI security, and secure-by-design architecture.",
-    availability: "Available for Remote/On-site Opportunities."
+    title: "Principal Systems Engineer",
+    subtitle: "Full-Stack Security Architect & Infrastructure Lead",
+    description: "Specialized in Secure-by-Design architecture and high-availability infrastructure. I bridge the gap between theoretical computer science and production warfare, focusing on shipping code that is rigorous, resilient, and ready for the real world.",
+    availability: "Open to Senior Engineering & Consulting Roles."
 };
 
 export const aboutData = {
-    title: "About Me",
-    philosophy: "Readable. Performant. Secure.",
+    title: "Engineering Philosophy",
+    philosophy: "Resilient. Scalable. Secure.",
     content: [
-        "I hate corporate buzzwords like \"passionate about technology.\"",
-        "Here is the reality:",
-        "I break things to understand them, and I build things to stop others from breaking them.",
-        "Whether it's optimizing database indexes to shave off milliseconds or hunting vulnerabilities for law enforcement, I focus on shipping code that works in the real world, not just on localhost."
+        "Infrastructure is not just about uptime; it's about trust.",
+        "I approach engineering with a security-first mindset: assuming breach, minimizing surface area, and enforcing strict type safety.",
+        "Whether architecting distributed systems or auditing government-grade software, my focus remains constant: delivering robust solutions that solve complex problems without creating new technical debt."
     ]
 };
 
 export const experienceData = [
     {
-        year: "2025",
-        title: "AI Security & Advanced Research",
-        subtitle: "Current Focus: Adversarial Machine Learning",
-        description: "Moving beyond standard cybersecurity into the chaos of AI. LLMs are leaking sieves; I'm building the patch.",
+        year: "2024–Present",
+        title: "Infrastructure Lead (IIIT Kota)",
+        subtitle: "High-Availability Campus Systems",
+        description: "Orchestrated the institute's transition to bare-metal infrastructure, achieving 99.9% uptime while managing recruitment and technical training.",
         keyPoints: [
-            { label: "Prompt Defense", text: "Architected a security framework that neutralizes prompt injection and context overflow attacks, preventing output manipulation and reducing token costs." },
-            { label: "Research", text: "Leading initiatives in OSINT methodologies and AI bias detection." },
-            { label: "Mentorship", text: "Conducted security workshops for 200+ students, teaching offensive and defensive coding practices." }
-        ]
-    },
-    {
-        year: "2024",
-        title: "DevSecOps & Infrastructure Scale",
-        subtitle: "The \"99.9% Uptime\" Era",
-        description: "Transitioned from writing code to owning the metal it runs on. Mastered the art of keeping servers alive when traffic spikes.",
-        keyPoints: [
-            { label: "Reliability", text: "Achieved 99.9% uptime across high-traffic production applications." },
-            { label: "Speed", text: "Slashed deployment times by 70% via CI/CD pipeline optimization." },
-            { label: "Optimization", text: "Managed cloud costs through strategic edge deployments and DNS security." }
-        ]
-    },
-    {
-        year: "2023",
-        title: "Full-Stack Production Engineering",
-        subtitle: "Scaling Logic",
-        description: "Built backend systems that don't crumble under load. Decomposed monoliths and fixed the latency issues that kill products.",
-        keyPoints: [
-            { label: "Backend", text: "Engineered scalable microservices and optimized SQL queries for raw speed." },
-            { label: "UX/UI", text: "Delivered responsive, intuitive interfaces that handle complex data without lag." },
-            { label: "Architecture", text: "Solved critical microservice latency bottlenecks." }
+            { label: "Reliability", text: "Achieved 99.9% uptime across high-traffic production applications via aggressive caching and load balancing." },
+            { label: "Leadership", text: "Managed recruitment and training for the technical team, mentoring 20+ student developers." },
+            { label: "Optimization", text: "Managed cloud costs through strategic edge deployments and local hosting, slashing deployment overhead by 70%." }
         ]
     },
     {
         year: "2022–2023",
-        title: "Security-First Development",
-        subtitle: "Offensive Security for Defensive Engineering",
-        description: "Went deep into the attacker mindset. If you can't hack it, you can't secure it.",
+        title: "Security Consultant (Contract)",
+        subtitle: "Govt. Intelligence & Critical Infrastructure",
+        description: "Collaborated with Mumbai Police (C-TRACE) to architect automated OSINT tools for digital investigations and threat analysis.",
         keyPoints: [
-            { label: "Law Enforcement", text: "Built automated OSINT tools for C-TRACE (Mumbai Police) to aid in digital tracking and investigations." },
-            { label: "Vulnerability Mgmt", text: "Identified, reported, and patched 50+ security vulnerabilities." },
-            { label: "Training", text: "Trained teams on OWASP Top 10 and OSINT methodologies." }
+            { label: "Law Enforcement", text: "Built automated OSINT pipelines to aid in digital tracking and investigations for C-TRACE." },
+            { label: "Vulnerability Mgmt", text: "Conducted assessments identifying and patching 50+ security flaws in production government systems." },
+            { label: "Training", text: "Trained teams on OWASP Top 10, secure coding, and OSINT methodologies." }
         ]
     },
     {
-        year: "2022",
-        title: "Network & Signals Intelligence",
-        subtitle: "The Physical Layer",
-        description: "Understood that \"the cloud\" is just computers connected by physics.",
+        year: "2020–Present",
+        title: "Full Stack & Infrastructure Engineer",
+        subtitle: "Freelance & Consulting (International)",
+        description: "Designed and maintained high-availability backend systems and native mobile reference architectures for international clients.",
         keyPoints: [
-            { label: "Cell.Devh.in", text: "Built a security-optimized public cell tower database for Indian infrastructure." },
-            { label: "Deep Tech", text: "Reverse-engineered the relationship between GPS coordinates, atomic clock synchronization, and network latency." }
-        ]
-    },
-    {
-        year: "2021",
-        title: "Mobile Engineering (Flutter)",
-        subtitle: "Native Performance",
-        description: "",
-        keyPoints: [
-            { label: "BroBuddy", text: "Developed a location-tracking application for cyclist groups with real-time updates." },
-            { label: "Systems", text: "Built a custom music player featuring local SQLite databases and aggressive caching strategies." },
-            { label: "Internals", text: "Mastered Android platform channels and Dart." }
-        ]
-    },
-    {
-        year: "2020",
-        title: "Automation & Reverse Engineering",
-        subtitle: "The \"Script Kiddie\" to Engineer Pipeline",
-        description: "",
-        keyPoints: [
-            { label: "Botnets", text: "Deployed asynchronous Telegram bots handling thousands of requests using Python (Async/Await)." },
-            { label: "Reversing", text: "Reverse-engineered private APIs to build custom scrapers and modules." },
-            { label: "Freelancing", text: "Managed servers and automation scripts for international clients." }
+            { label: "Architecture", text: "Engineered scalable microservices in Go and Python, optimizing SQL queries and indexes for raw speed." },
+            { label: "Mobile Engineering", text: "Developed native Flutter applications implementing offline-first architecture with SQLite synchronization." },
+            { label: "Automation", text: "Deployed asynchronous botnets and scrapers handling thousands of concurrent requests." }
         ]
     },
     {
         year: "2018–2019",
-        title: "The Linux Origin (Root)",
-        subtitle: "Where it started",
-        description: "Migrated to Fedora, bricked a few phones, and learned how operating systems actually work.",
+        title: "Linux Systems Administration",
+        subtitle: "The Foundation",
+        description: "Deep dive into operating system internals, kernel modification, and systems programming.",
         keyPoints: [
-            { label: "Linux", text: "Mastered partitioning, drivers, and file system permissions (ext4 vs NTFS)." },
-            { label: "Android", text: "Custom ROMs, rooting, SELinux enforcement, and virtualization (VMOS)." },
-            { label: "Hardware", text: "Self-repair and unbricking devices via ADB/Fastboot." }
+            { label: "Linux Internals", text: "Mastered partitioning, file system permissions, and driver management (Fedora/Debian)." },
+            { label: "Android Security", text: "Custom ROM development, SELinux enforcement, and virtualization." },
+            { label: "Hardware", text: "Low-level diagnostics and device recovery (ADB/Fastboot)." }
         ]
     }
 ];

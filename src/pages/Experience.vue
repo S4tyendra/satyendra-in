@@ -188,10 +188,10 @@ onUnmounted(() => {
 
             <div class="flex flex-col gap-8 relative pl-2 md:pl-0">
                 <!-- Vertical Line (Subtler) -->
-                <div class="absolute left-[20px] md:left-[100px] top-6 bottom-6 w-px bg-white/5 hidden md:block"></div>
+                <div class="absolute left-[20px] md:left-[140px] top-6 bottom-6 w-px bg-white/5 hidden md:block"></div>
 
                 <!-- Glowing Scroll Dot -->
-                <div class="absolute left-[16px] md:left-[96px] w-[9px] h-[9px] rounded-full bg-accent-primary shadow-[0_0_10px_rgba(var(--color-accent-primary),0.8)] z-20 pointer-events-none transition-transform duration-75 hidden md:block"
+                <div class="absolute left-[16px] md:left-[136px] w-[9px] h-[9px] rounded-full bg-accent-primary shadow-[0_0_10px_rgba(var(--color-accent-primary),0.8)] z-20 pointer-events-none transition-transform duration-75 hidden md:block"
                     :style="{ transform: `translateY(${scrollProgress * (timelineHeight - 48)}px)` }">
                     <div class="absolute inset-0 animate-ping rounded-full bg-accent-primary opacity-50"></div>
                 </div>
@@ -202,7 +202,7 @@ onUnmounted(() => {
 
                     <!-- Date Node (Desktop) -->
                     <!-- Fixed width container to prevent cutting off -->
-                    <div class="hidden md:flex flex-col items-end w-[80px] shrink-0 pt-1 relative z-10 mr-8">
+                    <div class="hidden md:flex flex-col items-end w-[120px] shrink-0 pt-1 relative z-10 mr-8">
                         <span
                             class="font-mono text-text-muted/60 text-sm group-hover:text-text-main transition-colors duration-300 w-full text-right">{{
                                 item.year }}</span>
