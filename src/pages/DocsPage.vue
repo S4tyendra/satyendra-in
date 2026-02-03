@@ -438,8 +438,8 @@ onUnmounted(() => {
                     </div>
                 </div>
 
-                <article class="doc-content">
-                    <component v-if="docModule?.default" :is="docModule.default" />
+                <article class="doc-content" :key="route.path">
+                    <component v-if="docModule?.default" :is="docModule.default" :key="route.path" />
 
                     <!-- Dynamic index content injection -->
                     <div v-if="isIndexPage && directoryContents && (directoryContents.folders.length > 0 || directoryContents.files.length > 0)"

@@ -178,15 +178,15 @@ export default defineConfig({
         manualChunks(id) {
           // Only split for client build (node_modules)
           if (id.includes('node_modules')) {
-            // Vue ecosystem
-            if (id.includes('vue') || id.includes('@vueuse')) {
+            // Vue ecosystem + UI libs that depend on Vue internals (must stay together)
+            if (id.includes('vue') || id.includes('@vueuse') || id.includes('reka-ui') || id.includes('vaul-vue')) {
               return 'vue-vendor'
             }
-            // UI libraries
-            if (id.includes('reka-ui') || id.includes('vaul-vue') || id.includes('lucide')) {
-              return 'ui'
+            // Icons can be split safely
+            if (id.includes('lucide')) {
+              return 'icons'
             }
-            // Markdown processing (skip shiki - too heavy to chunk safely)
+            // Markdown processing
             if (id.includes('markdown-it') || id.includes('gray-matter')) {
               return 'markdown'
             }
