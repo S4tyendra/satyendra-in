@@ -1,14 +1,8 @@
 <template>
   <div class="footer-wrapper">
-    <div v-if="isScrolled" class="h-[120px] w-full"></div>
-
-    <footer :class="[
-      'transition-all duration-300 ease-in-out',
-      isScrolled
-        ? 'fixed bottom-0 left-0 w-full z-50 bg-bg-main/95 backdrop-blur-md border-t border-text-main/10 px-4 h-8 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]'
-        : 'fade-in-up pt-8 border-t border-text-main/10 flex flex-col gap-4'
-    ]" :style="!isScrolled ? { animationDelay: '300ms' } : {}">
-      <div v-if="!isScrolled" class="w-full flex flex-col gap-4">
+    <footer class="fade-in-up pt-8 border-t border-text-main/10 flex flex-col gap-4"
+      :style="{ animationDelay: '300ms' }">
+      <div class="w-full flex flex-col gap-4">
         <div class="flex justify-between items-center font-mono text-[9px] uppercase tracking-wider text-text-main/40">
           <div class="flex items-center gap-2">
             <span class="relative flex h-2 w-2">
@@ -56,26 +50,6 @@
           </div>
         </div>
       </div>
-
-      <div v-else class="w-full flex justify-between items-center font-mono text-[10px] text-text-main/60">
-        <div class="flex items-center gap-3">
-          <div class="flex items-center gap-2">
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
-            </span>
-            <span>Online</span>
-          </div>
-          <span class="text-text-main/20">|</span>
-          <span>{{ currentTime }}</span>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <a href="mailto:hello@satyendra.in" class="hover:text-green-400 transition-colors">Contact</a>
-          <span class="text-text-main/20">|</span>
-          <span>© {{ new Date().getFullYear() }}</span>
-        </div>
-      </div>
     </footer>
   </div>
 </template>
@@ -85,10 +59,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import ArrowRightIcon from './icons/ArrowRightIcon.vue'
 import GithubIcon from './icons/GithubIcon.vue'
 import LinkedinIcon from './icons/LinkedinIcon.vue'
-
-defineProps({
-  isScrolled: Boolean
-})
 
 const currentTime = ref(new Date().toISOString().split('T')[1].split('.')[0] + ' UTC')
 const lastCommitText = ref('today')

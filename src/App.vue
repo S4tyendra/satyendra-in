@@ -55,11 +55,14 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="min-h-screen w-full flex flex-col justify-center py-12 px-4 relative bg-bg-main text-text-main overflow-x-hidden selection:bg-text-muted/40 selection:text-text-main">
-    <main class="w-full mx-auto relative z-10 flex flex-col gap-6 transition-all duration-500 ease-in-out @container"
+    class="min-h-screen w-full flex flex-col justify-center py-12 relative bg-bg-main text-text-main overflow-x-hidden selection:bg-text-muted/40 selection:text-text-main">
+
+    <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" />
+
+    <main
+      class="w-full mx-auto relative z-10 flex flex-col gap-6 transition-all duration-500 ease-in-out @container px-4"
       :class="isScrolled ? 'max-w-5xl' : 'max-w-[460px]'">
       <BackgroundAtmosphere />
-      <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" />
       <TerminalBreadcrumb ref="terminalRef" />
 
       <router-view v-slot="{ Component }">
@@ -68,7 +71,7 @@ onUnmounted(() => {
         </transition>
       </router-view>
 
-      <Footer :is-scrolled="isScrolled" />
+      <Footer />
     </main>
   </div>
 </template>

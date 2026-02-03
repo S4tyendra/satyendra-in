@@ -1,25 +1,29 @@
 <template>
-  <div class="header-wrapper">
-    <div v-if="isScrolled" class="h-[100px] w-full"></div>
-    
-    <header 
-      :class="[
-        'transition-all duration-300 ease-in-out',
-        isScrolled 
-          ? 'fixed top-0 left-0 w-full z-50 bg-[#082026]/95 backdrop-blur-md border-b border-text-main/10 px-4 h-12 flex justify-between items-center shadow-lg' 
-          : 'flex items-center gap-6 fade-in-up relative'
-      ]"
-    >
+  <div class="sticky top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]" :class="[
+    isScrolled
+      ? 'w-full py-2 bg-bg-main/90 backdrop-blur-md border-b border-text-main/10 shadow-[0_4px_20px_-12px_rgba(0,0,0,0.5)]'
+      : 'w-full max-w-[460px] mx-auto py-0 bg-transparent'
+  ]">
+    <header class="flex items-center justify-between transition-all duration-500 mx-auto"
+      :class="isScrolled ? 'max-w-5xl px-4' : 'w-full px-0'">
       <router-link to="/" class="flex items-center gap-4 cursor-pointer group">
-        <Avatar :class="{ '!w-10 !h-10': isScrolled }" class="transition-all duration-300" />
-        <div class="flex flex-col transition-all" :class="isScrolled ? 'gap-0' : 'gap-2'">
+        <Avatar :class="[
+          'transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]',
+          isScrolled ? '!w-10 !h-10' : ''
+        ]" />
+        <div class="flex flex-col transition-all duration-500" :class="isScrolled ? 'gap-0' : 'gap-2'">
           <div class="h-8 flex items-center group/name">
-            <h1 class="text-text-main font-bold tracking-tight flex items-center transition-all" :class="isScrolled ? 'text-base' : 'text-3xl'">
+            <h1
+              class="text-text-main font-bold tracking-tight flex items-center transition-all duration-500 origin-left"
+              :class="isScrolled ? 'text-base scale-100' : 'text-3xl'">
               <span class="name-expandable">Bongi</span>
               <span class="ml-1.5">Satyendra.</span>
             </h1>
           </div>
-          <div v-if="!isScrolled" class="pill-container inline-flex items-center gap-1.5 text-[11px] font-mono text-text-main/60 uppercase tracking-wider px-1 py-1.5 w-max group/pill">
+
+          <div
+            class="pill-container inline-flex items-center gap-1.5 text-[11px] font-mono text-text-main/60 uppercase tracking-wider overflow-hidden transition-all duration-500 group/pill"
+            :class="isScrolled ? 'max-h-0 opacity-0' : 'max-h-10 opacity-100 px-1 py-1.5'">
             <div class="flex items-center">
               <span class="font-semibold text-text-main/80">Eng</span>
               <span class="pill-expandable">ineer</span>
@@ -37,15 +41,18 @@
         </div>
       </router-link>
 
-      <button 
-        v-if="isScrolled"
-        @click="$emit('focus-terminal')"
-        class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-text-main/10 text-text-main/80 transition-colors border border-text-main/10 bg-[#082026]/50 text-xs font-mono"
-        title="Open Terminal"
-      >
-        <CodeIcon class="w-3.5 h-3.5" />
-        <span class="hidden sm:inline">Terminal</span>
-      </button>
+      <div class="flex items-center gap-4">
+        <!-- Add other nav items here if needed -->
+
+        <transition name="fade">
+          <button v-if="isScrolled" @click="$emit('focus-terminal')"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-text-main/10 text-text-main/80 transition-all duration-300 border border-text-main/10 bg-[#082026]/50 text-xs font-mono active:scale-95"
+            title="Open Terminal">
+            <CodeIcon class="w-3.5 h-3.5" />
+            <span class="hidden sm:inline">Terminal</span>
+          </button>
+        </transition>
+      </div>
     </header>
   </div>
 </template>
@@ -60,3 +67,16 @@ defineProps({
 
 defineEmits(['focus-terminal'])
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+</style>
