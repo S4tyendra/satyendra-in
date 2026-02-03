@@ -8,9 +8,29 @@ const route = useRoute()
 
 // Get isScrolled from parent App.vue via provide/inject or detect ourselves
 const isScrolled = ref(false)
+// Delayed state for sidebars - shows after content transition completes
+const showSidebars = ref(false)
+let sidebarTimeout = null
 
 const handleScroll = () => {
-    isScrolled.value = window.scrollY > 50
+    const scrolled = window.scrollY > 50
+
+    if (scrolled !== isScrolled.value) {
+        isScrolled.value = scrolled
+
+        // Clear any pending timeout
+        if (sidebarTimeout) clearTimeout(sidebarTimeout)
+
+        if (scrolled) {
+            // Delay showing sidebars until content transition completes (500ms)
+            sidebarTimeout = setTimeout(() => {
+                showSidebars.value = true
+            }, 500)
+        } else {
+            // Hide sidebars immediately when scrolling back up
+            showSidebars.value = false
+        }
+    }
 }
 
 onMounted(() => {
@@ -20,6 +40,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll)
+    if (sidebarTimeout) clearTimeout(sidebarTimeout)
 })
 
 // Extract section and slug from route params
@@ -192,9 +213,59 @@ const setSectionRef = (el) => {
 
         <!-- Doc Page Layout (when section is selected) -->
         <div v-else class="relative z-10 w-full py-8">
-            <!-- Mobile sidebar toggle -->
+            <!-- DESKTOP: Fixed Nav Sidebar - Left edge of screen -->
+            <aside class="hidden lg:block fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 w-44 z-30">
+                <nav class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <router-link to="/docs"
+                        class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-4 group">
+                        <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        <span>All Docs</span>
+                    </router-link>
+
+                    <div class="mb-4 pb-4 border-b border-white/10">
+                        <div class="text-xl mb-1">{{ currentConfig?.icon }}</div>
+                        <h2 class="text-sm font-bold text-text-main">{{ currentConfig?.title }}</h2>
+                    </div>
+
+                    <ul class="space-y-1 max-h-[40vh] overflow-y-auto">
+                        <li v-for="item in navItems" :key="item.path">
+                            <router-link :to="item.path" :class="[
+                                'block px-2 py-1.5 rounded-lg text-xs transition-all duration-200',
+                                route.path === item.path
+                                    ? 'bg-cyan-500/20 text-cyan-400 font-medium'
+                                    : 'text-text-muted hover:text-text-main hover:bg-white/5'
+                            ]">
+                                {{ item.title }}
+                            </router-link>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- DESKTOP: Fixed TOC - Right edge of screen -->
+            <aside v-if="toc.length > 0"
+                class="hidden lg:block fixed right-4 xl:right-8 top-1/2 -translate-y-1/2 w-44 z-30">
+                <div class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <h3 class="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">On this page</h3>
+                    <ul class="space-y-1 max-h-[50vh] overflow-y-auto">
+                        <li v-for="item in toc" :key="item.id">
+                            <button @click="scrollToAnchor(item.id)" :class="[
+                                'block text-left text-xs py-1 transition-colors hover:text-cyan-400 w-full',
+                                item.level === 3 ? 'pl-3 text-text-muted/70' : 'text-text-muted'
+                            ]">
+                                {{ item.text }}
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- MOBILE: Floating sidebar toggle -->
             <button @click="sidebarOpen = !sidebarOpen"
-                class="md:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-colors"
+                class="lg:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-colors"
                 aria-label="Toggle navigation">
                 <svg v-if="!sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
@@ -205,8 +276,8 @@ const setSectionRef = (el) => {
                 </svg>
             </button>
 
-            <!-- Mobile sidebar overlay -->
-            <aside v-if="sidebarOpen" class="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            <!-- MOBILE: Sidebar overlay -->
+            <aside v-if="sidebarOpen" class="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
                 @click="sidebarOpen = false">
                 <nav class="w-72 h-full bg-bg-main border-r border-white/5 p-6 overflow-y-auto" @click.stop>
                     <router-link to="/docs"
@@ -238,7 +309,7 @@ const setSectionRef = (el) => {
                 </nav>
             </aside>
 
-            <!-- Mobile floating TOC button (left side, when scrolled) -->
+            <!-- MOBILE: Floating TOC button (when scrolled) -->
             <button v-if="toc.length > 0 && isScrolled && !mobileTocOpen" @click="mobileTocOpen = true"
                 class="lg:hidden fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all"
                 aria-label="Table of Contents">
@@ -247,7 +318,7 @@ const setSectionRef = (el) => {
                 </svg>
             </button>
 
-            <!-- Mobile TOC bottom sheet -->
+            <!-- MOBILE: TOC bottom sheet -->
             <div v-if="mobileTocOpen" class="lg:hidden fixed inset-0 z-50" @click="mobileTocOpen = false">
                 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                 <div class="absolute bottom-0 left-0 right-0 bg-bg-main border-t border-white/10 rounded-t-2xl p-6 max-h-[60vh] overflow-y-auto animate-slide-up"
@@ -275,96 +346,43 @@ const setSectionRef = (el) => {
                 </div>
             </div>
 
-            <!-- Wide layout: TOC (left) | Content (center) | Nav (right) -->
-            <div class="flex justify-center gap-8 px-4 sm:px-6">
-                <!-- TOC - Left side (only when scrolled on large screens) -->
-                <aside v-if="toc.length > 0 && isScrolled" class="hidden lg:block w-48 shrink-0 order-3">
-                    <div class="sticky top-8">
-                        <h3 class="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">On this pages</h3>
-                        <ul class="space-y-2">
-                            <li v-for="item in toc" :key="item.id">
-                                <button @click="scrollToAnchor(item.id)" :class="[
-                                    'block text-left text-sm transition-colors hover:text-cyan-400 w-full',
-                                    item.level === 3 ? 'pl-3 text-text-muted/70' : 'text-text-muted'
-                                ]">
-                                    {{ item.text }}
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
-
-                <!-- Main content - Center -->
-                <main class="flex-1 min-w-0 max-w-3xl order-2">
-                    <!-- TOC Accordion (visible when NOT scrolled, or on smaller screens) -->
-                    <div v-if="toc.length > 0 && !isScrolled" class="mb-8 md:block">
-                        <button @click="tocOpen = !tocOpen"
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all group">
-                            <span class="text-sm font-medium text-text-muted group-hover:text-text-main">
-                                On this page
-                            </span>
-                            <svg :class="['w-4 h-4 text-text-muted transition-transform', tocOpen ? 'rotate-180' : '']"
-                                fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M19 9l-7 7-7-7" />
-                            </svg>
+            <!-- Main content - Center -->
+            <main class="w-full px-4 sm:px-6">
+                <!-- TOC Accordion for mobile/tablet (when not scrolled) -->
+                <div v-if="toc.length > 0 && !isScrolled" class="mb-8 lg:hidden">
+                    <button @click="tocOpen = !tocOpen"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all group">
+                        <span class="text-sm font-medium text-text-muted group-hover:text-text-main">
+                            On this page
+                        </span>
+                        <svg :class="['w-4 h-4 text-text-muted transition-transform', tocOpen ? 'rotate-180' : '']"
+                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div v-if="tocOpen" class="mt-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                        <button v-for="item in toc" :key="item.id" @click="scrollToAnchor(item.id)" :class="[
+                            'block text-left text-sm transition-colors hover:text-cyan-400 w-full',
+                            item.level === 3 ? 'pl-3 text-text-muted/70' : 'text-text-muted'
+                        ]">
+                            {{ item.text }}
                         </button>
-                        <div v-if="tocOpen"
-                            class="mt-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                            <button v-for="item in toc" :key="item.id" @click="scrollToAnchor(item.id)" :class="[
-                                'block text-left text-sm transition-colors hover:text-cyan-400 w-full',
-                                item.level === 3 ? 'pl-3 text-text-muted/70' : 'text-text-muted'
-                            ]">
-                                {{ item.text }}
-                            </button>
-                        </div>
                     </div>
+                </div>
 
-                    <article class="doc-content">
-                        <component v-if="docModule?.default" :is="docModule.default" />
-                        <div v-else class="text-center py-20">
-                            <div class="text-6xl mb-4">📄</div>
-                            <h2 class="text-2xl font-bold text-text-main mb-2">Page Not Found</h2>
-                            <p class="text-text-muted">The requested documentation page doesn't exist.</p>
-                            <router-link :to="`/docs/${section}`"
-                                class="inline-block mt-6 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors">
-                                Back to {{ currentConfig?.title || 'Docs' }}
-                            </router-link>
-                        </div>
-                    </article>
-                </main>
-
-                <!-- Sidebar/Nav - Right side (only when scrolled on large screens) -->
-                <aside v-if="isScrolled" class="hidden lg:block w-48 shrink-0 order-1">
-                    <div class="sticky top-8">
-                        <router-link to="/docs"
-                            class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-6 group">
-                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
-                                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M19 12H5M12 19l-7-7 7-7" />
-                            </svg>
-                            <span>All Docss</span>
+                <article class="doc-content">
+                    <component v-if="docModule?.default" :is="docModule.default" />
+                    <div v-else class="text-center py-20">
+                        <div class="text-6xl mb-4">📄</div>
+                        <h2 class="text-2xl font-bold text-text-main mb-2">Page Not Found</h2>
+                        <p class="text-text-muted">The requested documentation page doesn't exist.</p>
+                        <router-link :to="`/docs/${section}`"
+                            class="inline-block mt-6 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors">
+                            Back to {{ currentConfig?.title || 'Docs' }}
                         </router-link>
-
-                        <div class="mb-4">
-                            <div class="text-xl mb-1">{{ currentConfig?.icon }}</div>
-                            <h2 class="text-sm font-bold text-text-main">{{ currentConfig?.title }}</h2>
-                        </div>
-
-                        <ul class="space-y-1">
-                            <li v-for="item in navItems" :key="item.path">
-                                <router-link :to="item.path" :class="[
-                                    'block px-2 py-1.5 rounded-lg text-xs transition-all duration-200',
-                                    route.path === item.path
-                                        ? 'bg-cyan-500/20 text-cyan-400 font-medium'
-                                        : 'text-text-muted hover:text-text-main hover:bg-white/5'
-                                ]">
-                                    {{ item.title }}
-                                </router-link>
-                            </li>
-                        </ul>
                     </div>
-                </aside>
-            </div>
+                </article>
+            </main>
         </div>
     </div>
 </template>
@@ -567,5 +585,22 @@ const setSectionRef = (el) => {
 
 .animate-slide-up {
     animation: slide-up 0.3s cubic-bezier(0.2, 0.0, 0.2, 1) forwards;
+}
+
+/* Fade-in animation for delayed sidebars */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.4s cubic-bezier(0.2, 0.0, 0.2, 1) forwards;
 }
 </style>
