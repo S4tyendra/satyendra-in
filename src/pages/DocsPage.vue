@@ -1,8 +1,9 @@
 <script setup>
 import { useHead } from '@vueuse/head'
 import { computed, ref, onMounted, onUnmounted, watch, inject } from 'vue'
-import { useRoute } from 'vue-router'
-import { docsConfig, buildNavTree, getDocComponent, getDocContent, getAllSections } from '../utils/docs.js'
+import { useRoute, useRouter } from 'vue-router'
+import { docsConfig, buildNavTree, getDocComponent, getDocContent, getAllSections, getDirectoryContents } from '../utils/docs.js'
+import NavTree from '../components/NavTree.vue'
 import {
     Drawer,
     DrawerClose,
@@ -15,6 +16,7 @@ import {
 } from '@/components/ui/drawer'
 
 const route = useRoute()
+const router = useRouter()
 
 // Get isScrolled from parent App.vue via provide/inject or detect ourselves
 const isScrolled = ref(false)
@@ -68,6 +70,17 @@ const currentConfig = computed(() => docsConfig[section.value] || null)
 const navItems = computed(() => {
     if (!section.value) return []
     return buildNavTree(section.value)
+})
+
+// Get directory contents for dynamic index
+const directoryContents = computed(() => {
+    if (!section.value) return null
+    return getDirectoryContents(section.value, slug.value === 'index' ? '' : slug.value)
+})
+
+// Check if current page is an index page
+const isIndexPage = computed(() => {
+    return slug.value === 'index' || slug.value.endsWith('/index')
 })
 
 // Get document component
@@ -169,6 +182,46 @@ onMounted(() => {
 const setSectionRef = (el) => {
     if (el) sections.value.push(el)
 }
+
+// Handle internal anchor link clicks to prevent full page reload
+const handleDocContentClick = (event) => {
+    const target = event.target.closest('a')
+    if (!target) return
+
+    const href = target.getAttribute('href')
+    if (!href) return
+
+    // Check if it's an internal anchor link (starts with #)
+    if (href.startsWith('#')) {
+        event.preventDefault()
+        const id = href.slice(1)
+        scrollToAnchor(id)
+        // Update URL without reload
+        window.history.pushState({}, '', href)
+        return
+    }
+
+    // Check if it's an internal docs link
+    if (href.startsWith('/docs/')) {
+        event.preventDefault()
+        router.push(href)
+    }
+}
+
+onMounted(() => {
+    // Add click listener to doc content
+    const docContent = document.querySelector('.doc-content')
+    if (docContent) {
+        docContent.addEventListener('click', handleDocContentClick)
+    }
+})
+
+onUnmounted(() => {
+    const docContent = document.querySelector('.doc-content')
+    if (docContent) {
+        docContent.removeEventListener('click', handleDocContentClick)
+    }
+})
 </script>
 
 <template>
@@ -224,7 +277,7 @@ const setSectionRef = (el) => {
         <!-- Doc Page Layout (when section is selected) -->
         <div v-else class="relative z-10 w-full py-8">
             <!-- DESKTOP: Fixed Nav Sidebar - Left edge of screen -->
-            <aside class="hidden lg:block fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 w-44 z-30">
+            <aside class="hidden lg:block fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 max-w-4xl z-30">
                 <nav class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
                     <router-link to="/docs"
                         class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-4 group">
@@ -240,18 +293,7 @@ const setSectionRef = (el) => {
                         <h2 class="text-sm font-bold text-text-main">{{ currentConfig?.title }}</h2>
                     </div>
 
-                    <ul class="space-y-1 max-h-[40vh] overflow-y-auto">
-                        <li v-for="item in navItems" :key="item.path">
-                            <router-link :to="item.path" :class="[
-                                'block px-2 py-1.5 rounded-lg text-xs transition-all duration-200',
-                                route.path === item.path
-                                    ? 'bg-cyan-500/20 text-cyan-400 font-medium'
-                                    : 'text-text-muted hover:text-text-main hover:bg-white/5'
-                            ]">
-                                {{ item.title }}
-                            </router-link>
-                        </li>
-                    </ul>
+                    <NavTree :items="navItems" :current-path="route.path" />
                 </nav>
             </aside>
 
@@ -316,18 +358,8 @@ const setSectionRef = (el) => {
                             <span>All Docs</span>
                         </router-link>
 
-                        <ul class="space-y-1">
-                            <li v-for="item in navItems" :key="item.path">
-                                <router-link :to="item.path" :class="[
-                                    'block px-3 py-2.5 rounded-lg text-sm transition-all duration-200',
-                                    route.path === item.path
-                                        ? 'bg-cyan-500/20 text-cyan-400 font-medium border-l-2 border-cyan-400'
-                                        : 'text-text-muted hover:text-text-main hover:bg-white/5'
-                                ]" @click="sidebarOpen = false">
-                                    {{ item.title }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <NavTree :items="navItems" :current-path="route.path" :is-mobile="true"
+                            @navigate="sidebarOpen = false" />
                     </div>
                 </DrawerContent>
             </Drawer>
@@ -402,7 +434,79 @@ const setSectionRef = (el) => {
 
                 <article class="doc-content">
                     <component v-if="docModule?.default" :is="docModule.default" />
-                    <div v-else class="text-center py-20">
+
+                    <!-- Dynamic index content injection -->
+                    <div v-if="isIndexPage && directoryContents && (directoryContents.folders.length > 0 || directoryContents.files.length > 0)"
+                        class="mt-12 space-y-8">
+                        <div v-if="directoryContents.folders.length > 0">
+                            <h2 class="text-2xl font-bold text-text-main mb-6 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                </svg>
+                                Sections
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <router-link v-for="folder in directoryContents.folders" :key="folder.path"
+                                    :to="folder.path"
+                                    class="group block p-5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" fill="none"
+                                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                        </svg>
+                                        <div class="flex-1 min-w-0">
+                                            <h3
+                                                class="font-semibold text-text-main group-hover:text-cyan-400 transition-colors truncate">
+                                                {{ folder.title }}</h3>
+                                        </div>
+                                        <svg class="w-4 h-4 text-text-muted group-hover:text-cyan-400 group-hover:translate-x-1 transition-all flex-shrink-0"
+                                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </router-link>
+                            </div>
+                        </div>
+
+                        <div v-if="directoryContents.files.length > 0">
+                            <h2 class="text-2xl font-bold text-text-main mb-6 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Pages
+                            </h2>
+                            <div class="space-y-3">
+                                <router-link v-for="file in directoryContents.files" :key="file.path" :to="file.path"
+                                    class="group block p-4 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 hover:bg-white/10 transition-all duration-300">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-cyan-400/70 mt-0.5 flex-shrink-0" fill="none"
+                                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path
+                                                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                        <div class="flex-1 min-w-0">
+                                            <h3
+                                                class="font-semibold text-text-main group-hover:text-cyan-400 transition-colors mb-1">
+                                                {{ file.title }}</h3>
+                                            <p v-if="file.description" class="text-sm text-text-muted line-clamp-2">{{
+                                                file.description }}</p>
+                                        </div>
+                                        <svg class="w-4 h-4 text-text-muted group-hover:text-cyan-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
+                                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else-if="!docModule?.default" class="text-center py-20">
                         <div class="text-6xl mb-4">📄</div>
                         <h2 class="text-2xl font-bold text-text-main mb-2">Page Not Found</h2>
                         <p class="text-text-muted">The requested documentation page doesn't exist.</p>
