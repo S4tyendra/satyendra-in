@@ -3,6 +3,16 @@ import { useHead } from '@vueuse/head'
 import { computed, ref, onMounted, onUnmounted, watch, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { docsConfig, buildNavTree, getDocComponent, getDocContent, getAllSections } from '../utils/docs.js'
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from '@/components/ui/drawer'
 
 const route = useRoute()
 
@@ -263,88 +273,108 @@ const setSectionRef = (el) => {
                 </div>
             </aside>
 
-            <!-- MOBILE: Floating sidebar toggle -->
-            <button @click="sidebarOpen = !sidebarOpen"
-                class="lg:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-colors"
-                aria-label="Toggle navigation">
-                <svg v-if="!sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <!-- MOBILE: Sidebar overlay -->
-            <aside v-if="sidebarOpen" class="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-                @click="sidebarOpen = false">
-                <nav class="w-72 h-full bg-bg-main border-r border-white/5 p-6 overflow-y-auto" @click.stop>
-                    <router-link to="/docs"
-                        class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-6 group">
-                        <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
-                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
+            <!-- MOBILE: Navigation Drawer -->
+            <Drawer v-model:open="sidebarOpen">
+                <DrawerTrigger as-child>
+                    <button
+                        class="lg:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-all active:scale-95"
+                        aria-label="Toggle navigation">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        <span>All Docs</span>
-                    </router-link>
+                    </button>
+                </DrawerTrigger>
+                <DrawerContent class="bg-bg-main border-white/10 text-text-main h-[85vh]">
+                    <DrawerHeader class="border-b border-white/5 pb-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="text-2xl">{{ currentConfig?.icon }}</div>
+                                <DrawerTitle class="text-lg font-bold text-text-main">{{ currentConfig?.title }}
+                                </DrawerTitle>
+                            </div>
+                            <DrawerDescription class="sr-only">Navigation for {{ currentConfig?.title }} documentation
+                            </DrawerDescription>
+                            <DrawerClose as-child>
+                                <button class="p-2 rounded-lg hover:bg-white/5 transition-colors">
+                                    <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </DrawerClose>
+                        </div>
+                    </DrawerHeader>
 
-                    <div class="mb-6">
-                        <div class="text-2xl mb-1">{{ currentConfig?.icon }}</div>
-                        <h2 class="text-lg font-bold text-text-main">{{ currentConfig?.title }}</h2>
-                    </div>
-
-                    <ul class="space-y-1">
-                        <li v-for="item in navItems" :key="item.path">
-                            <router-link :to="item.path" :class="[
-                                'block px-3 py-2 rounded-lg text-sm transition-all duration-200',
-                                route.path === item.path
-                                    ? 'bg-cyan-500/20 text-cyan-400 font-medium border-l-2 border-cyan-400'
-                                    : 'text-text-muted hover:text-text-main hover:bg-white/5'
-                            ]">
-                                {{ item.title }}
-                            </router-link>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-
-            <!-- MOBILE: Floating TOC button (when scrolled) -->
-            <button v-if="toc.length > 0 && isScrolled && !mobileTocOpen" @click="mobileTocOpen = true"
-                class="lg:hidden fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all"
-                aria-label="Table of Contents">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M4 6h16M4 10h16M4 14h10M4 18h7" />
-                </svg>
-            </button>
-
-            <!-- MOBILE: TOC bottom sheet -->
-            <div v-if="mobileTocOpen" class="lg:hidden fixed inset-0 z-50" @click="mobileTocOpen = false">
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-                <div class="absolute bottom-0 left-0 right-0 bg-bg-main border-t border-white/10 rounded-t-2xl p-6 max-h-[60vh] overflow-y-auto animate-slide-up"
-                    @click.stop>
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-sm font-bold text-text-main uppercase tracking-wider">On this page</h3>
-                        <button @click="mobileTocOpen = false"
-                            class="p-2 rounded-lg hover:bg-white/10 transition-colors">
-                            <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path d="M6 18L18 6M6 6l12 12" />
+                    <div class="p-6 overflow-y-auto">
+                        <router-link to="/docs"
+                            class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-6 group"
+                            @click="sidebarOpen = false">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M19 12H5M12 19l-7-7 7-7" />
                             </svg>
-                        </button>
+                            <span>All Docs</span>
+                        </router-link>
+
+                        <ul class="space-y-1">
+                            <li v-for="item in navItems" :key="item.path">
+                                <router-link :to="item.path" :class="[
+                                    'block px-3 py-2.5 rounded-lg text-sm transition-all duration-200',
+                                    route.path === item.path
+                                        ? 'bg-cyan-500/20 text-cyan-400 font-medium border-l-2 border-cyan-400'
+                                        : 'text-text-muted hover:text-text-main hover:bg-white/5'
+                                ]" @click="sidebarOpen = false">
+                                    {{ item.title }}
+                                </router-link>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="space-y-2">
-                        <li v-for="item in toc" :key="item.id">
-                            <button @click="scrollToAnchor(item.id); mobileTocOpen = false" :class="[
-                                'block text-left text-sm py-2 transition-colors hover:text-cyan-400 w-full',
-                                item.level === 3 ? 'pl-4 text-text-muted/70' : 'text-text-muted'
-                            ]">
-                                {{ item.text }}
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                </DrawerContent>
+            </Drawer>
+
+            <!-- MOBILE: TOC Drawer -->
+            <Drawer v-if="toc.length > 0 && isScrolled" v-model:open="mobileTocOpen">
+                <DrawerTrigger as-child>
+                    <button
+                        class="lg:hidden fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all active:scale-95"
+                        aria-label="Table of Contents">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M4 6h16M4 10h16M4 14h10M4 18h7" />
+                        </svg>
+                    </button>
+                </DrawerTrigger>
+                <DrawerContent class="bg-bg-main border-white/10 text-text-main max-h-[70vh]">
+                    <div class="mx-auto mt-4 h-1.5 w-12 rounded-full bg-white/10"></div>
+                    <DrawerHeader class="border-b border-white/5 pb-4">
+                        <div class="flex items-center justify-between">
+                            <DrawerTitle class="text-xs font-bold text-text-muted uppercase tracking-wider">On this page
+                            </DrawerTitle>
+                            <DrawerDescription class="sr-only">Table of contents for the current document section
+                            </DrawerDescription>
+                            <DrawerClose as-child>
+                                <button class="p-2 rounded-lg hover:bg-white/5 transition-colors">
+                                    <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </DrawerClose>
+                        </div>
+                    </DrawerHeader>
+                    <div class="p-6 overflow-y-auto">
+                        <ul class="space-y-1">
+                            <li v-for="item in toc" :key="item.id">
+                                <button @click="scrollToAnchor(item.id); mobileTocOpen = false" :class="[
+                                    'block text-left text-sm py-2.5 transition-colors hover:text-cyan-400 w-full rounded-lg px-2 hover:bg-white/5',
+                                    item.level === 3 ? 'pl-6 text-text-muted/70' : 'text-text-muted font-medium'
+                                ]">
+                                    {{ item.text }}
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </DrawerContent>
+            </Drawer>
 
             <!-- Main content - Center -->
             <main class="w-full px-4 sm:px-6">
@@ -568,23 +598,6 @@ const setSectionRef = (el) => {
 .doc-content :deep(h3:hover .header-anchor),
 .doc-content :deep(h4:hover .header-anchor) {
     opacity: 1;
-}
-
-/* Bottom sheet slide-up animation */
-@keyframes slide-up {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.animate-slide-up {
-    animation: slide-up 0.3s cubic-bezier(0.2, 0.0, 0.2, 1) forwards;
 }
 
 /* Fade-in animation for delayed sidebars */
