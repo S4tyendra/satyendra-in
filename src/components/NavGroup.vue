@@ -1,14 +1,14 @@
 <template>
-  <div 
-    :class="['nav-group rounded-lg border transition-all duration-300 bg-zinc-900/20 backdrop-blur-sm border-text-main/10', { active: isActive }]"
-    @mouseleave="handleMouseLeave"
-  >
-    <button 
+  <div
+    :class="['nav-group group rounded-lg border transition-all duration-300 bg-zinc-900/20 backdrop-blur-sm border-text-main/10', { active: isActive }]"
+    @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+    <button
       class="w-full h-[52px] flex items-center justify-between px-4 cursor-pointer outline-none select-none nav-trigger"
-      @click="handleClick"
-    >
+      @click="handleClick">
       <div class="flex items-center gap-4">
-        <span class="text-text-main/40 text-[10px] font-mono border border-text-main/20 rounded px-1.5 py-0.5 group-hover:text-green-500 group-hover:border-green-500/30 transition-colors">{{ num }}</span>
+        <span
+          class="text-text-main/40 text-[10px] font-mono border border-text-main/20 rounded px-1.5 py-0.5 group-hover:text-green-500 group-hover:border-green-500/30 group-[.active]:text-green-500 group-[.active]:border-green-500/30 transition-colors">{{
+            num }}</span>
         <span class="font-medium text-[13px] text-text-main/90 tracking-wide uppercase">{{ title }}</span>
       </div>
       <ArrowIcon />
@@ -27,17 +27,24 @@
 import { ref } from 'vue'
 import ArrowIcon from './icons/ArrowIcon.vue'
 
-defineProps({
+const props = defineProps({
   num: String,
-  title: String
+  title: String,
+  isDefaultOpen: {
+    type: Boolean,
+    default: false
+  }
 })
 
-const isActive = ref(false)
+const isActive = ref(props.isDefaultOpen)
 
 const handleClick = (e) => {
-  if (window.matchMedia('(hover: hover)').matches) return
   e.stopPropagation()
   isActive.value = !isActive.value
+}
+
+const handleMouseEnter = () => {
+  if (window.innerWidth > 768) isActive.value = true
 }
 
 const handleMouseLeave = () => {

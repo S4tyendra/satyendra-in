@@ -1,11 +1,11 @@
 <template>
   <nav class="space-y-2 fade-in-up" style="animation-delay: 200ms;">
-    <NavGroup ref="groupEngineering" num="01" title="Engineering">
+    <NavGroup ref="groupEngineering" num="01" title="Engineering" is-default-open>
       <NavItem :icon="CodeIcon" label="Projects" code="DIR_01 [02]" href="/projects" />
       <NavItem :icon="FlaskIcon" label="Experience" code="GIT_REPO [03]" href="/experience" />
     </NavGroup>
 
-    <NavGroup ref="groupKnowledge" num="04" title="Knowledge">
+    <NavGroup ref="groupKnowledge" num="04" title="Knowledge" is-default-open>
       <NavItem :icon="PenIcon" label="Blog" code="LOGS [05]" href="/blog" />
       <NavItem :icon="BookIcon" label="Docs" code="MAN [06]" href="/docs" />
     </NavGroup>

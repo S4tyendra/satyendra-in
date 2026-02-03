@@ -187,7 +187,7 @@ const setSectionRef = (el) => {
         <div v-if="!section" class="relative z-10 py-16 px-6 w-full">
             <div :ref="setSectionRef" class="scroll-section space-y-6 mb-16 text-center">
                 <h1
-                    class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-br from-cyan-100 to-cyan-400/60 pb-2">
+                    class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-br from-cyan-100 to-cyan-400/60 pb-2">
                     Documentation
                 </h1>
                 <p class="text-lg md:text-xl text-text-muted max-w-2xl mx-auto">
@@ -195,7 +195,7 @@ const setSectionRef = (el) => {
                 </p>
             </div>
 
-            <div :ref="setSectionRef" class="scroll-section grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
+            <div :ref="setSectionRef" class="scroll-section grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
                 <router-link v-for="sec in allSections" :key="sec.key" :to="sec.basePath"
                     class="group block p-6 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-cyan-500/30 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 relative overflow-hidden">
                     <div

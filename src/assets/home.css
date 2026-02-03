@@ -219,21 +219,8 @@
 
 /* Desktop Hover Logic */
 @media (hover: hover) {
-    .nav-group:hover .accordion-wrapper {
-        grid-template-rows: 1fr;
-    }
-
-    .nav-group:hover .arrow-icon {
-        transform: rotate(90deg);
-        color: #22c55e;
-    }
-
     .nav-group:hover {
         background-color: rgba(230, 222, 200, 0.02);
-    }
-
-    .nav-group:hover::before {
-        width: 3px;
     }
 }
 
