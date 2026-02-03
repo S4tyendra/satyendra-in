@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /cdn-cgi/
 
-Sitemap: /sitemap.xml
+Sitemap: https://satyendra.in/sitemap.xml

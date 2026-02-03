@@ -1,21 +1,23 @@
 import { ViteSSG } from 'vite-ssg'
 import './base.css'
 import App from './App.vue'
-import Home from './pages/Home.vue'
-import Projects from './pages/Projects.vue'
-import ProjectDetail from './pages/ProjectDetail.vue'
-import Experience from './pages/Experience.vue'
-import Blog from './pages/Blog.vue'
-import DocsPage from './pages/DocsPage.vue'
-import Photography from './pages/Photography.vue'
-import Services from './pages/Services.vue'
-import DevSecOps from './pages/DevSecOps.vue'
-import ReportDetail from './pages/ReportDetail.vue'
-import Mobile from './pages/Mobile.vue'
-import Contact from './pages/Contact.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 import { getAllDocRoutes } from './utils/docs.js'
+
+// Dynamic imports for code-splitting - each page gets its own chunk
+const Home = () => import('./pages/Home.vue')
+const Projects = () => import('./pages/Projects.vue')
+const ProjectDetail = () => import('./pages/ProjectDetail.vue')
+const Experience = () => import('./pages/Experience.vue')
+const Blog = () => import('./pages/Blog.vue')
+const DocsPage = () => import('./pages/DocsPage.vue')
+const Photography = () => import('./pages/Photography.vue')
+const Services = () => import('./pages/Services.vue')
+const DevSecOps = () => import('./pages/DevSecOps.vue')
+const ReportDetail = () => import('./pages/ReportDetail.vue')
+const Mobile = () => import('./pages/Mobile.vue')
+const Contact = () => import('./pages/Contact.vue')
 
 const routes = [
     { path: '/', component: Home },
@@ -63,6 +65,10 @@ export const includedRoutes = (paths, routes) => {
         // For docs routes with params, return the statically generated paths
         if (route.path.includes('/docs/:')) {
             return docRoutes
+        }
+        // Skip auth-gated dynamic routes - they can't be pre-rendered
+        if (route.path === '/devsecops/reports/:id') {
+            return [] // Exclude from SSG, handled client-side only
         }
         return route.path
     })
