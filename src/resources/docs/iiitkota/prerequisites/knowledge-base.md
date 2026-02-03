@@ -1,10 +1,17 @@
 # Knowledge Base
-- What services are available?
+
+What services are available?
 
 Domains:
+
 1. iiitkota.ac.in
 2. webapi.iiitkota.ac.in
 3. admin.iiitkota.ac.in
-4. placements.iiitkota.ac.in (RIP)
+4. placements.iiitkota.ac.in (inactive)
 5. alumni.iiitkota.ac.in
 6. fts.iiitkota.ac.in
+
+> TODO: Explain all the services and their purpose.
+
+Make sure you have [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) installed.
+Follow the guide [here](/docs/iiitkota/prerequisites/wsl-installation)

@@ -1,20 +1,12 @@
-TL;DR:
-
-  * **Workflow:** Create Page (`src/pages`) → Register Route (`App.jsx`) → Create Data (`src/data`) → Implement UI → Update Sitemap.
-  * **Key Pattern:** **Always** use `lazy` imports for pages and heavy components to maintain performance.
-  * **Data Strategy:** Separate static data into `src/data` to keep components clean.
-
------
-
 # Workflow: Adding a New Page
 
-This guide walks through creating a example **"Hackathons"** page (`/hackathons`) as a practical example.
+This guide walks through creating a "Hackathons" page (`/hackathons`) as an example.
 
-## 1\. Create the Page Skeleton
+## 1. Create the Page Skeleton
 
-First, create the route component. This acts as the entry point for the new URL.
+Create the route component as the entry point for the new URL.
 
-**File:** `src/pages/hackathons.jsx`
+File: `src/pages/hackathons.jsx`
 
 ```javascript
 import React from 'react';
@@ -30,24 +22,20 @@ function Hackathons() {
 export default Hackathons;
 ```
 
------
-
 ## 2. Register the Route
 
-Connect the new component to the application router. You must use **Lazy Loading** to ensure the page bundle is only downloaded when the user visits the route.
+Connect the new component to the application router. Use lazy loading so the bundle loads only when the route is visited.
 
-**File:** `src/App.jsx`
+File: `src/App.jsx`
 
-**1. Add Lazy Import:**
-Find the lazy import section at the top of the file:
+Add lazy import (top of file):
 
 ```javascript
 // ... existing imports
 const Hackathons = lazy(() => import('./pages/hackathons.jsx'));
 ```
 
-**2. Update Route Configuration:**
-Add the new route object to the `children` array in `routeConfig`.
+Update route configuration (add to `children` in `routeConfig`):
 
 ```javascript
 const routeConfig = [
@@ -62,10 +50,10 @@ const routeConfig = [
         children: [
             { index: true, element: <HomePage /> },
             { path: "about-institute", element: <AboutInstitute /> },
-            
-            // ✅ Add new route here
+
+            // Add new route here
             { path: "hackathons", element: <Hackathons /> },
-            
+
             // 404 must remain last
             { path: "*", element: <NotFoundPage /> },
         ]
@@ -73,16 +61,14 @@ const routeConfig = [
 ];
 ```
 
-✅ **Verification:**
+Verification:
 Start your local server (`bun run dev`) and visit `http://localhost:5173/hackathons`. You should see "Hackathons Page Setup".
 
------
+## 3. Data Layer Setup
 
-## 3\. Data Layer Setup
+Do not hardcode large JSON inside JSX files. Keep static data in `src/data`.
 
-Do not hardcode massive JSON objects inside your JSX files. Separate the data logic.
-
-**File:** `src/data/hackathon.js`
+File: `src/data/hackathon.js`
 
 ```javascript
 const hackathonData = {
@@ -109,19 +95,17 @@ const hackathonData = {
 export default hackathonData;
 ```
 
------
-
 ## 4. Full UI Implementation
 
-Now, update the page component to fetch data and render the UI.
+Update the page component to render data and UI.
 
-**Key Requirements:**
+Key requirements:
 
-1.  **SEO:** Use `useDynamicSEO` to set meta tags.
-2.  **Performance:** `lazy` import all heavy UI components (`Card`, `Image`, `Button`).
-3.  **UX:** Use `Suspense` with a `Skeleton` fallback while components load.
+- Use `useDynamicSEO` to set meta tags.
+- Lazy import heavy UI components (`Card`, `Image`, `Button`).
+- Use `Suspense` with a `Skeleton` fallback while components load.
 
-**File:** `src/pages/hackathons.jsx`
+File: `src/pages/hackathons.jsx`
 
 ```javascript
 import React, { lazy, Suspense } from 'react';
@@ -131,7 +115,7 @@ import { Calendar, MapPin, Globe } from 'lucide-react';
 import { format } from 'date-fns';
 import { Skeleton } from "@/components/universal/Skeleton"; 
 
-// ⚡ Lazy load UI components for better bundle splitting
+// Lazy load UI components for better bundle splitting
 const Card = lazy(() => import('@/components/ui/card').then(m => ({ default: m.Card })));
 const CardHeader = lazy(() => import('@/components/ui/card').then(m => ({ default: m.CardHeader })));
 const CardTitle = lazy(() => import('@/components/ui/card').then(m => ({ default: m.CardTitle })));
@@ -185,7 +169,7 @@ export default function Hackathons() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {events.map((h, index) => (
                         <Card key={index} className="flex flex-col h-full hover:shadow-xl transition-all border-t-4 border-t-primary group">
-                            
+
                             {/* Image Section */}
                             <div className="relative h-52 overflow-hidden bg-secondary/10">
                                 {h.images?.[0] ? (
@@ -245,15 +229,13 @@ export default function Hackathons() {
 }
 ```
 
-> **Refactoring Tip:** If the `Card` logic becomes complex, move it to a dedicated component file: `src/components/page-components/hackathons/HackathonCard.jsx`.
+If the `Card` logic becomes complex, move it to `src/components/page-components/hackathons/HackathonCard.jsx`.
 
------
+## 5. Update Build Scripts
 
-## 5\. Update Build Scripts
+Register the new path in the build system so the sitemap generator includes it.
 
-Finally, register the new path in the build system so the sitemap generator knows about it.
-
-**File:** `scripts/generate-sitemap.js`
+File: `scripts/generate-sitemap.js`
 
 Locate the `staticRoutes` array and append your new path:
 
@@ -262,8 +244,8 @@ const staticRoutes = [
   '/',
   '/about-institute',
   // ... existing routes
-  '/hackathons', // ✅ Add this
+  '/hackathons', // Add this
 ];
 ```
 
-**Why?** This ensures `/hackathons` appears in `sitemap.xml`, allowing Google to index the page correctly.
+This ensures `/hackathons` appears in `sitemap.xml` for indexing.

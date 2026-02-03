@@ -1,7 +1,5 @@
-# IIIT Kota internal tech docs!
+# IIIT Kota Internal Tech Docs
 
+## Initialization (Any Project)
 
-
-# Initialization (For Any Project)
-
-1. Read the [Prerequisites](/docs/iiitkota/prerequisites/knowledge-base) to get your environment ready.
+Read the prerequisites to set up your environment: [Prerequisites](/docs/iiitkota/prerequisites/knowledge-base).

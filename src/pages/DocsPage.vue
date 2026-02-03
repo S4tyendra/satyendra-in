@@ -20,39 +20,44 @@ const router = useRouter()
 
 // Get isScrolled from parent App.vue via provide/inject or detect ourselves
 const isScrolled = ref(false)
-// Delayed state for sidebars - shows after content transition completes
-const showSidebars = ref(false)
-let sidebarTimeout = null
+// Responsive state
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200)
+const isDesktop = computed(() => windowWidth.value > 944)
+const isUltraWide = computed(() => windowWidth.value >= 1760)
+
+// Visibility Logic (Matches v2.html)
+// Show Sidebars if: Desktop AND (Not Scrolled OR UltraWide)
+const showSidebars = computed(() => {
+    // Only show sidebars when a specific section is selected (not on docs index)
+    if (!section.value) return false
+    return isDesktop.value && (!isScrolled.value || isUltraWide.value)
+})
+
+// Show FABs if: Sidebars are NOT shown (Inverse)
+const showFabs = computed(() => {
+    // Only show FABs when a specific section is selected
+    if (!section.value) return false
+    return !showSidebars.value
+})
 
 const handleScroll = () => {
-    const scrolled = window.scrollY > 50
+    isScrolled.value = window.scrollY > 50
+}
 
-    if (scrolled !== isScrolled.value) {
-        isScrolled.value = scrolled
-
-        // Clear any pending timeout
-        if (sidebarTimeout) clearTimeout(sidebarTimeout)
-
-        if (scrolled) {
-            // Delay showing sidebars until content transition completes (500ms)
-            sidebarTimeout = setTimeout(() => {
-                showSidebars.value = true
-            }, 500)
-        } else {
-            // Hide sidebars immediately when scrolling back up
-            showSidebars.value = false
-        }
-    }
+const handleResize = () => {
+    windowWidth.value = window.innerWidth
 }
 
 onMounted(() => {
     window.addEventListener('scroll', handleScroll)
-    handleScroll() // Check initial state
+    window.addEventListener('resize', handleResize)
+    handleScroll() // Check initial scroll state
+    handleResize() // Check initial resize state
 })
 
 onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll)
-    if (sidebarTimeout) clearTimeout(sidebarTimeout)
+    window.removeEventListener('resize', handleResize)
 })
 
 // Extract section and slug from route params
@@ -277,7 +282,9 @@ onUnmounted(() => {
         <!-- Doc Page Layout (when section is selected) -->
         <div v-else class="relative z-10 w-full py-8">
             <!-- DESKTOP: Fixed Nav Sidebar - Left edge of screen -->
-            <aside class="hidden lg:block fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 max-w-4xl z-30">
+            <!-- DESKTOP: Fixed Nav Sidebar - Left edge of screen -->
+            <aside class="desktop-sidebar fixed left-4 top-1/2 -translate-y-1/2 w-64 z-30"
+                :class="{ 'visible': showSidebars }">
                 <nav class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
                     <router-link to="/docs"
                         class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors mb-4 group">
@@ -298,8 +305,8 @@ onUnmounted(() => {
             </aside>
 
             <!-- DESKTOP: Fixed TOC - Right edge of screen -->
-            <aside v-if="toc.length > 0"
-                class="hidden lg:block fixed right-4 xl:right-8 top-1/2 -translate-y-1/2 w-44 z-30">
+            <aside v-if="toc.length > 0" class="desktop-sidebar fixed right-4 top-1/2 -translate-y-1/2 w-64 z-30"
+                :class="{ 'visible': showSidebars }">
                 <div class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
                     <h3 class="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">On this page</h3>
                     <ul class="space-y-1 max-h-[50vh] overflow-y-auto">
@@ -315,12 +322,12 @@ onUnmounted(() => {
                 </div>
             </aside>
 
-            <!-- MOBILE: Navigation Drawer -->
+            <!-- Navigation Drawer (below 2xl breakpoint) -->
             <Drawer v-model:open="sidebarOpen">
                 <DrawerTrigger as-child>
                     <button
-                        class="lg:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-all active:scale-95"
-                        aria-label="Toggle navigation">
+                        class="fab-button fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-all active:scale-95"
+                        :class="{ 'visible': showFabs }" aria-label="Toggle navigation">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -364,12 +371,11 @@ onUnmounted(() => {
                 </DrawerContent>
             </Drawer>
 
-            <!-- MOBILE: TOC Drawer -->
-            <Drawer v-if="toc.length > 0 && isScrolled" v-model:open="mobileTocOpen">
+            <Drawer v-if="toc.length > 0" v-model:open="mobileTocOpen">
                 <DrawerTrigger as-child>
                     <button
-                        class="lg:hidden fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all active:scale-95"
-                        aria-label="Table of Contents">
+                        class="fab-button fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all active:scale-95"
+                        :class="{ 'visible': showFabs }" aria-label="Table of Contents">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M4 6h16M4 10h16M4 14h10M4 18h7" />
                         </svg>
@@ -719,5 +725,30 @@ onUnmounted(() => {
 
 .animate-fade-in {
     animation: fade-in 0.4s cubic-bezier(0.2, 0.0, 0.2, 1) forwards;
+}
+
+/* Visibility transitions matching v2.html */
+.desktop-sidebar {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.desktop-sidebar.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.fab-button {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fab-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 </style>
