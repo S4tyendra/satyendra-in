@@ -556,7 +556,7 @@ const setSectionRef = (el) => {
     color: rgba(34, 211, 238, 0.5);
     text-decoration: none;
     margin-right: 0.5rem;
-    opacity: 0;
+    opacity: 0.6;
     transition: opacity 0.2s;
 }
 
