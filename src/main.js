@@ -6,7 +6,7 @@ import Projects from './pages/Projects.vue'
 import ProjectDetail from './pages/ProjectDetail.vue'
 import Experience from './pages/Experience.vue'
 import Blog from './pages/Blog.vue'
-import Docs from './pages/Docs.vue'
+import DocsPage from './pages/DocsPage.vue'
 import Photography from './pages/Photography.vue'
 import Services from './pages/Services.vue'
 import DevSecOps from './pages/DevSecOps.vue'
@@ -15,6 +15,7 @@ import Mobile from './pages/Mobile.vue'
 import Contact from './pages/Contact.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
+import { getAllDocRoutes } from './utils/docs.js'
 
 const routes = [
     { path: '/', component: Home },
@@ -22,7 +23,10 @@ const routes = [
     { path: '/projects/:repo', component: ProjectDetail, props: true },
     { path: '/experience', component: Experience },
     { path: '/blog', component: Blog },
-    { path: '/docs', component: Docs },
+    // Docs routes - index, section, and nested slugs
+    { path: '/docs', component: DocsPage },
+    { path: '/docs/:section', component: DocsPage, props: true },
+    { path: '/docs/:section/:slug+', component: DocsPage, props: true },
     { path: '/photography', component: Photography },
     { path: '/services', component: Services },
     { path: '/devsecops', component: DevSecOps },
@@ -49,9 +53,17 @@ export const includedRoutes = (paths, routes) => {
         return `/projects/${name}`
     }).filter(p => p !== null)
 
+    // Get all doc routes for SSG
+    const docRoutes = getAllDocRoutes().map(r => r.path)
+
     return routes.flatMap(route => {
-        return route.path === '/projects/:repo'
-            ? projectRoutes
-            : route.path
+        if (route.path === '/projects/:repo') {
+            return projectRoutes
+        }
+        // For docs routes with params, return the statically generated paths
+        if (route.path.includes('/docs/:')) {
+            return docRoutes
+        }
+        return route.path
     })
 }

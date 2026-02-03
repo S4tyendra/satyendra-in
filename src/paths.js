@@ -42,7 +42,15 @@ export const fileSystem = {
             "about": { type: "file", path: "/about" },
             "contact": { type: "file", path: "/contact" },
             "experience": { type: "file", path: "/experience" },
-            "docs": { type: "file", path: "/docs" },
+            "docs": {
+                type: "dir",
+                path: "/docs",
+                children: {
+                    "iiitkota": { type: "file", path: "/docs/iiitkota" },
+                    "personal": { type: "file", path: "/docs/personal" },
+                    "devh-api": { type: "file", path: "/docs/devh-api" }
+                }
+            },
             "photography": { type: "file", path: "/photography" },
             "services": { type: "file", path: "/services" }
         }
