@@ -22,9 +22,8 @@
       </button>
     </div>
 
-    <ProjectsSection :projects="filteredProjects" />
-    <div class="my-16 py-16 h-[400px] flex justify-center items-center">
-
+    <div class="w-full h-[600px] relative border border-zinc-800 rounded-xl overflow-hidden bg-black/50">
+      <InfiniteMenu :items="menuItems" :scale="3" />
     </div>
   </div>
 </template>
@@ -32,7 +31,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useHead } from '@vueuse/head'
-import ProjectsSection from '../components/ProjectsSection.vue'
+import InfiniteMenu from '../components/InfiniteMenu/InfiniteMenu.vue'
 import projectsData from '../data/projects.js'
 import closedData from '../data/closedSrcProjects.js'
 import '../assets/projects.css'
@@ -80,6 +79,20 @@ const toggleTag = (tag) => {
   }
 }
 
+const getOgImage = (link) => {
+  if (!link) return 'https://placehold.co/600x600/18181b/FFF?text=Project';
+  try {
+    const parts = link.split('/');
+    const slug = parts[parts.length - 1] || parts[parts.length - 2];
+    if (slug) {
+      return `https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1024,height=1024,fit=cover,gravity=center,format=avif,quality=100/projects/${slug}.png`;
+    }
+  } catch (e) {
+    // ignore
+  }
+  return `https://placehold.co/600x600/18181b/FFF?text=Project`; // Fallback
+}
+
 const filteredProjects = computed(() => {
   return allProjects.filter(p => {
     const query = searchQuery.value.toLowerCase()
@@ -92,5 +105,20 @@ const filteredProjects = computed(() => {
 
     return matchesSearch && matchesTags
   })
+})
+
+const getRepoName = (link) => {
+  if (!link) return '';
+  const parts = link.split('/');
+  return parts[parts.length - 1] || parts[parts.length - 2];
+}
+
+const menuItems = computed(() => {
+  return filteredProjects.value.map(p => ({
+    image: getOgImage(p.link),
+    title: p.title,
+    description: p.desc,
+    link: `/projects/${getRepoName(p.link)}`
+  }))
 })
 </script>

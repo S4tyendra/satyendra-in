@@ -6,7 +6,7 @@
     </div>
     <div v-if="projects.length" class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
       <ProjectCard v-for="project in projects" :key="project.link" :title="project.title" :description="project.desc"
-        :tags="project.tags" :link="`/projects/${getRepoName(project.link)}`" />
+        :tags="project.tags" :link="`/projects/${getRepoName(project.link)}`" :image="getOgImage(project.link)" />
     </div>
     <div v-else class="text-text-muted text-sm italic py-4">
       No projects match your search.
@@ -28,5 +28,21 @@ const getRepoName = (link) => {
   if (!link) return '';
   const parts = link.split('/');
   return parts[parts.length - 1] || parts[parts.length - 2];
+}
+
+const getOgImage = (link) => {
+  if (!link) return null;
+  try {
+    const url = new URL(link);
+    if (url.hostname === 'github.com') {
+      const parts = url.pathname.split('/').filter(p => p);
+      if (parts.length >= 2) {
+        return `https://opengraph.githubassets.com/1/${parts[0]}/${parts[1]}`;
+      }
+    }
+  } catch (e) {
+    // ignore invalid urls
+  }
+  return null;
 }
 </script>
