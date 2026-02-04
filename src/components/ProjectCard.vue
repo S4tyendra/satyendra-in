@@ -3,11 +3,11 @@
     class="group/project rounded-lg border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/50 transition-all duration-300 overflow-hidden text-left flex flex-col h-full">
 
     <!-- Project Image -->
-    <div v-if="image" class="aspect-square w-full overflow-hidden border-b border-zinc-800/50 bg-zinc-900">
+    <!-- <div v-if="image" class="aspect-square w-full overflow-hidden border-b border-zinc-800/50 bg-zinc-900">
       <img :src="image" :alt="title"
         class="w-full h-full object-cover transition-transform duration-500 group-hover/project:scale-105"
         loading="lazy" />
-    </div>
+    </div> -->
 
     <div class="p-4 flex flex-col flex-grow">
       <div class="flex justify-between items-start mb-2">

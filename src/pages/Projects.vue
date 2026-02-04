@@ -22,8 +22,10 @@
       </button>
     </div>
 
-    <div class="w-full h-[600px] relative border border-zinc-800 rounded-xl overflow-hidden bg-black/50">
-      <InfiniteMenu :items="menuItems" :scale="3" />
+    <ProjectsSection :projects="filteredProjects" />
+
+    <div class="w-full h-[800px] relative border border-zinc-800 rounded-xl overflow-hidden bg-black/50">
+      <InfiniteMenu :items="menuItems" :scale="1.5" />
     </div>
   </div>
 </template>
@@ -31,6 +33,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useHead } from '@vueuse/head'
+import ProjectsSection from '../components/ProjectsSection.vue'
 import InfiniteMenu from '../components/InfiniteMenu/InfiniteMenu.vue'
 import projectsData from '../data/projects.js'
 import closedData from '../data/closedSrcProjects.js'
