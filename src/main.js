@@ -18,6 +18,19 @@ const DevSecOps = () => import('./pages/DevSecOps.vue')
 const ReportDetail = () => import('./pages/ReportDetail.vue')
 const Mobile = () => import('./pages/Mobile.vue')
 const Contact = () => import('./pages/Contact.vue')
+const NotFound = () => import('./pages/NotFound.vue')
+
+// Case-insensitive redirect map
+const redirectMap = {
+    // /flutter, /android, /kotlin → /mobile
+    'flutter': '/mobile',
+    'android': '/mobile',
+    'kotlin': '/mobile',
+    // /devops, /secops, /ops → /devsecops
+    'devops': '/devsecops',
+    'secops': '/devsecops',
+    'ops': '/devsecops'
+}
 
 const routes = [
     { path: '/', component: Home },
@@ -34,15 +47,25 @@ const routes = [
     { path: '/devsecops', component: DevSecOps },
     { path: '/devsecops/reports/:id', component: ReportDetail, props: true },
     { path: '/mobile', component: Mobile },
-    { path: '/contact', component: Contact }
+    { path: '/contact', component: Contact },
+
+    // 404 catch-all - must be last
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+    { path: '/404', name: 'NotFound', component: NotFound }
 ]
 
 // Export for SSG
 export const createApp = ViteSSG(
     App,
     { routes, base: import.meta.env.BASE_URL },
-    ({ app, router, routes, isClient, initialState }) => {
-        // Custom setup hooks can go here
+    ({ app, router, isClient }) => {
+        // Case-insensitive redirects via navigation guard
+        router.beforeEach((to, from) => {
+            const pathLower = to.path.replace(/^\//, '').toLowerCase()
+            if (redirectMap[pathLower]) {
+                return redirectMap[pathLower]
+            }
+        })
     },
 )
 
