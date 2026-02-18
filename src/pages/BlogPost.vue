@@ -222,7 +222,7 @@ useHead(computed(() => ({
                                 <router-link :to="`/blog/${p.slug}`"
                                     class="flex items-start gap-2 px-2 py-2 rounded-lg text-xs transition-all group hover:bg-white/5"
                                     :class="p.slug === slug ? 'bg-cyan-500/15 text-cyan-400 font-medium' : ''">
-                                    <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                                    <svg class="w-3.5 h-3.5 mt-0.5 shrink-0"
                                         :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted'" fill="none"
                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path
@@ -312,7 +312,7 @@ useHead(computed(() => ({
                                 <router-link :to="`/blog/${p.slug}`" @click="sidebarOpen = false"
                                     class="flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm transition-all hover:bg-white/5"
                                     :class="p.slug === slug ? 'bg-cyan-500/15 text-cyan-400 font-medium' : ''">
-                                    <svg class="w-4 h-4 mt-0.5 flex-shrink-0"
+                                    <svg class="w-4 h-4 mt-0.5 shrink-0"
                                         :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted'" fill="none"
                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path

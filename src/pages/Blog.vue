@@ -79,8 +79,6 @@ useHead({
         </div>
 
         <div class="relative z-10 w-full py-8">
-            <!-- DESKTOP: Left sidebar — all posts list with search -->
-
 
             <!-- Mobile FAB — open drawer -->
             <Drawer v-model:open="drawerOpen">
@@ -122,7 +120,7 @@ useHead({
                                 <router-link :to="`/blog/${post.slug}`" @click="drawerOpen = false"
                                     class="flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm transition-all hover:bg-white/5"
                                     active-class="bg-cyan-500/15 text-cyan-400 font-medium">
-                                    <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-text-muted" fill="none"
+                                    <svg class="w-4 h-4 mt-0.5 shrink-0 text-text-muted" fill="none"
                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path
                                             d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -167,7 +165,7 @@ useHead({
                     <router-link v-for="post in filteredPosts" :key="post.slug" :to="`/blog/${post.slug}`"
                         class="group flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 hover:bg-white/8 transition-all duration-300 hover:-translate-y-0.5">
                         <!-- Date column -->
-                        <div class="flex-shrink-0 text-right hidden sm:block w-20">
+                        <div class="shrink-0 text-right hidden sm:block w-20">
                             <span class="text-xs font-mono text-cyan-400/60">
                                 {{ new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
                                 }}
@@ -203,7 +201,7 @@ useHead({
                         </div>
 
                         <!-- Arrow -->
-                        <svg class="w-4 h-4 text-text-muted group-hover:text-cyan-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
+                        <svg class="w-4 h-4 text-text-muted group-hover:text-cyan-400 group-hover:translate-x-1 transition-all shrink-0 mt-1"
                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M9 5l7 7-7 7" />
                         </svg>

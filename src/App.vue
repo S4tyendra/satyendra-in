@@ -6,6 +6,7 @@ import BackgroundAtmosphere from './components/BackgroundAtmosphere.vue'
 import Header from './components/Header.vue'
 import TerminalBreadcrumb from './components/TerminalBreadcrumb.vue'
 import Footer from './components/Footer.vue'
+import FloatingNav from './components/FloatingNav.vue'
 import './assets/home.css'
 
 const isScrolled = ref(false)
@@ -71,6 +72,8 @@ onUnmounted(() => {
 
       <Footer />
     </main>
+
+    <FloatingNav />
   </div>
 </template>
 
