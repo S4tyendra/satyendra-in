@@ -4,6 +4,7 @@ import App from './App.vue'
 import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 import { getAllDocRoutes } from './utils/docs.js'
+import { getAllPosts } from './utils/blog.js'
 
 // Dynamic imports for code-splitting - each page gets its own chunk
 const Home = () => import('./pages/Home.vue')
@@ -11,6 +12,7 @@ const Projects = () => import('./pages/Projects.vue')
 const ProjectDetail = () => import('./pages/ProjectDetail.vue')
 const Experience = () => import('./pages/Experience.vue')
 const Blog = () => import('./pages/Blog.vue')
+const BlogPost = () => import('./pages/BlogPost.vue')
 const DocsPage = () => import('./pages/DocsPage.vue')
 const Photography = () => import('./pages/Photography.vue')
 const Services = () => import('./pages/Services.vue')
@@ -38,6 +40,7 @@ const routes = [
     { path: '/projects/:repo', component: ProjectDetail, props: true },
     { path: '/experience', component: Experience },
     { path: '/blog', component: Blog },
+    { path: '/blog/:slug', component: BlogPost, props: true },
     // Docs routes - index, section, and nested slugs
     { path: '/docs', component: DocsPage },
     { path: '/docs/:section', component: DocsPage, props: true },
@@ -88,6 +91,9 @@ export const includedRoutes = (paths, routes) => {
         // For docs routes with params, return the statically generated paths
         if (route.path.includes('/docs/:')) {
             return docRoutes
+        }
+        if (route.path === '/blog/:slug') {
+            return getAllPosts().map(post => `/blog/${post.slug}`)
         }
         // Skip auth-gated dynamic routes - they can't be pre-rendered
         if (route.path === '/devsecops/reports/:id') {
