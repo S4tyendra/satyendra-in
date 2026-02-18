@@ -88,6 +88,11 @@ const isIndexPage = computed(() => {
     return slug.value === 'index' || slug.value.endsWith('/index')
 })
 
+// Check if we have directory contents to show
+const hasDirectoryContents = computed(() => {
+    return directoryContents.value && (directoryContents.value.folders.length > 0 || directoryContents.value.files.length > 0)
+})
+
 // Get document component
 const docModule = computed(() => {
     if (!section.value) return null
@@ -442,8 +447,7 @@ onUnmounted(() => {
                     <component v-if="docModule?.default" :is="docModule.default" :key="route.path" />
 
                     <!-- Dynamic index content injection -->
-                    <div v-if="isIndexPage && directoryContents && (directoryContents.folders.length > 0 || directoryContents.files.length > 0)"
-                        class="mt-12 space-y-8">
+                    <div v-if="hasDirectoryContents" class="mt-12 space-y-8">
                         <div v-if="directoryContents.folders.length > 0">
                             <h2 class="text-2xl font-bold text-text-main mb-6 flex items-center gap-3">
                                 <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2"
@@ -512,7 +516,7 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <div v-else-if="!docModule?.default" class="text-center py-20">
+                    <div v-if="!docModule?.default && !hasDirectoryContents" class="text-center py-20">
                         <div class="text-6xl mb-4">📄</div>
                         <h2 class="text-2xl font-bold text-text-main mb-2">Page Not Found</h2>
                         <p class="text-text-muted">The requested documentation page doesn't exist.</p>
