@@ -1,22 +1,22 @@
 ---
-title: "Why I Built Lopala: A Real-Time WebOS in Rust"
+title: "Why I Built Latch: A Real-Time WebOS in Rust"
 date: April 01, 2026
-slug: why-i-built-lopala
+slug: why-i-built-latch
 status: Published
 tags: Rust, Vue, WebSockets, Systems Engineering, DevOps, PTY, Open Source
 type: Post
-ogDescription: "A deep dive into building Lopala, a zero-config, real-time Web Operating System in Rust and Vue. Features multiplexed PTYs, chunked file transfers, and collaborative CRDT editing."
-summary: "A deep dive into building Lopala, a zero-config, real-time Web Operating System in Rust and Vue. Features multiplexed PTYs, chunked file transfers, and collaborative CRDT editing."
+ogDescription: "A deep dive into building Latch, a zero-config, real-time Web Operating System in Rust and Vue. Features multiplexed PTYs, chunked file transfers, and collaborative CRDT editing."
+summary: "A deep dive into building Latch, a zero-config, real-time Web Operating System in Rust and Vue. Features multiplexed PTYs, chunked file transfers, and collaborative CRDT editing."
 ---
 
 
-# Why I Built Lopala: A Real-Time WebOS in Rust
+# Why I Built Latch: A Real-Time WebOS in Rust
 
 We were using `sshx` for remote collaboration, but, it only shares the terminal. No file uploads, no visual text editing, no real environment sync. I initially planned to contribute to `sshx`, but adding all that would fundamentally change what `sshx` is meant to be.
 
-So, I built **Lopala**.
+So, I built **Latch**.
 
-![image.png](/blog-images/why-i-built-lopala/image.png)
+![image.png](/blog-images/why-i-built-latch/image.png)
 
 It uses the same forking process to simulate a terminal, but it doesn't end there. **It is a full, shared Operating System in the browser.**
 
@@ -24,19 +24,19 @@ You run the binary, open the generated link, and share the PIN with your team or
 
 You can install it right now:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/s4tyendra/lopala/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/s4tyendra/latch/main/install.sh | bash
 ```
 And run:
 ```bash
-lopala --tunnel --port 8452 --pin 0000
+latch --tunnel --port 8452 --pin 0000
 ```
 
 Here is the low-level breakdown of how the engine actually works.
 
 ### 1. The Multi-User Real-Time PTY
-Lopala isn't just a basic web shell. It uses the `nix` crate's `forkpty()` to create the master/slave file descriptors and fork a new process to run `$SHELL`. We use `ioctl TIOCSWINSZ` to pass terminal resizing directly from the browser's `xterm.js` to the UNIX process, making resizing feel completely native.
+Latch isn't just a basic web shell. It uses the `nix` crate's `forkpty()` to create the master/slave file descriptors and fork a new process to run `$SHELL`. We use `ioctl TIOCSWINSZ` to pass terminal resizing directly from the browser's `xterm.js` to the UNIX process, making resizing feel completely native.
 
-lopala pipes the raw master file descriptor into a custom async stream using `tokio::io::poll_read_ready`.
+latch pipes the raw master file descriptor into a custom async stream using `tokio::io::poll_read_ready`.
 (`std::fs::File` is blocking)
 
 
@@ -52,7 +52,7 @@ while start < s.len() && !s.is_char_boundary(start) {
 }
 ```
 
-I also added a custom `wdl` bash script that gets injected into an ephemeral `/tmp/lopala/bin` `$PATH`. If you type `wdl filename` in the terminal, it prints the ANSI code `\033]999;DOWNLOAD;%path\007`, which the frontend intercepts to trigger a direct browser download.
+I also added a custom `wdl` bash script that gets injected into an ephemeral `/tmp/latch/bin` `$PATH`. If you type `wdl filename` in the terminal, it prints the ANSI code `\033]999;DOWNLOAD;%path\007`, which the frontend intercepts to trigger a direct browser download.
 
 ### 2. Synced State File Manager & Chunked I/O
 The file manager is completely synced globally via `WsEvent::FileSync`. If I scroll down, enter a folder, or select a file, everyone else sees it instantly.
@@ -73,7 +73,7 @@ If `--tunnel` flag used, the Rust backend searches the system for `cloudflared`.
 ### 5. System Search & Screen Streaming
 Hitting `Ctrl+K` triggers a REST API call executing `rg --files --maxdepth 6 -g '{q}' ~` via `ripgrep` for blazing-fast system-wide file searching.
 
-If the host system has a display attached, Lopala can stream the live screen to the web UI. It uses `grim` to capture the screen every 100ms and streams the output exclusively to the clients requesting it.
+If the host system has a display attached, Latch can stream the live screen to the web UI. It uses `grim` to capture the screen every 100ms and streams the output exclusively to the clients requesting it.
 
 ### Releasing
 Pushing a tag triggers a GitHub Action that:
@@ -94,4 +94,4 @@ I stress-tested this with 10 simultaneous users on an AWS `t3.micro` (1 vCPU, 1G
 
 > *(Note: It should theoretically run fine on macOS ARM, but it is untested. Windows support is currently unknown. PRs are welcome).*
 
-Check out the code, star the repo, and let me know if you manage to break it: [github.com/s4tyendra/lopala](https://github.com/s4tyendra/lopala)
+Check out the code, star the repo, and let me know if you manage to break it: [github.com/s4tyendra/latch](https://github.com/s4tyendra/latch)
