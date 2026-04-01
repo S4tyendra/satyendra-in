@@ -51,17 +51,17 @@ export function getAllPosts() {
 
         if (frontmatter.status === 'Published' && (!frontmatter.type || frontmatter.type.toLowerCase() === 'post')) {
             posts.push({
+                ...frontmatter,
                 slug,
                 title: frontmatter.title || slug,
                 date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
                 summary: frontmatter.summary || '',
                 tags: frontmatter.tags ? frontmatter.tags.split(',').map(t => t.trim()) : [],
-                ...frontmatter
             })
         }
     }
 
-    return posts.sort((a, b) => b.date - a.date)
+    return posts.sort((a, b) => b.date.getTime() - a.date.getTime())
 }
 
 // Get single post Vue component (for rendering)

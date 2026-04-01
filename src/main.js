@@ -5,6 +5,7 @@ import projectsData from './data/projects.js'
 import closedData from './data/closedSrcProjects.js'
 import { getAllDocRoutes } from './utils/docs.js'
 import { getAllPosts } from './utils/blog.js'
+import { photos } from './data/photos.js'
 
 // Dynamic imports for code-splitting - each page gets its own chunk
 const Home = () => import('./pages/Home.vue')
@@ -15,6 +16,7 @@ const Blog = () => import('./pages/Blog.vue')
 const BlogPost = () => import('./pages/BlogPost.vue')
 const DocsPage = () => import('./pages/DocsPage.vue')
 const Photography = () => import('./pages/Photography.vue')
+const PhotoDetail = () => import('./pages/PhotoDetail.vue')
 const Services = () => import('./pages/Services.vue')
 const DevSecOps = () => import('./pages/DevSecOps.vue')
 const ReportDetail = () => import('./pages/ReportDetail.vue')
@@ -46,6 +48,7 @@ const routes = [
     { path: '/docs/:section', component: DocsPage, props: true },
     { path: '/docs/:section/:slug+', component: DocsPage, props: true },
     { path: '/photography', component: Photography },
+    { path: '/photography/:id', component: PhotoDetail, props: true },
     { path: '/services', component: Services },
     { path: '/devsecops', component: DevSecOps },
     { path: '/devsecops/reports/:id', component: ReportDetail, props: true },
@@ -94,6 +97,9 @@ export const includedRoutes = (paths, routes) => {
         }
         if (route.path === '/blog/:slug') {
             return getAllPosts().map(post => `/blog/${post.slug}`)
+        }
+        if (route.path === '/photography/:id') {
+            return photos.map(photo => `/photography/${photo.id}`)
         }
         // Skip auth-gated dynamic routes - they can't be pre-rendered
         if (route.path === '/devsecops/reports/:id') {

@@ -1,6 +1,6 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useHead } from '@vueuse/head'
 import BackgroundAtmosphere from './components/BackgroundAtmosphere.vue'
 import Header from './components/Header.vue'
@@ -11,6 +11,7 @@ import './assets/home.css'
 
 const isScrolled = ref(false)
 const terminalRef = ref(null)
+const route = useRoute()
 
 useHead({
   title: 'Bongi Satyendra | Systems Engineer & Cloud Architect',
@@ -60,7 +61,7 @@ onUnmounted(() => {
     <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" class="mb-6 w-full" />
 
     <main class="w-full mx-auto relative z-10 flex flex-col gap-6 transition-all duration-500 ease-in-out @container"
-      :class="isScrolled ? 'max-w-5xl' : 'max-w-[460px]'">
+      :class="(route.path === '/' || !isScrolled) ? 'max-w-[460px]' : 'max-w-5xl'">
       <BackgroundAtmosphere />
       <TerminalBreadcrumb ref="terminalRef" />
 
