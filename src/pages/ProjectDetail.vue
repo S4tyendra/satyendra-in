@@ -12,17 +12,15 @@
         <header class="mb-12">
             <div class="flex flex-wrap gap-2 mb-4">
                 <span v-for="tag in project.tags" :key="tag"
-                    class="px-2 py-1 text-xs font-mono border border-border-color rounded-md text-text-muted bg-bg-secondary/30">
+                    class="px-2 py-1 text-xs font-sans border border-text-main/15 rounded-sm text-text-muted">
                     {{ tag }}
                 </span>
             </div>
-            <h1
-                class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-text-main to-text-muted">
-                {{ project.title }}</h1>
+            <h1 class="page-title text-3xl md:text-4xl mb-4">{{ project.title }}</h1>
             <p class="text-xl text-text-muted leading-relaxed max-w-2xl">{{ project.desc }}</p>
 
-            <div class="flex gap-4 mt-6">
-                <a :href="project.link" target="_blank" rel="noopener noreferrer"
+            <div class="flex flex-wrap gap-4 mt-6">
+                <a v-if="project.link.includes('github.com')" :href="project.link" target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gap-2 px-4 py-2 bg-text-main text-bg-main font-medium rounded hover:bg-white/90 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -33,14 +31,14 @@
                 </a>
                 <a v-if="project.deployment_url" :href="project.deployment_url" target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 px-4 py-2 border border-border-color text-text-main font-medium rounded hover:bg-bg-secondary transition-colors">
+                    class="inline-flex items-center gap-2 px-4 py-2 border border-line text-text-main font-medium rounded hover:bg-bg-raised transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                         <polyline points="15 3 21 3 21 9" />
                         <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
-                    Live Demo
+                    Visit website
                 </a>
             </div>
         </header>
@@ -72,7 +70,7 @@
                 </section>
 
                 <!-- Placeholder for Readme or more content -->
-                <div class="p-6 border border-border-color rounded-lg bg-bg-secondary/20">
+                <div v-if="project.link.includes('github.com')" class="p-6 border border-line rounded-lg bg-bg-raised/20">
                     <p class="text-sm text-text-muted italic text-center">
                         More detailed documentation and setup instructions are available on the source repository.
                     </p>
@@ -80,12 +78,12 @@
             </div>
 
             <aside class="space-y-6">
-                <div class="p-5 rounded-lg border border-border-color bg-bg-secondary/10">
+                <div class="p-5 rounded-lg border border-line bg-bg-raised/10">
                     <h3 class="text-sm font-semibold text-text-main mb-3 uppercase tracking-wider">Project Info</h3>
                     <dl class="space-y-3 text-sm">
                         <div class="flex justify-between items-center" v-if="project.deployment_url">
                             <dt class="text-text-muted">Status</dt>
-                            <dd class="text-green-400 font-medium">Live</dd>
+                            <dd class="text-phosphor font-medium">Live</dd>
                         </div>
                         <div class="flex justify-between items-center">
                             <dt class="text-text-muted">Type</dt>
@@ -114,7 +112,7 @@ import projectsData from '../data/projects.js'
 import closedData from '../data/closedSrcProjects.js'
 
 const route = useRoute()
-const repoName = route.params.repo
+const repoName = computed(() => route.params.repo)
 
 const allProjects = [...projectsData, ...closedData]
 
@@ -124,7 +122,7 @@ const project = computed(() => {
         if (!p.link) return false;
         const parts = p.link.split('/')
         const name = parts[parts.length - 1] || parts[parts.length - 2] // handle trailing slash
-        return name === repoName || p.title.toLowerCase().replace(/\s+/g, '-') === repoName
+        return name === repoName.value || p.title.toLowerCase().replace(/\s+/g, '-') === repoName.value
     })
 })
 
@@ -161,7 +159,7 @@ useHead({
         },
         {
             property: 'og:url',
-            content: computed(() => `https://satyendra.in/projects/${repoName}`)
+            content: computed(() => `https://satyendra.in/projects/${repoName.value}`)
         },
         // Twitter
         {
@@ -188,7 +186,7 @@ useHead({
     link: [
         {
             rel: 'canonical',
-            href: computed(() => `https://satyendra.in/projects/${repoName}`)
+            href: computed(() => `https://satyendra.in/projects/${repoName.value}`)
         }
     ]
 })

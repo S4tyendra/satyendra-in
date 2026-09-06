@@ -57,13 +57,17 @@ const routes = [
 
     // 404 catch-all - must be last
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-    { path: '/404', name: 'NotFound', component: NotFound }
 ]
 
 // Export for SSG
 export const createApp = ViteSSG(
     App,
-    { routes, base: import.meta.env.BASE_URL },
+    { routes, base: import.meta.env.BASE_URL, scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) return savedPosition
+        if (to.hash) return { el: to.hash, top: 150 }
+        if (to.path === from.path) return false
+        return { top: 0 }
+    } },
     ({ app, router, isClient }) => {
         // Case-insensitive redirects via navigation guard
         router.beforeEach((to, from) => {

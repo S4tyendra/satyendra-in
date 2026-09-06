@@ -1,47 +1,39 @@
-/* --- HEADER: FANTASY BORDER & IMAGE --- */
+/* --- AVATAR --- */
 .avatar-container {
     position: relative;
     z-index: 20;
 }
 
-.fantasy-border {
+.avatar-ring {
     position: absolute;
     inset: -3px;
     border-radius: 1rem;
-    background: conic-gradient(from 0deg, transparent, #6366f1, #ec4899, #a855f7, transparent);
+    border: 1px solid rgba(230, 222, 200, 0.18);
     opacity: 0;
-    transition: opacity 0.3s ease, border-radius 0.5s ease;
-    filter: blur(8px);
+    transition: opacity 0.35s ease, inset 0.4s ease, border-radius 0.4s ease;
     z-index: -1;
 }
 
-.avatar-container:hover .fantasy-border {
-    opacity: 0.6;
+.avatar-container:hover .avatar-ring {
+    opacity: 1;
 }
 
-/* Click State */
 .avatar-container.processing .img-main {
     border-radius: 50%;
-    transform: scale(0.95);
+    transform: scale(0.96);
 }
 
-.avatar-container.processing .fantasy-border {
+.avatar-container.processing .avatar-ring {
     opacity: 1;
     border-radius: 50%;
-    inset: -6px;
-    background: conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
-    animation: spinBorder 2s linear infinite;
-    filter: blur(4px);
+    inset: -5px;
+    border-color: var(--color-phosphor);
+    animation: ringPulse 1.6s ease-in-out infinite;
 }
 
-@keyframes spinBorder {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+@keyframes ringPulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
 }
 
 .img-main {
@@ -59,7 +51,7 @@
 }
 
 .pill-container:hover .pill-expandable {
-    max-width: 50px;
+    max-width: 70px;
     opacity: 1;
 }
 
@@ -73,19 +65,19 @@
 }
 
 .group\/name:hover .name-expandable {
-    max-width: 100px;
+    max-width: 110px;
     opacity: 1;
     margin-right: 0.3em;
 }
 
-/* --- BIO: HIGHLIGHTERS & EFFECTS --- */
+/* --- BIO: HIGHLIGHTERS --- */
 .highlighter-effect {
     position: relative;
     display: inline-block;
     transition: all 0.3s ease;
     border-left: 2px solid transparent;
     padding-left: 0;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.251) 0%, rgba(34, 197, 94, 0) 100%);
+    background-image: linear-gradient(90deg, rgba(230, 222, 200, 0.18) 0%, transparent 100%);
     background-size: 0% 100%;
     background-repeat: no-repeat;
     background-position: left center;
@@ -97,10 +89,8 @@
     padding-right: 4px;
     color: #E6DEC8;
     border-left-color: #E6DEC8;
-    background-image: linear-gradient(90deg, rgba(230, 222, 200, 0.251) 0%, rgba(34, 197, 94, 0) 100%);
 }
 
-/* Violet (Backend) */
 .highlight-base {
     position: relative;
     display: inline-block;
@@ -118,10 +108,9 @@
 }
 
 .hl-violet {
-    background-image: linear-gradient(90deg, #8b5cf6 0%, #6d28d9 100%);
+    background-image: linear-gradient(90deg, #6d4a9a 0%, #4a2f72 100%);
 }
 
-/* --- SMOOTH CYBER LOCK & DEVOPS --- */
 .cyber-wrapper {
     display: inline-flex;
     align-items: center;
@@ -152,8 +141,8 @@
 }
 
 .group\/item:hover .devops-text {
-    color: #3b82f6;
-    text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    color: var(--color-phosphor);
+    text-shadow: 0 0 8px rgba(143, 188, 122, 0.35);
 }
 
 /* --- BIO: BORDER REVEAL --- */
@@ -163,7 +152,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #27272a;
+    background: rgba(230, 222, 200, 0.12);
     border-radius: 2px;
     overflow: hidden;
 }
@@ -171,10 +160,7 @@
 .bio-line::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: #E6DEC8;
     transform: scaleY(0);
     transform-origin: top;
@@ -183,7 +169,6 @@
 
 .bio-card:hover .bio-line::after {
     transform: scaleY(1);
-    background: #E6DEC8;
 }
 
 /* --- ACCORDION & NAV --- */
@@ -203,7 +188,6 @@
     overflow: visible;
 }
 
-/* Left Border Glow on Hover */
 .nav-group::before {
     content: '';
     position: absolute;
@@ -214,31 +198,28 @@
     background: linear-gradient(180deg, #E6DEC8, transparent);
     transition: width 0.3s ease;
     border-radius: 8px 0 0 8px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
-/* Desktop Hover Logic */
 @media (hover: hover) {
     .nav-group:hover {
-        background-color: rgba(230, 222, 200, 0.02);
+        background-color: rgba(230, 222, 200, 0.03);
     }
 }
 
-/* Mobile Active State */
 .nav-group.active .accordion-wrapper {
     grid-template-rows: 1fr;
 }
 
 .nav-group.active .arrow-icon {
     transform: rotate(90deg);
-    color: #22c55e;
+    color: var(--color-phosphor);
 }
 
 .nav-group.active::before {
-    width: 3px;
+    width: 2px;
 }
 
-/* Nav Items */
 .nav-item {
     position: relative;
 }

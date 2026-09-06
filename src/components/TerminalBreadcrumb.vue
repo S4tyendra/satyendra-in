@@ -1,29 +1,29 @@
 <template>
     <div class="w-full font-mono text-xs relative select-none">
-        <div :class="['flex items-center gap-1.5 px-3 py-2 border transition-all cursor-text text-[#c9d1d9]',
-            shouldShowPanel ? 'rounded-t-xl border-[#30363d] bg-[#0d1117]/90 border-b-0' : 'rounded-xl',
-            !shouldShowPanel && isFocused ? 'border-[#30363d] bg-[#0d1117]/70' : '',
-            !shouldShowPanel && !isFocused ? 'border-transparent bg-[#0d1117]/35 hover:border-[#30363d]/40' : ''
+        <div :class="['flex items-center gap-1.5 px-3 py-2 border transition-all cursor-text text-text-main',
+            shouldShowPanel ? 'rounded-t-lg border-text-main/15 bg-bg-inset/90 border-b-0' : 'rounded-lg',
+            !shouldShowPanel && isFocused ? 'border-text-main/20 bg-bg-inset/80' : '',
+            !shouldShowPanel && !isFocused ? 'border-text-main/8 bg-bg-inset/40 hover:border-text-main/16' : ''
         ]" @click="handleContainerClick">
-            <span class="text-[#7ee787] font-semibold text-[11px]">satya@web</span>
-            <span class="text-zinc-600 text-[11px]">:</span>
+            <span class="text-phosphor font-medium text-[11px]">satya@web</span>
+            <span class="text-text-main/30 text-[11px]">:</span>
             <PathBreadcrumb />
-            <span class="text-zinc-600">$</span>
+            <span class="text-text-main/35">$</span>
             <div class="flex-1 min-w-[90px]">
                 <input id="terminal-input"
-                    class="w-full bg-transparent border-none outline-none text-[#c9d1d9] placeholder-zinc-600 text-[11px]"
+                    class="w-full bg-transparent border-none outline-none text-text-main placeholder-text-main/30 text-[11px]"
                     placeholder="type help for commands" v-model="inputValue" @input="handleInput"
                     @keydown="handleKeyDown" @focus="handleFocus" @blur="handleBlur" spellcheck="false"
                     autocomplete="off" />
             </div>
-            <kbd class="flex items-center gap-1 text-[10px] text-zinc-500 px-1.5 py-0.5 rounded-md border border-[#30363d]/60 bg-[#05070b]/70 hover:border-[#58a6ff]/50 cursor-pointer"
+            <kbd class="flex items-center gap-1 text-[10px] text-text-main/40 px-1.5 py-0.5 rounded border border-text-main/12 bg-bg-main/70 hover:border-text-main/30 cursor-pointer"
                 @click.stop="focusInput">
                 <span class="px-1 py-0.5 bg-transparent">/</span>
             </kbd>
         </div>
         <Transition name="terminal-expand" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave">
             <div v-if="shouldShowPanel"
-                class="border border-[#30363d] border-t-0 bg-[#0d1117]/90 rounded-b-xl overflow-hidden shadow-2xl backdrop-blur-sm">
+                class="border border-text-main/15 border-t-0 bg-bg-inset/95 rounded-b-lg overflow-hidden shadow-2xl backdrop-blur-sm">
                 <SuggestionsPanel :inputValue="inputValue" :terminalOutput="terminalOutput" :suggestions="suggestions"
                     :selectedIndex="selectedIndex" @applySuggestion="applySuggestion"
                     @setSelectedIndex="setSelectedIndex" />

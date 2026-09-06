@@ -8,7 +8,7 @@
 
         <!-- Graph Container (Always rendered, blurred when loading) -->
         <div v-else
-            class="w-full bg-[#161b22]/20 backdrop-blur-md border border-[#30363d] rounded-xl shadow-2xl overflow-hidden relative fade-in group transition-all duration-300 hover:border-text-main/20">
+            class="w-full relative fade-in">
 
             <!-- Shimmer Overlay when loading -->
             <div v-if="loading" class="absolute inset-0 z-50 pointer-events-none overflow-hidden rounded-xl">
@@ -16,50 +16,23 @@
             </div>
 
             <!-- Header -->
-            <div class="px-4 py-3 flex justify-between items-baseline cursor-default transition-all duration-500"
-                :class="{ 'blur-sm': loading }">
-                <h2 class="text-xs font-normal text-gray-400">
-                    <span class="text-white font-semibold text-sm">{{ displayContributions.toLocaleString() }}</span>
+            <div class="pb-2 flex justify-between items-baseline cursor-default">
+                <h2 class="text-[13px] text-text-main/55">
+                    <span class="text-text-main font-medium">{{ displayContributions.toLocaleString() }}</span>
                     contributions last year
                 </h2>
-                <span class="text-[10px] text-gray-500 font-mono">{{ displayYearRange }}</span>
+                <span class="text-[12px] text-text-main/40">{{ displayYearRange }}</span>
             </div>
 
-            <!-- Collapsible Body -->
-            <div class="accordion-wrapper">
-                <div class="accordion-inner">
-                    <div class="px-4 pb-4 space-y-4 accordion-content">
-                        <!-- Scrollable Container -->
-                        <div class="relative group/graph transition-all duration-500" :class="{ 'blur-sm': loading }">
-                            <!-- Left/Right Fade Indicators -->
-                            <div
-                                class="absolute left-0 top-0 bottom-0 w-4 bg-linear-to-r from-[#161b22] to-transparent z-10 pointer-events-none">
-                            </div>
-                            <div
-                                class="absolute right-0 top-0 bottom-0 w-4 bg-linear-to-l from-[#161b22] to-transparent z-10 pointer-events-none">
-                            </div>
-
-                            <!-- The Graph -->
-                            <div class="overflow-x-auto graph-scroll pb-2">
-                                <div class="flex gap-[3px] min-w-max p-1 items-center mx-auto w-fit">
-                                    <div v-for="(pair, pIndex) in displayWeekPairs" :key="pIndex"
-                                        class="flex flex-col gap-[3px]">
-                                        <div v-for="(week, wIndex) in pair" :key="wIndex"
-                                            class="flex flex-col gap-[3px]">
-                                            <div v-for="(day, dIndex) in week.contributionDays" :key="day.date"
-                                                class="w-[10px] h-[10px] rounded-[2px] cursor-pointer border border-transparent hover:border-[rgba(255,255,255,0.4)] transition day-cell"
-                                                :style="{
-                                                    backgroundColor: getColor(day),
-                                                    border: day.contributionCount === 0 ? '1px solid rgba(255,255,255,0.04)' : undefined,
-                                                    animationDelay: loading ? '0ms' : `${(pIndex * 5) + (wIndex * 2 + dIndex) * 5}ms`
-                                                }" @mouseenter="showTooltip($event, day)" @mouseleave="hideTooltip"
-                                                @touchstart="showTooltip($event, day)"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="overflow-x-auto graph-scroll">
+                <div class="graph-weeks">
+                    <div v-for="(day, index) in displayDays" :key="day.date || index"
+                        class="graph-day day-cell"
+                        :style="{
+                            backgroundColor: getColor(day),
+                            animationDelay: loading ? '0ms' : `${index * 2}ms`
+                        }" @mouseenter="day.date && showTooltip($event, day)" @mouseleave="hideTooltip"
+                        @touchstart="day.date && showTooltip($event, day)"></div>
                 </div>
             </div>
         </div>
@@ -144,13 +117,18 @@ const displayYearRange = computed(() => {
     return yearRange.value
 })
 
-const displayWeekPairs = computed(() => {
-    const weeks = loading.value ? placeholderData.weeks : (calendar.value.weeks || [])
-    const pairs = []
-    for (let i = 0; i < weeks.length; i += 2) {
-        pairs.push(weeks.slice(i, i + 2))
-    }
-    return pairs
+const displayWeeks = computed(() => {
+    return loading.value ? placeholderData.weeks : (calendar.value.weeks || [])
+})
+
+const displayDays = computed(() => {
+    return displayWeeks.value.flatMap((week) => {
+        const days = [...(week.contributionDays || [])]
+        while (days.length < 7) {
+            days.push({ date: '', contributionCount: 0, color: '#161b22' })
+        }
+        return days.slice(0, 7)
+    })
 })
 
 const fetchGraph = async () => {
@@ -225,6 +203,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.graph-weeks {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 3px;
+    width: 100%;
+}
+
+.graph-day {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
 .graph-scroll::-webkit-scrollbar {
     height: 4px;
 }
@@ -240,7 +234,7 @@ onMounted(() => {
 }
 
 .graph-scroll::-webkit-scrollbar-thumb:hover {
-    background: #58a6ff;
+    background: rgba(230, 222, 200, 0.4);
 }
 
 .custom-tooltip {
@@ -314,30 +308,7 @@ onMounted(() => {
     }
 }
 
-.accordion-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.5s cubic-bezier(0.2, 0.0, 0.2, 1);
-}
-
-.accordion-inner {
-    overflow: hidden;
-    min-height: 0;
-}
-
-.accordion-content {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease-out;
-}
-
-.group:hover .accordion-wrapper {
-    grid-template-rows: 1fr;
-}
-
-.group:hover .accordion-content {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.3s;
+.day-cell:hover {
+    outline: 1px solid rgba(230, 222, 200, 0.45);
 }
 </style>

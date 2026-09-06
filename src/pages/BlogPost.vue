@@ -179,15 +179,7 @@ useHead(computed(() => ({
 
 <template>
     <div class="blog-wrapper flex flex-col items-center w-full min-h-[80vh] relative overflow-hidden">
-        <!-- Background ambient -->
-        <div class="fixed inset-0 pointer-events-none z-0">
-            <div
-                class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-cyan-900/10 rounded-full blur-[120px] opacity-30 animate-pulse">
-            </div>
-            <div
-                class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[150px] opacity-20 animate-pulse delay-1000">
-            </div>
-        </div>
+
 
         <div class="relative z-10 w-full py-8">
             <!-- DESKTOP: Left sidebar — all posts with search -->
@@ -197,7 +189,7 @@ useHead(computed(() => ({
                     class="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 flex flex-col gap-3 max-h-[80vh]">
                     <!-- Back to Blog -->
                     <router-link to="/blog"
-                        class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors group">
+                        class="flex items-center gap-2 text-sm text-text-muted hover:text-text-main transition-colors group">
                         <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -213,7 +205,7 @@ useHead(computed(() => ({
                                 <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                             </svg>
                             <input v-model="search" type="text" placeholder="Search posts…"
-                                class="w-full bg-white/5 border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-text-main placeholder-text-muted focus:outline-none focus:border-cyan-500/50 transition-colors" />
+                                class="w-full bg-white/5 border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-text-main placeholder-text-muted focus:outline-none focus:border-text-main/35 transition-colors" />
                         </div>
 
                         <!-- Post list -->
@@ -221,15 +213,15 @@ useHead(computed(() => ({
                             <li v-for="p in filteredPosts" :key="p.slug">
                                 <router-link :to="`/blog/${p.slug}`"
                                     class="flex items-start gap-2 px-2 py-2 rounded-lg text-xs transition-all group hover:bg-white/5"
-                                    :class="p.slug === slug ? 'bg-cyan-500/15 text-cyan-400 font-medium' : ''">
+                                    :class="p.slug === slug ? 'bg-text-main/10 text-text-main font-medium' : ''">
                                     <svg class="w-3.5 h-3.5 mt-0.5 shrink-0"
-                                        :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted'" fill="none"
+                                        :class="p.slug === slug ? 'text-text-main' : 'text-text-muted'" fill="none"
                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path
                                             d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                     </svg>
                                     <span
-                                        :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted group-hover:text-text-main'"
+                                        :class="p.slug === slug ? 'text-text-main' : 'text-text-muted group-hover:text-text-main'"
                                         class="leading-snug">{{ p.title }}</span>
                                 </router-link>
                             </li>
@@ -250,10 +242,10 @@ useHead(computed(() => ({
                             <button @click="scrollToAnchor(item.id)" :class="[
                                 'block text-left text-xs py-1 transition-all w-full font-medium',
                                 item.id === activeId
-                                    ? 'text-cyan-400'
+                                    ? 'text-text-main'
                                     : item.level === 3
-                                        ? 'pl-3 text-text-muted/70 hover:text-cyan-400 font-normal'
-                                        : 'text-text-muted hover:text-cyan-400 font-normal'
+                                        ? 'pl-3 text-text-muted/70 hover:text-text-main font-normal'
+                                        : 'text-text-muted hover:text-text-main font-normal'
                             ]">
                                 <span :class="item.level === 3 ? 'pl-3 block' : ''">
                                     {{ item.text }}
@@ -268,7 +260,7 @@ useHead(computed(() => ({
             <Drawer v-model:open="sidebarOpen">
                 <DrawerTrigger as-child>
                     <button
-                        class="fab-button fixed bottom-6 right-6 z-50 p-4 rounded-full bg-cyan-600 text-white shadow-2xl hover:bg-cyan-500 transition-all active:scale-95"
+                        class="fab-button fixed bottom-6 right-6 z-50 p-4 rounded-full bg-text-main text-bg-main shadow-2xl hover:bg-text-main/90 transition-all active:scale-95"
                         :class="{ 'visible': showFabs }" aria-label="All posts">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M4 6h16M4 12h16M4 18h16" />
@@ -292,7 +284,7 @@ useHead(computed(() => ({
                     </DrawerHeader>
                     <div class="p-6 overflow-y-auto flex flex-col gap-4">
                         <router-link to="/blog" @click="sidebarOpen = false"
-                            class="flex items-center gap-2 text-sm text-text-muted hover:text-cyan-400 transition-colors group">
+                            class="flex items-center gap-2 text-sm text-text-muted hover:text-text-main transition-colors group">
                             <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
                                 stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -305,20 +297,20 @@ useHead(computed(() => ({
                                 <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                             </svg>
                             <input v-model="search" type="text" placeholder="Search posts…"
-                                class="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-3 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-cyan-500/50 transition-colors" />
+                                class="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-3 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-text-main/35 transition-colors" />
                         </div>
                         <ul class="space-y-1">
                             <li v-for="p in filteredPosts" :key="p.slug">
                                 <router-link :to="`/blog/${p.slug}`" @click="sidebarOpen = false"
                                     class="flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm transition-all hover:bg-white/5"
-                                    :class="p.slug === slug ? 'bg-cyan-500/15 text-cyan-400 font-medium' : ''">
+                                    :class="p.slug === slug ? 'bg-text-main/10 text-text-main font-medium' : ''">
                                     <svg class="w-4 h-4 mt-0.5 shrink-0"
-                                        :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted'" fill="none"
+                                        :class="p.slug === slug ? 'text-text-main' : 'text-text-muted'" fill="none"
                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path
                                             d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                     </svg>
-                                    <span :class="p.slug === slug ? 'text-cyan-400' : 'text-text-muted'"
+                                    <span :class="p.slug === slug ? 'text-text-main' : 'text-text-muted'"
                                         class="leading-snug">{{ p.title }}</span>
                                 </router-link>
                             </li>
@@ -331,7 +323,7 @@ useHead(computed(() => ({
             <Drawer v-if="toc.length > 0" v-model:open="mobileTocOpen">
                 <DrawerTrigger as-child>
                     <button
-                        class="fab-button fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-400 shadow-2xl hover:bg-white/20 transition-all active:scale-95"
+                        class="fab-button fixed bottom-6 left-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-text-main shadow-2xl hover:bg-white/20 transition-all active:scale-95"
                         :class="{ 'visible': showFabs }" aria-label="Table of Contents">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M4 6h16M4 10h16M4 14h10M4 18h7" />
@@ -361,10 +353,10 @@ useHead(computed(() => ({
                                 <button @click="scrollToAnchor(item.id); mobileTocOpen = false" :class="[
                                     'block text-left text-sm py-2.5 transition-all w-full rounded-lg px-2 hover:bg-white/5',
                                     item.id === activeId
-                                        ? 'text-cyan-400 font-semibold bg-cyan-500/10'
+                                        ? 'text-text-main font-semibold bg-text-main/8'
                                         : item.level === 3
-                                            ? 'pl-6 text-text-muted/70 hover:text-cyan-400'
-                                            : 'text-text-muted font-medium hover:text-cyan-400'
+                                            ? 'pl-6 text-text-muted/70 hover:text-text-main'
+                                            : 'text-text-muted font-medium hover:text-text-main'
                                 ]">
                                     {{ item.text }}
                                 </button>
@@ -379,7 +371,7 @@ useHead(computed(() => ({
                 <!-- TOC accordion for mobile/tablet -->
                 <div v-if="toc.length > 0 && !isScrolled" class="mb-8 lg:hidden">
                     <button @click="tocOpen = !tocOpen"
-                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all group">
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-text-main/20 transition-all group">
                         <span class="text-sm font-medium text-text-muted group-hover:text-text-main">On this page</span>
                         <svg :class="['w-4 h-4 text-text-muted transition-transform', tocOpen ? 'rotate-180' : '']"
                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -388,7 +380,7 @@ useHead(computed(() => ({
                     </button>
                     <div v-if="tocOpen" class="mt-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
                         <button v-for="item in toc" :key="item.id" @click="scrollToAnchor(item.id)" :class="[
-                            'block text-left text-sm transition-colors hover:text-cyan-400 w-full',
+                            'block text-left text-sm transition-colors hover:text-text-main w-full',
                             item.level === 3 ? 'pl-3 text-text-muted/70' : 'text-text-muted'
                         ]">
                             {{ item.text }}
@@ -397,14 +389,14 @@ useHead(computed(() => ({
                 </div>
 
                 <div v-if="post">
-                    <article class="blog-content" :key="slug">
+                    <article class="blog-content prose-site" :key="slug">
                         <component v-if="postComponent?.default" :is="postComponent.default" />
                         <div v-else class="text-center py-20">
                             <div class="text-5xl mb-4">📄</div>
                             <h2 class="text-2xl font-bold text-text-main mb-2">Post Not Found</h2>
                             <p class="text-text-muted">This blog post doesn't exist.</p>
                             <router-link to="/blog"
-                                class="inline-block mt-6 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors">
+                                class="inline-block mt-6 px-4 py-2 bg-text-main text-bg-main rounded-md hover:bg-text-main/90 transition-colors">
                                 Back to Blog
                             </router-link>
                         </div>
@@ -414,7 +406,7 @@ useHead(computed(() => ({
                     <div class="text-5xl mb-4">📄</div>
                     <h2 class="text-2xl font-bold text-text-main mb-2">Post Not Found</h2>
                     <router-link to="/blog"
-                        class="inline-block mt-6 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors">
+                        class="inline-block mt-6 px-4 py-2 bg-text-main text-bg-main rounded-md hover:bg-text-main/90 transition-colors">
                         Back to Blog
                     </router-link>
                 </div>
@@ -499,14 +491,14 @@ useHead(computed(() => ({
 }
 
 .blog-content :deep(a) {
-    color: rgb(34, 211, 238);
+    color: #e6dec8;
     text-decoration: underline;
     text-underline-offset: 2px;
     transition: color 0.2s;
 }
 
 .blog-content :deep(a:hover) {
-    color: rgb(103, 232, 249);
+    color: #e6dec8;
 }
 
 .blog-content :deep(ul),
@@ -530,11 +522,11 @@ useHead(computed(() => ({
 
 .blog-content :deep(code:not(pre code)) {
     background: rgba(255, 255, 255, 0.1);
-    color: rgb(103, 232, 249);
+    color: #e6dec8;
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     font-size: 0.875rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
 }
 
 .blog-content :deep(pre) {
@@ -587,11 +579,11 @@ useHead(computed(() => ({
 }
 
 .blog-content :deep(blockquote) {
-    border-left: 4px solid rgba(34, 211, 238, 0.5);
+    border-left: 4px solid rgba(230, 222, 200, 0.45);
     padding-left: 1rem;
     font-style: italic;
     color: var(--color-text-muted);
-    background: rgba(34, 211, 238, 0.05);
+    background: rgba(230, 222, 200, 0.05);
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     margin: 1.5rem 0;
@@ -617,7 +609,7 @@ useHead(computed(() => ({
 
 /* Header anchor styling — same as DocsPage */
 .blog-content :deep(.header-anchor) {
-    color: rgba(34, 211, 238, 0.5);
+    color: rgba(230, 222, 200, 0.45);
     text-decoration: none;
     margin-right: 0.5rem;
     opacity: 0.6;
@@ -625,7 +617,7 @@ useHead(computed(() => ({
 }
 
 .blog-content :deep(.header-anchor:hover) {
-    color: rgb(34, 211, 238);
+    color: #e6dec8;
 }
 
 .blog-content :deep(h2:hover .header-anchor),

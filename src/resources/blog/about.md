@@ -19,7 +19,7 @@ type: Page
 # **Hi! I'm Satyendra.**
 
 <aside>
-🎨 **Hi! I'm Satyendra, a Computer Science student at Indian Institute of information technology, Kota.**
+🎨 **Hi! I'm Satyendra, a Software Development Engineer at Neosurge. CSE, IIIT Kota (2022–2026).**
 
 I specialize in building robust and secure applications with a strong focus on backend architecture. My expertise includes implementing industry-standard security protocols, optimizing database performance, and creating scalable system designs. I'm particularly passionate about cybersecurity and developing secure, efficient solutions for complex technical challenges.
 
@@ -29,7 +29,7 @@ I specialize in building robust and secure applications with a strong focus on b
 
 ---
 
-I'm a passionate Computer Science Engineering student at Indian Institute of Information Technology Kota (2022-2026). With a strong foundation in programming and a keen interest in technology, I've developed expertise in both frontend and backend development.
+I'm a Software Development Engineer at Neosurge. I studied Computer Science at IIIT Kota (2022–2026). Backend, infra, and security — that's the work.
 
 ## 📋 Experience
 

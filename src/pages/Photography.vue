@@ -3,11 +3,11 @@ import { useHead } from '@vueuse/head'
 import { photos } from '../data/photos.js'
 
 useHead({
-    title: 'Visuals & Photography | Satyendra',
+    title: 'Photography | Satyendra',
     meta: [
-        { name: 'description', content: 'A gallery of perspectives. Street, landscape, and macro photography captured through my lens.' },
-        { property: 'og:title', content: 'Visuals & Photography | Satyendra' },
-        { property: 'og:description', content: 'A gallery of perspectives. Street, landscape, and macro photography.' },
+        { name: 'description', content: 'Photographs by Satyendra.' },
+        { property: 'og:title', content: 'Photography | Satyendra' },
+        { property: 'og:description', content: 'Photographs by Satyendra.' },
         { property: 'og:url', content: 'https://satyendra.in/photography' },
         { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/photography.png' },
         { name: 'twitter:card', content: 'summary_large_image' },
@@ -19,45 +19,27 @@ useHead({
 </script>
 
 <template>
-    <div class="min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div class="w-full mx-auto mb-12 text-center">
-            <h1 class="text-4xl font-bold text-text-main mb-4 tracking-tight">Visual Journal</h1>
-            <p class="text-lg text-text-main/60 max-w-2xl mx-auto">
-                A collection of fleeting moments, quiet details, and grand landscapes.
-                Captured to tell a story beyond words.
-            </p>
+    <div class="flex flex-col gap-8 fade-in-up pb-8">
+        <header class="space-y-2">
+            <p class="page-kicker">Photography</p>
+            <h1 class="page-title text-3xl">Photographs.</h1>
+        </header>
+
+        <div v-if="photos.length" class="columns-xs gap-4 space-y-4">
+            <router-link v-for="photo in photos" :key="photo.id" :to="`/photography/${photo.id}`"
+                class="block break-inside-avoid relative group overflow-hidden border border-text-main/10 hover:border-text-main/30 transition-colors">
+                <img :src="photo.thumbnail" :alt="photo.title" width="400" height="600" loading="lazy"
+                    class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-[filter] duration-500" />
+                <div class="absolute inset-x-0 bottom-0 p-3 bg-linear-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <h3 class="text-text-main text-sm font-medium">{{ photo.title }}</h3>
+                    <p class="text-text-main/70 text-xs mt-0.5 line-clamp-2">{{ photo.description }}</p>
+                </div>
+            </router-link>
         </div>
 
-        <div class="columns-xs gap-6 space-y-6">
-            <template v-for="photo in photos" :key="photo.id">
-                <router-link :to="`/photography/${photo.id}`"
-                    class="block break-inside-avoid relative group rounded-xl overflow-hidden shadow-lg bg-surface-lighter/5 ring-1 ring-white/5 hover:ring-white/20 transition-all duration-300 transform hover:-translate-y-1">
-                    <img :src="photo.thumbnail" :alt="photo.title" width="400" height="600" loading="lazy"
-                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
-
-                    <!-- Overlay -->
-                    <div
-                        class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <h3
-                            class="text-white text-xl font-bold translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            {{ photo.title }}</h3>
-                        <p
-                            class="text-white/80 text-sm mt-1 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75 line-clamp-2">
-                            {{ photo.description }}</p>
-                    </div>
-                </router-link>
-            </template>
-        </div>
-
-        <div v-if="photos.length === 0" class="text-center py-24">
-            <p class="text-xl text-text-main/50">Gallery is being curated. Check back soon.</p>
+        <div v-else class="border border-dashed border-text-main/15 rounded-md px-4 py-10">
+            <p class="font-sans text-xs text-text-main/50">ls: photography/ — empty</p>
+            <p class="text-sm text-text-muted mt-2">Nothing scanned in yet. The rest of the site still works.</p>
         </div>
     </div>
 </template>
-
-<style scoped>
-/* Smooth masonry layout */
-.columns-1 {
-    column-fill: balance;
-}
-</style>

@@ -42,14 +42,14 @@ onUnmounted(() => window.removeEventListener('resize', handleResize))
 
 <template>
     <Transition name="nav-fade">
-        <div v-if="show" class="fixed z-40" style="bottom: 5.5rem; right: 1.5rem;">
+        <div v-if="show" class="fixed z-40 bottom-24 right-4 md:bottom-16 md:right-6">
 
             <!-- ── DESKTOP: collapsible panel ── -->
             <div v-if="isDesktop" class="flex flex-col items-end gap-2">
                 <!-- Panel -->
                 <Transition name="panel-slide">
                     <div v-if="panelOpen"
-                        class="w-56 rounded-2xl bg-bg-main/95 backdrop-blur-md border border-white/10 shadow-2xl overflow-hidden p-3 space-y-2">
+                        class="w-56 rounded-lg bg-bg-main/95 backdrop-blur-md border border-text-main/15 shadow-2xl overflow-hidden p-3 space-y-2">
                         <NavGroup num="01" title="Engineering" :is-default-open="false">
                             <NavItem :icon="CodeIcon" label="Projects" code="DIR_01 [02]" href="/projects" />
                             <NavItem :icon="FlaskIcon" label="Experience" code="GIT_REPO [03]" href="/experience" />
@@ -67,8 +67,8 @@ onUnmounted(() => window.removeEventListener('resize', handleResize))
 
                 <!-- Toggle button -->
                 <button @click="panelOpen = !panelOpen"
-                    class="w-12 h-12 rounded-full bg-bg-main/95 backdrop-blur-md border border-white/10 shadow-2xl flex items-center justify-center text-text-muted hover:text-cyan-400 hover:border-cyan-500/40 transition-all duration-300 active:scale-95"
-                    :class="panelOpen ? 'border-cyan-500/40 text-cyan-400' : ''" aria-label="Toggle navigation">
+                    class="w-12 h-12 rounded-full bg-bg-main/95 backdrop-blur-md border border-text-main/15 shadow-2xl flex items-center justify-center text-text-muted hover:text-text-main hover:border-text-main/40 transition-all duration-300 active:scale-95"
+                    :class="panelOpen ? 'border-text-main/40 text-text-main' : ''" aria-label="Toggle navigation">
                     <!-- Grid icon when closed, X when open -->
                     <svg v-if="!panelOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"
                         viewBox="0 0 24 24">
@@ -88,7 +88,7 @@ onUnmounted(() => window.removeEventListener('resize', handleResize))
                 <Drawer v-model:open="drawerOpen">
                     <DrawerTrigger as-child>
                         <button
-                            class="w-12 h-12 rounded-full bg-bg-main/95 backdrop-blur-md border border-white/10 shadow-2xl flex items-center justify-center text-text-muted hover:text-cyan-400 hover:border-cyan-500/40 transition-all duration-300 active:scale-95"
+                            class="w-12 h-12 rounded-full bg-bg-main/95 backdrop-blur-md border border-text-main/15 shadow-2xl flex items-center justify-center text-text-muted hover:text-text-main hover:border-text-main/40 transition-all duration-300 active:scale-95"
                             aria-label="Navigation">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"
                                 viewBox="0 0 24 24">

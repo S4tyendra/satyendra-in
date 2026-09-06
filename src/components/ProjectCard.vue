@@ -1,31 +1,23 @@
 <template>
   <div
-    class="group/project rounded-lg border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/50 transition-all duration-300 overflow-hidden text-left flex flex-col h-full">
-
-    <!-- Project Image -->
-    <!-- <div v-if="image" class="aspect-square w-full overflow-hidden border-b border-zinc-800/50 bg-zinc-900">
-      <img :src="image" :alt="title"
-        class="w-full h-full object-cover transition-transform duration-500 group-hover/project:scale-105"
-        loading="lazy" />
-    </div> -->
-
+    class="group/project border border-text-main/10 bg-bg-raised/30 hover:border-text-main/25 hover:bg-bg-raised/50 transition-colors overflow-hidden text-left flex flex-col h-full rounded-md">
     <div class="p-4 flex flex-col flex-grow">
       <div class="flex justify-between items-start mb-2">
         <component :is="link.startsWith('http') ? 'a' : 'router-link'" :to="link.startsWith('http') ? undefined : link"
           :href="link.startsWith('http') ? link : undefined" :target="link.startsWith('http') ? '_blank' : undefined"
-          class="font-medium text-text-main text-sm hover:underline cursor-pointer">
+          class="font-medium text-text-main text-sm hover:underline underline-offset-4 decoration-text-main/30 cursor-pointer">
           {{ title }}
         </component>
         <component :is="link.startsWith('http') ? 'a' : 'router-link'" :to="link.startsWith('http') ? undefined : link"
           :href="link.startsWith('http') ? link : undefined" :target="link.startsWith('http') ? '_blank' : undefined"
-          class="text-zinc-400 hover:text-zinc-300 transition-colors cursor-pointer">
+          class="text-text-main/40 hover:text-text-main transition-colors cursor-pointer" aria-hidden="true">
           →
         </component>
       </div>
-      <p class="text-[12px] text-zinc-400 mb-3 leading-relaxed flex-grow">{{ description }}</p>
+      <p class="text-[12px] text-text-muted mb-3 leading-relaxed flex-grow">{{ description }}</p>
       <div class="flex flex-wrap gap-1.5 mt-auto">
         <span v-for="tag in tags" :key="tag"
-          class="px-2 py-0.5 text-[10px] font-mono rounded bg-zinc-800 text-zinc-400">
+          class="px-1.5 py-0.5 text-[10px] font-mono text-text-main/45 border border-text-main/10 rounded-sm">
           {{ tag }}
         </span>
       </div>
@@ -37,7 +29,7 @@
 defineProps({
   title: String,
   description: String,
-  image: String, // Added image prop
+  image: String,
   tags: {
     type: Array,
     default: () => []

@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-col gap-4 fade-in-up" style="animation-delay: 100ms;">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-[10px] font-mono text-text-main/60 border border-zinc-800 rounded px-1.5 py-0.5">DIR_01</span>
+      <span class="text-[10px] font-mono text-text-main/60 border border-text-main/15 rounded px-1.5 py-0.5">DIR_01</span>
       <span class="font-medium text-[13px] text-text-main tracking-wide uppercase">Projects</span>
     </div>
     <div v-if="projects.length" class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">

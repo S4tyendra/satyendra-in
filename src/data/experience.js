@@ -1,63 +1,63 @@
-export const introData = {
-    title: "Principal Systems Engineer",
-    subtitle: "Full-Stack Security Architect & Infrastructure Lead",
-    description: "Specialized in Secure-by-Design architecture and high-availability infrastructure. I bridge the gap between theoretical computer science and production warfare, focusing on shipping code that is rigorous, resilient, and ready for the real world.",
-    availability: "Open to Senior Engineering & Consulting Roles."
-};
+import { companyProducts } from './featuredWork.js'
 
-export const aboutData = {
-    title: "Engineering Philosophy",
-    philosophy: "Resilient. Scalable. Secure.",
-    content: [
-        "Infrastructure is not just about uptime; it's about trust.",
-        "I approach engineering with a security-first mindset: assuming breach, minimizing surface area, and enforcing strict type safety.",
-        "Whether architecting distributed systems or auditing government-grade software, my focus remains constant: delivering robust solutions that solve complex problems without creating new technical debt."
-    ]
+export const introData = {
+    title: "Software Development Engineer",
+    subtitle: "Neosurge · Apr 2026–present",
+    description: "Cloud infrastructure, security, backend services, and applications.",
+    availability: "SDE @ Neosurge"
 };
 
 export const experienceData = [
     {
-        year: "2024–Present",
-        title: "Infrastructure Lead (IIIT Kota)",
-        subtitle: "High-Availability Campus Systems",
-        description: "Orchestrated the institute's transition to bare-metal infrastructure, achieving 99.9% uptime while managing recruitment and technical training.",
+        year: "Apr 2026–present",
+        title: "Software Development Engineer",
+        subtitle: "Neosurge",
         keyPoints: [
-            { label: "Reliability", text: "Achieved 99.9% uptime across high-traffic production applications via aggressive caching and load balancing." },
-            { label: "Leadership", text: "Managed recruitment and training for the technical team, mentoring 20+ student developers." },
-            { label: "Optimization", text: "Managed cloud costs through strategic edge deployments and local hosting, slashing deployment overhead by 70%." }
+            { text: "Reduced cloud costs, improved backend security, and introduced HTTP/3 where it improved performance." },
+            { text: "Built internal reverse proxies and a customer support portal designed for high traffic." },
+            { text: "Built a production telemetry system handling approximately 50,000 requests per second on a machine with 1 GB of RAM." },
+            { text: "Developed and released Aavak and Octaraa. Built Mino Money across the mobile app, backend API, and cloud infrastructure." },
+        ],
+        links: [
+            ...companyProducts.flatMap(product => product.stores.map(store => ({ label: `${product.title} · ${store.label}`, href: store.href }))),
+            { label: "50k RPS notes", href: "/blog/50k-rps-on-1gb" },
         ]
     },
     {
-        year: "2022–2023",
-        title: "Security Consultant (Contract)",
-        subtitle: "Govt. Intelligence & Critical Infrastructure",
-        description: "Collaborated with Mumbai Police (C-TRACE) to architect automated OSINT tools for digital investigations and threat analysis.",
+        year: "2024–present",
+        title: "Infrastructure Lead",
+        subtitle: "IIIT Kota",
         keyPoints: [
-            { label: "Law Enforcement", text: "Built automated OSINT pipelines to aid in digital tracking and investigations for C-TRACE." },
-            { label: "Vulnerability Mgmt", text: "Conducted assessments identifying and patching 50+ security flaws in production government systems." },
-            { label: "Training", text: "Trained teams on OWASP Top 10, secure coding, and OSINT methodologies." }
+            { text: "Managed campus web infrastructure on bare-metal servers with 99.9% uptime." },
+            { text: "Combined edge and local hosting to reduce deployment overhead by approximately 70%." },
+            { text: "Recruited and trained more than 20 student developers." },
         ]
     },
     {
-        year: "2020–Present",
-        title: "Full Stack & Infrastructure Engineer",
-        subtitle: "Freelance & Consulting (International)",
-        description: "Designed and maintained high-availability backend systems and native mobile reference architectures for international clients.",
+        year: "2022–23",
+        title: "Security Consultant",
+        subtitle: "Government / C-TRACE",
         keyPoints: [
-            { label: "Architecture", text: "Engineered scalable microservices in Go and Python, optimizing SQL queries and indexes for raw speed." },
-            { label: "Mobile Engineering", text: "Developed native Flutter applications implementing offline-first architecture with SQLite synchronization." },
-            { label: "Automation", text: "Deployed asynchronous botnets and scrapers handling thousands of concurrent requests." }
+            { text: "Built open-source intelligence pipelines for Mumbai Police C-TRACE." },
+            { text: "Helped resolve more than 50 vulnerabilities in production government systems." },
+            { text: "Delivered training on OWASP, secure coding, and open-source intelligence." },
         ]
     },
     {
-        year: "2018–2019",
-        title: "Linux Systems Administration",
-        subtitle: "The Foundation",
-        description: "Deep dive into operating system internals, kernel modification, and systems programming.",
+        year: "2020–present",
+        title: "Freelance Developer",
+        subtitle: "Independent work",
         keyPoints: [
-            { label: "Linux Internals", text: "Mastered partitioning, file system permissions, and driver management (Fedora/Debian)." },
-            { label: "Android Security", text: "Custom ROM development, SELinux enforcement, and virtualization." },
-            { label: "Hardware", text: "Low-level diagnostics and device recovery (ADB/Fastboot)." }
+            { text: "Developed Go and Python backend services and optimized database queries and indexes." },
+            { text: "Built offline-first Flutter applications and concurrent web scrapers." },
+        ]
+    },
+    {
+        year: "2018–19",
+        title: "Linux & Android",
+        subtitle: "Early technical work",
+        keyPoints: [
+            { text: "Worked with Debian and Fedora internals, custom Android ROMs, SELinux, and ADB recovery." },
         ]
     }
 ];

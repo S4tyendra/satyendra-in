@@ -154,7 +154,7 @@ onUnmounted(() => {
             <!-- Loading -->
             <div v-if="isLoading" class="flex flex-col items-center justify-center py-20 gap-4">
                 <div class="w-10 h-10 border-2 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
-                <p class="text-teal-500/50 font-mono text-xs animate-pulse">Loading report...</p>
+                <p class="text-teal-500/50 font-sans text-xs animate-pulse">Loading report...</p>
             </div>
 
             <!-- Error -->
@@ -179,7 +179,7 @@ onUnmounted(() => {
             <div v-else-if="isAuthenticated" class="w-full">
                 <div v-if="fileKey.endsWith('.data')" v-html="content" class="report-content"></div>
                 <pre v-else
-                    class="font-mono text-sm leading-relaxed text-teal-50/90 whitespace-pre-wrap p-6 bg-white/5 rounded-xl border border-white/10">{{ content }}</pre>
+                    class="font-sans text-sm leading-relaxed text-teal-50/90 whitespace-pre-wrap p-6 bg-white/5 rounded-xl border border-white/10">{{ content }}</pre>
             </div>
 
             <!-- Login Form -->
@@ -200,17 +200,17 @@ onUnmounted(() => {
 
                     <form @submit.prevent="fetchContent" class="space-y-4">
                         <div class="space-y-2">
-                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Username
+                            <label class="text-xs font-sans uppercase tracking-wider text-text-muted ml-1">Username
                                 Provided</label>
                             <input v-model="username" type="text" required placeholder="X-ID-029"
-                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-mono text-sm" />
+                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-sans text-sm" />
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-xs font-mono uppercase tracking-wider text-text-muted ml-1">Password
+                            <label class="text-xs font-sans uppercase tracking-wider text-text-muted ml-1">Password
                                 Provided</label>
                             <input v-model="password" type="password" required placeholder="••••••••"
-                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-mono text-sm" />
+                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/50 transition-all font-sans text-sm" />
                         </div>
 
                         <div class="flex justify-center pt-4">
@@ -218,7 +218,7 @@ onUnmounted(() => {
                             <div class="cf-turnstile-container"></div>
                         </div>
 
-                        <p v-if="error" class="text-red-400 text-xs text-center font-mono">{{ error }}</p>
+                        <p v-if="error" class="text-red-400 text-xs text-center font-sans">{{ error }}</p>
 
                         <button type="submit" :disabled="isLoading || !turnstileToken"
                             class="w-full py-3 bg-teal-600 hover:bg-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-900/20 mt-4 flex items-center justify-center gap-2">

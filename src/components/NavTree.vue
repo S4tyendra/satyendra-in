@@ -62,7 +62,7 @@ function handleNavigate() {
                         fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M9 5l7 7-7 7" />
                     </svg>
-                    <svg class="w-4 h-4 text-cyan-400/70" fill="none" stroke="currentColor" stroke-width="2"
+                    <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                     </svg>
@@ -82,11 +82,11 @@ function handleNavigate() {
                 isMobile ? 'text-sm px-3 py-2.5' : 'text-xs',
                 currentPath === item.path
                     ? isMobile
-                        ? 'bg-cyan-500/20 text-cyan-400 font-medium border-l-2 border-cyan-400'
-                        : 'bg-cyan-500/20 text-cyan-400 font-medium'
+                        ? 'bg-text-main/10 text-text-main font-medium border-l-2 border-text-main'
+                        : 'bg-text-main/10 text-text-main font-medium'
                     : 'text-text-muted hover:text-text-main hover:bg-white/5'
             ]" @click="handleNavigate">
-                <svg v-if="!item.isIndex" class="w-3.5 h-3.5 text-cyan-400/50" fill="none" stroke="currentColor"
+                <svg v-if="!item.isIndex" class="w-3.5 h-3.5 text-text-muted/70" fill="none" stroke="currentColor"
                     stroke-width="2" viewBox="0 0 24 24">
                     <path
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

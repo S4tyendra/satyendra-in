@@ -1,127 +1,73 @@
+<script setup>
+import SiteIcon from '../components/SiteIcon.vue'
+import CompanyStoreLinks from '../components/CompanyStoreLinks.vue'
+import { ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@vueuse/head'
+import projects from '../data/projects.js'
+import closedProjects from '../data/closedSrcProjects.js'
+import { companyProducts, projectPath, personalProducts } from '../data/featuredWork.js'
+const route = useRoute()
+const router = useRouter()
+const search = ref('')
+const categories = [{ id: 'all', label: 'All work' }, { id: 'products', label: 'Personal products' }, { id: 'opensource', label: 'Open source' }, { id: 'professional', label: 'Professional work' }]
+const active = computed(() => categories.some(category => category.id === route.query.type) ? route.query.type : 'all')
+const selectCategory = type => router.replace({ query: { ...route.query, type: type === 'all' ? undefined : type } })
+const records = [
+  ...personalProducts.map(p => ({ ...p, category: 'products' })),
+  ...projects.map(p => ({ ...p, category: 'opensource' })),
+  ...companyProducts.map(p => ({ title: p.title, desc: p.description, link: p.href, category: 'professional', tags: ['Neosurge'], stores: p.stores, external: true })),
+  ...closedProjects.filter(p => !personalProducts.includes(p)).map(p => ({ ...p, category: 'professional' })),
+]
+const filtered = computed(() => records.filter(p => (active.value === 'all' || p.category === active.value) && `${p.title} ${p.desc} ${p.tags.join(' ')}`.toLowerCase().includes(search.value.trim().toLowerCase())))
+const categoryLabel = id => categories.find(category => category.id === id)?.label
+useHead({ title: 'Projects | Bongi Satyendra', meta: [{ name: 'description', content: 'Personal products to use, open-source repositories to explore, and professional work at Neosurge and IIIT Kota.' }], link: [{ rel: 'canonical', href: 'https://satyendra.in/projects' }] })
+</script>
+
 <template>
-  <div class="flex flex-col gap-6 fade-in-up min-h-[400px]">
-
-    <!-- Search and Filter Controls -->
-    <div class="flex flex-col md:flex-row justify-between gap-4 mb-4">
-      <div class="relative w-full md:w-96">
-        <input v-model="searchQuery" type="text" placeholder="Search projects by name, description or tech..."
-          class="w-full bg-bg-secondary/10 border border-border-color rounded-md py-2 px-4 pl-10 text-text-main placeholder-text-muted/60 focus:outline-none focus:border-text-muted transition-colors text-sm" />
-        <svg class="absolute left-3 top-2.5 text-text-muted/50" width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </div>
-
+  <div class="project-directory">
+    <header class="directory-heading"><p class="eyebrow">Selected work & project archive</p><h1 class="page-title">Projects.</h1><p>Apps, tools, and infrastructure. Find something to use, explore the source, or see what I build at work.</p></header>
+    <div class="project-controls">
+      <div class="category-filters" role="group" aria-label="Project category"><button v-for="category in categories" :key="category.id" type="button" :aria-pressed="active === category.id" @click="selectCategory(category.id)">{{ category.label }}</button></div>
+      <label class="project-search"><span class="sr-only">Search projects by name or technology</span><input v-model="search" type="search" placeholder="Search projects or technologies"></label>
     </div>
-
-    <div v-if="allTags.length" class="flex gap-2 flex-wrap mb-6">
-      <button v-for="tag in allTags" :key="tag" @click="toggleTag(tag)"
-        :class="['px-2.5 py-1 text-[11px] font-mono rounded border transition-all', selectedTags.includes(tag) ? 'bg-text-main text-bg-main border-text-main' : 'bg-transparent text-text-muted/80 border-border-color hover:border-text-muted']">
-        {{ tag }}
-      </button>
+    <p class="result-count" role="status">{{ filtered.length }} {{ filtered.length === 1 ? 'project' : 'projects' }}<span v-if="search"> matching “{{ search }}”</span></p>
+    <div v-if="filtered.length" class="directory-grid">
+      <article v-for="project in filtered" :key="project.link" class="directory-card">
+        <p class="eyebrow">{{ categoryLabel(project.category) }}</p><h2>{{ project.title }}</h2><p class="project-description">{{ project.desc }}</p>
+        <div class="project-technologies"><span v-for="tag in project.tags.slice(0, 4)" :key="tag">{{ tag }}</span></div>
+        <div class="project-actions">
+          <router-link v-if="!project.external" :to="projectPath(project)">Project details <SiteIcon name="right" /></router-link>
+          <CompanyStoreLinks v-if="project.stores" :product="project" />
+          <a v-else :href="project.deployment_url || project.link" target="_blank" rel="noopener noreferrer">{{ project.category === 'opensource' ? 'Source code' : 'Visit website' }} <SiteIcon name="external" /></a>
+        </div>
+      </article>
     </div>
-
-    <ProjectsSection :projects="filteredProjects" />
-
-    <div class="w-full h-[800px] relative border border-zinc-800 rounded-xl overflow-hidden bg-black/50">
-      <InfiniteMenu :items="menuItems" :scale="1.5" />
-    </div>
+    <div v-else class="empty-results"><h2>No matching projects.</h2><p>Try a different name or technology, or reset the filters.</p><button class="button-primary" @click="search = ''; selectCategory('all')">Reset filters</button></div>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
-import { useHead } from '@vueuse/head'
-import ProjectsSection from '../components/ProjectsSection.vue'
-import InfiniteMenu from '../components/InfiniteMenu/InfiniteMenu.vue'
-import projectsData from '../data/projects.js'
-import closedData from '../data/closedSrcProjects.js'
-import '../assets/projects.css'
-
-const allProjects = [...projectsData, ...closedData]
-
-const searchQuery = ref('')
-const selectedTags = ref([])
-
-useHead({
-  title: 'Engineering Projects | Satyendra',
-  meta: [
-    { name: 'description', content: 'A catalog of open-source tools, cloud infrastructure utilities, and system software built with Go, Vue, and Linux.' },
-    { property: 'og:title', content: 'Engineering Projects | Satyendra' },
-    { property: 'og:description', content: 'Open-source tools, cloud infrastructure utilities, and system software.' },
-    { property: 'og:url', content: 'https://satyendra.in/projects' },
-    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/projects/index.png' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://satyendra.in/projects' }
-  ]
-})
-
-// Extract most popular tags
-const allTags = computed(() => {
-  const tagCounts = {}
-  allProjects.forEach(p => {
-    p.tags.forEach(tag => {
-      tagCounts[tag] = (tagCounts[tag] || 0) + 1
-    })
-  })
-
-  // Sort by count desc, then alpha
-  return Object.keys(tagCounts)
-    .sort((a, b) => tagCounts[b] - tagCounts[a])
-    .slice(0, 20) // Top 20 tags
-})
-
-const toggleTag = (tag) => {
-  if (selectedTags.value.includes(tag)) {
-    selectedTags.value = selectedTags.value.filter(t => t !== tag)
-  } else {
-    selectedTags.value.push(tag)
-  }
-}
-
-const getOgImage = (link) => {
-  if (!link) return 'https://placehold.co/600x600/18181b/FFF?text=Project';
-  try {
-    const parts = link.split('/');
-    const slug = parts[parts.length - 1] || parts[parts.length - 2];
-    if (slug) {
-      return `https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1024,height=1024,fit=cover,gravity=center,format=avif,quality=100/projects/${slug}.png`;
-    }
-  } catch (e) {
-    // ignore
-  }
-  return `https://placehold.co/600x600/18181b/FFF?text=Project`; // Fallback
-}
-
-const filteredProjects = computed(() => {
-  return allProjects.filter(p => {
-    const query = searchQuery.value.toLowerCase()
-    const matchesSearch = p.title.toLowerCase().includes(query) ||
-      p.desc.toLowerCase().includes(query) ||
-      p.tags.some(t => t.toLowerCase().includes(query))
-
-    const matchesTags = selectedTags.value.length === 0 ||
-      p.tags.some(tag => selectedTags.value.includes(tag)) // OR logic (Union)
-
-    return matchesSearch && matchesTags
-  })
-})
-
-const getRepoName = (link) => {
-  if (!link) return '';
-  const parts = link.split('/');
-  return parts[parts.length - 1] || parts[parts.length - 2];
-}
-
-const menuItems = computed(() => {
-  return filteredProjects.value.map(p => ({
-    image: getOgImage(p.link),
-    title: p.title,
-    description: p.desc,
-    link: `/projects/${getRepoName(p.link)}`
-  }))
-})
-</script>
+<style scoped>
+.directory-heading { max-width: 700px; }
+.directory-heading h1 { margin: 14px 0 20px; }
+.directory-heading > p:last-child { color: var(--paper-dim); font-size: 18px; line-height: 1.65; }
+.project-controls { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+.category-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.category-filters button { padding: 12px 18px; min-height: 46px; border: 1px solid var(--line); border-radius: 3px; font-size: 14px; }
+.category-filters button[aria-pressed=true] { background: var(--paper); color: var(--bg); }
+.project-search { max-width: 480px; }
+.project-search input { width: 100%; border: 1px solid var(--line); background: var(--bg-raised); padding: 14px 16px; border-radius: 3px; font-size: 16px; }
+.result-count { margin: 24px 0 16px; font-size: 14px; color: var(--paper-dim); }
+.directory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.directory-card { padding: 28px; border: 1px solid var(--line); display: flex; flex-direction: column; background: var(--bg-raised); border-radius: 3px; }
+.directory-card h2 { font-size: 25px; letter-spacing: -.6px; margin: 16px 0 12px; overflow-wrap: anywhere; }
+.project-description { font-size: 16px; color: var(--paper-dim); line-height: 1.6; }
+.project-technologies { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 20px 0 24px; font-size: 12px; color: var(--paper-dim); }
+.project-actions { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: auto; border-top: 1px solid var(--line); padding-top: 8px; }
+.project-actions a { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; }
+.project-actions a:hover { text-decoration: underline; }
+.empty-results { padding: 48px 0; }
+.empty-results h2 { font-size: 24px; }
+.empty-results p { margin: 12px 0 24px; color: var(--paper-dim); }
+@media (max-width: 700px) { .directory-grid { grid-template-columns: 1fr; } .directory-card { padding: 24px; } .category-filters button { padding: 10px 12px; } .directory-heading > p:last-child { font-size: 16px; } }
+</style>

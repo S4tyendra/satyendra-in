@@ -9,7 +9,7 @@ useHead({
         { name: 'description', content: 'Expert DevSecOps architecture: Kernel-level security (eBPF), Kubernetes Orchestration, Infrastructure as Code (Terraform), and Zero-Downtime Deployments. Automating security from code to cloud.' },
         { name: 'keywords', content: 'DevSecOps, Cloud Security, Kubernetes, Terraform, eBPF, Tetragon, Orchestr8, Blue-Green Deployment, CI/CD, Container Security, AWS, GCP' },
         { property: 'og:title', content: 'DevSecOps & Cloud Engineering | Satyendra' },
-        { property: 'og:description', content: 'Security is not a checkbox. Implementing kernel-level defense, automated pipelines, and immutable infrastructure.' },
+        { property: 'og:description', content: 'Kernel-level defense, automated deployment pipelines, and infrastructure security.' },
         { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/devsecops.png' },
         { property: 'og:url', content: 'https://satyendra.in/devsecops' },
         { name: 'twitter:card', content: 'summary_large_image' },
@@ -39,40 +39,15 @@ const setSectionRef = (el) => {
 
 <template>
     <div class="flex flex-col items-center justify-center min-h-[70vh] text-center relative overflow-hidden w-full">
-        <!-- Background Elements -->
-        <div class="fixed inset-0 pointer-events-none z-0">
-            <div
-                class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-900/10 rounded-full blur-[100px] opacity-30 animate-pulse">
-            </div>
-            <div
-                class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[120px] opacity-30 animate-pulse delay-700">
-            </div>
-        </div>
-
         <!-- HERO SECTION -->
-        <div class="relative z-10 py-20 px-6 max-w-5xl mx-auto w-full">
-            <div class="relative mb-8 group inline-block">
-                <div
-                    class="absolute inset-0 bg-teal-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-700 opacity-50">
-                </div>
-                <div
-                    class="relative p-4 rounded-2xl bg-bg-main/40 border border-white/10 shadow-2xl backdrop-blur-sm animate-float">
-                    <ShieldIcon
-                        class="w-12 h-12 text-teal-200/80 group-hover:text-teal-400 transition-colors duration-500" />
-                </div>
-            </div>
+        <div class="relative z-10 py-16 px-6 max-w-5xl mx-auto w-full">
+            <p class="page-kicker mb-4">Infrastructure & security</p>
+            <h1 class="page-title text-4xl md:text-5xl mb-6">DevSecOps</h1>
 
-            <h1
-                class="text-4xl md:text-5xl font-bold mb-8 tracking-tight text-transparent bg-clip-text bg-linear-to-br from-teal-50 to-teal-400/60 pb-2">
-                DevSecOps
-            </h1>
-
-            <div class="relative mb-20 max-w-3xl mx-auto">
-                <p class="text-lg md:text-xl font-light text-text-muted italic leading-relaxed">
-                    Security is not a checkbox,<br class="md:hidden" /> it's a culture.
+            <div class="relative mb-16 max-w-2xl mx-auto">
+                <p class="text-base text-text-muted leading-relaxed">
+                    Security testing, deployment automation, and monitoring for production systems.
                 </p>
-                <div class="absolute -top-4 -left-4 text-5xl text-teal-500/10 font-serif font-black">"</div>
-                <div class="absolute -bottom-4 -right-4 text-5xl text-teal-500/10 font-serif font-black">"</div>
             </div>
 
             <!-- SECTION 1: CORE TRIAD -->
@@ -80,15 +55,15 @@ const setSectionRef = (el) => {
                 class="scroll-section grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 w-full text-left">
                 <!-- Proactive Defense -->
                 <div
-                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-teal-500/30 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
+                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-text-main/20 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-teal-400">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-text-main">
                             <path stroke="currentColor" stroke-width="2"
                                 d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                         </svg>
                     </div>
                     <div
-                        class="mb-4 text-teal-400 font-mono text-xs tracking-widest uppercase bg-teal-900/30 w-fit px-3 py-1 rounded-full border border-teal-500/20">
+                        class="mb-4 text-text-main font-sans text-xs tracking-widest uppercase bg-text-main/8 w-fit px-3 py-1 rounded-full border border-text-main/15">
                         01. Shield</div>
                     <h3 class="text-2xl font-bold text-text-main mb-3">Defensive Architecture</h3>
                     <p class="text-base text-text-muted leading-relaxed">
@@ -99,9 +74,9 @@ const setSectionRef = (el) => {
 
                 <!-- Automation -->
                 <div
-                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-teal-500/30 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
+                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-text-main/20 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-teal-400">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-text-main">
                             <path stroke="currentColor" stroke-width="2"
                                 d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                             <polyline stroke="currentColor" stroke-width="2" points="14 2 14 8 20 8" />
@@ -111,7 +86,7 @@ const setSectionRef = (el) => {
                         </svg>
                     </div>
                     <div
-                        class="mb-4 text-teal-400 font-mono text-xs tracking-widest uppercase bg-teal-900/30 w-fit px-3 py-1 rounded-full border border-teal-500/20">
+                        class="mb-4 text-text-main font-sans text-xs tracking-widest uppercase bg-text-main/8 w-fit px-3 py-1 rounded-full border border-text-main/15">
                         02. Pipeline</div>
                     <h3 class="text-2xl font-bold text-text-main mb-3">CI/CD Governance</h3>
                     <p class="text-base text-text-muted leading-relaxed">
@@ -122,15 +97,15 @@ const setSectionRef = (el) => {
 
                 <!-- Resilience -->
                 <div
-                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-teal-500/30 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
+                    class="p-8 rounded-2xl bg-bg-main/50 border border-white/5 hover:border-text-main/20 hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 group relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-teal-400">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="text-text-main">
                             <path stroke="currentColor" stroke-width="2"
                                 d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                         </svg>
                     </div>
                     <div
-                        class="mb-4 text-teal-400 font-mono text-xs tracking-widest uppercase bg-teal-900/30 w-fit px-3 py-1 rounded-full border border-teal-500/20">
+                        class="mb-4 text-text-main font-sans text-xs tracking-widest uppercase bg-text-main/8 w-fit px-3 py-1 rounded-full border border-text-main/15">
                         03. Scale</div>
                     <h3 class="text-2xl font-bold text-text-main mb-3">Immutable Infra</h3>
                     <p class="text-base text-text-muted leading-relaxed">
@@ -145,14 +120,14 @@ const setSectionRef = (el) => {
             class="scroll-section w-full bg-white/5 border-y border-white/5 py-24 relative overflow-hidden backdrop-blur-sm">
             <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                 <div class="text-left space-y-6">
-                    <div class="flex items-center gap-3 text-teal-400 font-mono text-sm tracking-wider">
+                    <div class="flex items-center gap-3 text-text-main font-sans text-sm tracking-wider">
                         <span class="w-8 h-[2px] bg-teal-400"></span>
                         KERNEL LEVEL VISIBILITY
                     </div>
                     <h2 class="text-4xl font-bold text-text-main">eBPF & Runtime Security</h2>
                     <p class="text-lg text-text-muted leading-relaxed">
                         Implementing security observability at the kernel layer using <strong
-                            class="text-teal-300">Tetragon</strong> and <strong class="text-teal-300">Falco</strong>.
+                            class="text-text-main">Tetragon</strong> and <strong class="text-text-main">Falco</strong>.
                         We move beyond simple log parsing to enforce policies directly on syscalls.
                     </p>
                     <ul class="space-y-4 pt-4">
@@ -176,7 +151,7 @@ const setSectionRef = (el) => {
 
                 <!-- MOCK TERMINAL UI -->
                 <div
-                    class="rounded-xl overflow-hidden bg-[#0a0a0a] border border-white/10 shadow-2xl font-mono text-sm text-left">
+                    class="rounded-xl overflow-hidden bg-[#0a0a0a] border border-white/10 shadow-2xl font-sans text-sm text-left">
                     <div class="bg-white/5 px-4 py-2 border-b border-white/5 flex gap-2">
                         <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
@@ -209,9 +184,9 @@ const setSectionRef = (el) => {
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <!-- Feature 1 -->
                 <div
-                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-text-main/20 transition-all">
                     <div
-                        class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
+                        class="h-12 w-12 rounded-lg bg-text-main/8 flex items-center justify-center mb-6 text-text-main">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
                             <path d="M4 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
                             <path d="M12 14v7" />
@@ -227,9 +202,9 @@ const setSectionRef = (el) => {
 
                 <!-- Feature 2 -->
                 <div
-                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-text-main/20 transition-all">
                     <div
-                        class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
+                        class="h-12 w-12 rounded-lg bg-text-main/8 flex items-center justify-center mb-6 text-text-main">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                         </svg>
@@ -243,9 +218,9 @@ const setSectionRef = (el) => {
 
                 <!-- Feature 3 -->
                 <div
-                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-teal-500/30 transition-all">
+                    class="group p-6 rounded-2xl bg-linear-to-b from-white/5 to-transparent border border-white/5 hover:border-text-main/20 transition-all">
                     <div
-                        class="h-12 w-12 rounded-lg bg-teal-900/40 flex items-center justify-center mb-6 text-teal-400">
+                        class="h-12 w-12 rounded-lg bg-text-main/8 flex items-center justify-center mb-6 text-text-main">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-current stroke-2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
@@ -265,7 +240,7 @@ const setSectionRef = (el) => {
             <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- CODE BLOCK -->
                 <div
-                    class="order-2 lg:order-1 rounded-xl overflow-hidden bg-[#0d1117] border border-white/10 shadow-xl font-mono text-xs">
+                    class="order-2 lg:order-1 rounded-xl overflow-hidden bg-[#0d1117] border border-white/10 shadow-xl font-sans text-xs">
                     <div class="flex items-center px-4 py-3 bg-white/5 border-b border-white/5 text-text-muted">
                         <span class="mr-2">📄</span> main.tf
                     </div>
@@ -288,14 +263,14 @@ const setSectionRef = (el) => {
 
                 <!-- TEXT -->
                 <div class="order-1 lg:order-2 text-left space-y-6">
-                    <div class="flex items-center gap-3 text-teal-400 font-mono text-sm tracking-wider">
+                    <div class="flex items-center gap-3 text-text-main font-sans text-sm tracking-wider">
                         <span class="w-8 h-[2px] bg-teal-400"></span>
                         INFRASTRUCTURE AS CODE
                     </div>
                     <h2 class="text-4xl font-bold text-text-main">Automated Provisioning</h2>
                     <p class="text-lg text-text-muted leading-relaxed">
-                        Managing infrastructure complexity with <strong class="text-teal-300">Terraform</strong> and
-                        <strong class="text-teal-300">Ansible</strong>.
+                        Managing infrastructure complexity with <strong class="text-text-main">Terraform</strong> and
+                        <strong class="text-text-main">Ansible</strong>.
                         We treat servers like cattle, not pets.
                     </p>
                     <ul class="space-y-4 pt-4">
@@ -345,9 +320,9 @@ const setSectionRef = (el) => {
                 <div class="flex flex-col md:flex-row gap-8 p-8 items-center">
                     <!-- Icon/Visual -->
                     <div
-                        class="w-16 h-16 rounded-xl bg-teal-900/20 flex items-center justify-center border border-teal-500/20 group-hover:scale-110 transition-transform duration-300">
+                        class="w-16 h-16 rounded-xl bg-teal-900/20 flex items-center justify-center border border-text-main/15 group-hover:scale-110 transition-transform duration-300">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" class="text-teal-400">
+                            stroke-width="2" class="text-text-main">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                         </svg>
                     </div>
@@ -355,10 +330,10 @@ const setSectionRef = (el) => {
                     <!-- Content -->
                     <div class="flex-1 text-left">
                         <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-2xl font-bold text-text-main group-hover:text-teal-400 transition-colors">
+                            <h3 class="text-2xl font-bold text-text-main group-hover:text-text-main transition-colors">
                                 Orchestr8</h3>
                             <span
-                                class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded border border-white/10 bg-white/5 text-text-muted">Orchestration</span>
+                                class="px-2 py-1 text-[10px] font-sans uppercase tracking-wider rounded border border-white/10 bg-white/5 text-text-muted">Orchestration</span>
                         </div>
 
                         <p class="text-text-muted mb-4 leading-relaxed">
@@ -368,7 +343,7 @@ const setSectionRef = (el) => {
                                 class="text-teal-200">Blue-Green zero-downtime</strong> deployment strategies.
                         </p>
 
-                        <div class="flex gap-4 text-sm font-mono text-teal-500/80">
+                        <div class="flex gap-4 text-sm font-sans text-teal-500/80">
                             <span class="flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span> Zero Downtime
                             </span>
@@ -380,7 +355,7 @@ const setSectionRef = (el) => {
 
                     <!-- Arrow -->
                     <div
-                        class="text-white/20 group-hover:text-teal-400 transform group-hover:translate-x-1 transition-all">
+                        class="text-white/20 group-hover:text-text-main transform group-hover:translate-x-1 transition-all">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7" />
@@ -396,15 +371,15 @@ const setSectionRef = (el) => {
             <div class="w-full blur-sm opacity-40 pointer-events-none select-none grayscale-50">
                 <div class="text-left mb-12 flex items-end justify-between">
                     <div>
-                        <div class="flex items-center gap-3 text-teal-400 font-mono text-sm tracking-wider mb-2">
+                        <div class="flex items-center gap-3 text-text-main font-sans text-sm tracking-wider mb-2">
                             <span class="w-8 h-[2px] bg-teal-400"></span>
                             TRANSPARENCY & COMPLIANCE
                         </div>
                         <h2 class="text-4xl font-bold">Security Audit Logs</h2>
                     </div>
                     <div class="hidden md:block text-right">
-                        <p class="text-text-muted text-sm font-mono">RETENTION: 90 DAYS</p>
-                        <p class="text-teal-500/50 text-xs font-mono">ENCRYPTED AT REST</p>
+                        <p class="text-text-muted text-sm font-sans">RETENTION: 90 DAYS</p>
+                        <p class="text-teal-500/50 text-xs font-sans">ENCRYPTED AT REST</p>
                     </div>
                 </div>
 
@@ -413,7 +388,7 @@ const setSectionRef = (el) => {
                         class="group flex items-center justify-between p-6 rounded-xl bg-white/5 border border-white/5 transition-all">
                         <div class="flex items-center gap-6">
                             <div
-                                class="w-12 h-12 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 border border-teal-500/20">
+                                class="w-12 h-12 rounded-lg bg-teal-500/10 flex items-center justify-center text-text-main border border-text-main/15">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -424,16 +399,16 @@ const setSectionRef = (el) => {
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-text-main group-hover:text-teal-400 transition-colors">
+                                <h3 class="font-bold text-text-main group-hover:text-text-main transition-colors">
                                     Buyhatke
                                     Application Audit</h3>
-                                <p class="text-sm text-text-muted font-mono uppercase tracking-tight">ID:
+                                <p class="text-sm text-text-muted font-sans uppercase tracking-tight">ID:
                                     buyhatke-2026-01-23-22-00 • CLASSIFIED</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
                             <span
-                                class="hidden sm:inline-block px-3 py-1 rounded-full text-[10px] bg-teal-500/20 text-teal-400 border border-teal-500/30 font-bold uppercase tracking-widest">RESTRICTED</span>
+                                class="hidden sm:inline-block px-3 py-1 rounded-full text-[10px] bg-teal-500/20 text-text-main border border-text-main/20 font-bold uppercase tracking-widest">RESTRICTED</span>
                             <div
                                 class="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-text-muted transition-all">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -472,13 +447,13 @@ const setSectionRef = (el) => {
                     <div
                         class="p-4 rounded-full bg-white/5 border border-white/10 mb-2 group-hover:border-teal-500/50 transition-colors">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" class="text-text-muted group-hover:text-teal-400 transition-colors">
+                            stroke-width="2" class="text-text-muted group-hover:text-text-main transition-colors">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
                     </div>
                     <div>
-                        <p class="font-mono text-sm tracking-widest text-white/90 font-bold uppercase">
+                        <p class="font-sans text-sm tracking-widest text-white/90 font-bold uppercase">
                             reports are not public yet. <span class="text-teal-500">(4)</span>
                         </p>
                     </div>

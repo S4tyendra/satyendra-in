@@ -1,65 +1,40 @@
-<template>
-  <div class="sticky top-0 z-50 w-full transition-all duration-500 -z-10 ease-in-out">
-    <!-- Full-width background backdrop -->
-    <div class="absolute inset-0 transition-all duration-500 ease-in-out" :class="isScrolled
-      ? 'bg-bg-main/95 backdrop-blur-md border-b border-text-main/10 shadow-lg'
-      : 'bg-transparent border-transparent'">
-    </div>
-
-    <!-- Content Container -->
-    <header class="mx-auto relative transition-all duration-500 ease-in-out flex items-center justify-between"
-      :class="isScrolled ? 'max-w-5xl h-14 px-4' : 'max-w-[460px] h-20'">
-
-      <router-link to="/" class="flex items-center gap-4 cursor-pointer group">
-        <Avatar :class="{ 'w-9! h-9!': isScrolled }" class="transition-all duration-500" />
-        <div class="flex flex-col transition-all duration-500" :class="isScrolled ? 'gap-0' : 'gap-1'">
-          <div class="h-8 flex items-center group/name">
-            <h1 class="text-text-main font-bold tracking-tight flex items-center transition-all duration-500"
-              :class="isScrolled ? 'text-lg' : 'text-3xl'">
-              <span class="name-expandable">Bongi</span>
-              <span class="ml-1.5">Satyendra.</span>
-            </h1>
-          </div>
-          <div
-            class="pill-container inline-flex items-center gap-1.5 text-[11px] font-mono text-text-main/60 uppercase tracking-wider overflow-hidden transition-all duration-500 ease-in-out"
-            :class="isScrolled ? 'max-h-0 opacity-0' : 'max-h-8 opacity-100 px-1 py-1'">
-            <div class="flex items-center">
-              <span class="font-semibold text-text-main/80">Eng</span>
-              <span class="pill-expandable">ineer</span>
-            </div>
-            <span class="text-text-main/40">/</span>
-            <div class="flex items-center">
-              <span class="font-semibold text-text-main/80">Student</span>
-            </div>
-            <span class="text-text-main/40">/</span>
-            <div class="flex items-center">
-              <span class="font-semibold text-text-main/80">Dev</span>
-              <span class="pill-expandable">eloper</span>
-            </div>
-          </div>
-        </div>
-      </router-link>
-
-      <div class="flex items-center gap-4">
-        <button
-          class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-text-main/10 text-text-main/80 transition-all duration-300 border border-text-main/10 bg-[#082026]/50 text-xs font-mono group"
-          :class="isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'"
-          @click="$emit('focus-terminal')" title="Open Terminal">
-          <CodeIcon class="w-3.5 h-3.5 group-hover:text-green-400 transition-colors" />
-          <span class="hidden sm:inline">Terminal</span>
-        </button>
-      </div>
-    </header>
-  </div>
-</template>
-
 <script setup>
-import Avatar from './Avatar.vue'
-import CodeIcon from './icons/CodeIcon.vue'
-
-defineProps({
-  isScrolled: Boolean
-})
-
-defineEmits(['focus-terminal'])
+import SiteIcon from './SiteIcon.vue'
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const menuOpen = ref(false)
+const menuButton = ref(null)
+const menuPanel = ref(null)
+const links = [
+  { href: '/', label: 'Home', note: 'A quick introduction' },
+  { href: '/projects', label: 'Projects', note: 'Products & open source' },
+  { href: '/experience', label: 'Experience', note: 'Roles & responsibilities' },
+  { href: '/blog', label: 'Writing', note: 'Articles & practical guides' },
+]
+const isActive = href => href === '/' ? route.path === '/' : route.path === href || route.path.startsWith(href + '/')
+async function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+  if (menuOpen.value) { await nextTick(); menuPanel.value?.querySelector('a')?.focus() }
+}
+function closeMenu(restoreFocus = false) {
+  menuOpen.value = false
+  if (restoreFocus) menuButton.value?.focus()
+}
+function keydown(event) { if (event.key === 'Escape' && menuOpen.value) closeMenu(true) }
+function resize() { if (window.innerWidth > 800 && menuOpen.value) closeMenu() }
+watch(() => route.fullPath, () => closeMenu())
+onMounted(() => { window.addEventListener('keydown', keydown); window.addEventListener('resize', resize) })
+onUnmounted(() => { window.removeEventListener('keydown', keydown); window.removeEventListener('resize', resize) })
 </script>
+<template>
+  <header class="site-header" @focusout="event => { if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) closeMenu() }">
+    <div class="header-inner">
+      <router-link to="/" class="site-brand" aria-label="Satyendra — home"><span class="brand-mark" aria-hidden="true">s.</span><span>Satyendra<span class="brand-dot">.</span></span></router-link>
+      <nav class="primary-nav" aria-label="Main navigation"><router-link v-for="link in links" :key="link.href" :to="link.href" :class="{ 'nav-active': isActive(link.href) }" :aria-current="isActive(link.href) ? 'page' : undefined">{{ link.label }}</router-link></nav>
+      <router-link to="/contact" class="contact-link">Get in touch <span aria-hidden="true"><SiteIcon name="external" /></span></router-link>
+      <button ref="menuButton" class="mobile-menu-button" type="button" :aria-expanded="menuOpen" aria-controls="mobile-navigation" @click="toggleMenu">{{ menuOpen ? 'Close' : 'Menu' }}<span class="menu-icon" :class="{ 'is-open': menuOpen }" aria-hidden="true"><i></i><i></i></span></button>
+    </div>
+    <Transition name="mobile-menu"><nav v-if="menuOpen" id="mobile-navigation" ref="menuPanel" class="mobile-navigation" aria-label="Mobile navigation"><router-link v-for="(link, index) in links" :key="link.href" :to="link.href" :aria-current="isActive(link.href) ? 'page' : undefined" @click="closeMenu()"><span class="mobile-nav-number">0{{ index + 1 }}</span><span><strong>{{ link.label }}</strong><small>{{ link.note }}</small></span><span aria-hidden="true"><SiteIcon name="external" /></span></router-link><router-link to="/contact" class="mobile-contact" @click="closeMenu()">Get in touch <span aria-hidden="true"><SiteIcon name="external" /></span></router-link><div class="mobile-secondary"><router-link to="/docs" @click="closeMenu()">Docs</router-link><router-link to="/photography" @click="closeMenu()">Photography</router-link><router-link to="/services" @click="closeMenu()">Services</router-link></div></nav></Transition>
+  </header>
+</template>

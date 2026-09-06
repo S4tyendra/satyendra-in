@@ -1,11 +1,11 @@
 <template>
   <div class="flex items-center flex-wrap gap-x-0.5">
-    <span v-if="!resolved" class="text-[#79c0ff] text-[11px]">{{ currentPath }}</span>
+    <span v-if="!resolved" class="text-text-main/80 text-[11px]">{{ currentPath }}</span>
     <template v-else>
       <span v-for="(crumb, index) in resolved.breadcrumbs" :key="index" class="flex items-center">
-        <span v-if="index > 0" class="text-zinc-700 text-[10px] mx-0.5">/</span>
+        <span v-if="index > 0" class="text-text-main/25 text-[10px] mx-0.5">/</span>
         <span 
-          :class="['px-0.5 rounded cursor-pointer transition-colors text-[11px]', isLast(index) ? 'text-[#79c0ff] font-medium' : 'text-[#79c0ff]/70 hover:text-[#79c0ff] hover:bg-white/5']"
+          :class="['px-0.5 rounded cursor-pointer transition-colors text-[11px]', isLast(index) ? 'text-text-main font-medium' : 'text-text-main/55 hover:text-text-main hover:bg-text-main/8']"
           @mouseenter="(e) => handleMouseEnter(e, crumb)"
           @mouseleave="handleMouseLeave"
           @click="navigate(crumb.node.path)"

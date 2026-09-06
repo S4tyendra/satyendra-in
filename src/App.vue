@@ -1,29 +1,22 @@
 <script setup>
-import { RouterView, useRoute } from 'vue-router'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { RouterView } from 'vue-router'
 import { useHead } from '@vueuse/head'
-import BackgroundAtmosphere from './components/BackgroundAtmosphere.vue'
 import Header from './components/Header.vue'
-import TerminalBreadcrumb from './components/TerminalBreadcrumb.vue'
 import Footer from './components/Footer.vue'
-import FloatingNav from './components/FloatingNav.vue'
-import './assets/home.css'
-
-const isScrolled = ref(false)
-const terminalRef = ref(null)
-const route = useRoute()
+import './assets/site.css'
 
 useHead({
-  title: 'Bongi Satyendra | Systems Engineer & Cloud Architect',
+  title: 'Bongi Satyendra | Software Development Engineer',
   meta: [
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'author', content: 'Bongi Satyendra' },
-    { name: 'keywords', content: 'Satyendra, Systems Engineer, Cloud Architect, DevSecOps, SRE, Golang, Linux, Cybersecurity, Infrastructure' }, { name: 'application-name', content: 'Satyendra Portfolio' },
+    { name: 'keywords', content: 'Satyendra, Systems Engineer, Cloud Architect, DevSecOps, SRE, Golang, Linux, Cybersecurity, Infrastructure' },
+    { name: 'application-name', content: 'Satyendra' },
     { name: 'theme-color', content: '#082026' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://satyendra.in/' },
-    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/default.png' }, // Fallback global image
+    { property: 'og:image', content: 'https://og-images-cdn.satyendra.in/cdn-cgi/image/width=1200,format=avif,quality=1/default.png' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:site', content: '@s4tyendra' },
     { name: 'twitter:creator', content: '@s4tyendra' },
@@ -34,58 +27,15 @@ useHead({
   ]
 })
 
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-}
-
-const handleTerminalFocus = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-  setTimeout(() => {
-    const input = document.getElementById('terminal-input')
-    if (input) input.focus()
-  }, 500)
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
 </script>
 
 <template>
-  <div
-    class="min-h-screen w-full flex flex-col justify-center py-12 px-4 relative bg-bg-main text-text-main overflow-x-hidden selection:bg-text-muted/40 selection:text-text-main">
-    <Header :is-scrolled="isScrolled" @focus-terminal="handleTerminalFocus" class="mb-6 w-full" />
-
-    <main class="w-full mx-auto relative z-10 flex flex-col gap-6 transition-all duration-500 ease-in-out @container"
-      :class="(route.path === '/' || !isScrolled) ? 'max-w-[460px]' : 'max-w-5xl'">
-      <BackgroundAtmosphere />
-      <TerminalBreadcrumb ref="terminalRef" />
-
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-
-      <Footer />
+  <div class="site-shell">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main-content" tabindex="-1" class="site-main @container">
+      <RouterView />
     </main>
-
-    <FloatingNav />
+    <Footer />
   </div>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
