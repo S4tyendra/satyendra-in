@@ -2,11 +2,12 @@
 import SiteIcon from './SiteIcon.vue'
 import { ref, computed } from 'vue'
 import { personalProducts, projectPath } from '../data/featuredWork.js'
+const record = title => personalProducts.find(p => p.title === title)
 const selected = ref(0)
 const products = [
-  { name: 'GemHub', audience: 'For Gemini users', intro: 'Discover Gemini Gems.', description: 'Discover custom Gemini personas, save the useful ones, and share your own with the community.', features: ['Browse community Gems', 'Save your favourites', 'Share your own creations'], action: 'Explore GemHub', icon: 'gem', colour: '#d8dcb8', record: personalProducts[0] },
-  { name: 'Edge Proxy', audience: 'For developers', intro: 'Cross-origin requests & image caching.', description: 'A proxy for cross-origin requests, with an image caching layer to reduce repeat downloads.', features: ['Cross-origin requests', 'Image caching', 'HTTP methods & headers'], action: 'Use Edge Proxy', icon: 'network', colour: '#efb17c', record: personalProducts[1] },
-  { name: 'DevH', audience: 'Developer infrastructure', intro: 'APIs & developer utilities.', description: 'API endpoints, utility libraries, and installation scripts used across my personal projects.', features: ['Utility APIs', 'Installation scripts', 'Project documentation'], action: 'Visit DevH', icon: 'server', colour: '#b9d4d3', record: personalProducts[2] },
+  { name: 'Tincan', audience: 'For two people', intro: 'A direct line for two.', description: 'Video calls, screen sharing with sound, chat, file transfer and games, browser to browser. Nothing passes through a server.', features: ['Peer-to-peer calls & screen sharing', 'Resumable file transfer', 'Games while you talk'], action: 'Open Tincan', icon: 'call', colour: '#d8dcb8', record: record('Tincan') },
+  { name: 'Edge Proxy', audience: 'For developers', intro: 'Cross-origin requests & image caching.', description: 'A proxy for cross-origin requests, with an image caching layer to reduce repeat downloads.', features: ['Cross-origin requests', 'Image caching', 'HTTP methods & headers'], action: 'Use Edge Proxy', icon: 'network', colour: '#efb17c', record: record('Edge Proxy & Image Cache') },
+  { name: 'DevH', audience: 'Developer infrastructure', intro: 'APIs & developer utilities.', description: 'API endpoints, utility libraries, and installation scripts used across my personal projects.', features: ['Utility APIs', 'Installation scripts', 'Project documentation'], action: 'Visit DevH', icon: 'server', colour: '#b9d4d3', record: record('DevH API Gateway') },
 ]
 const current = computed(() => products[selected.value])
 function move(event) {

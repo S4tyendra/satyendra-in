@@ -15,11 +15,13 @@ const active = computed(() => categories.some(category => category.id === route.
 const selectCategory = type => router.replace({ query: { ...route.query, type: type === 'all' ? undefined : type } })
 const records = [
   ...personalProducts.map(p => ({ ...p, category: 'products' })),
-  ...projects.map(p => ({ ...p, category: 'opensource' })),
+  ...projects.filter(p => !personalProducts.includes(p)).map(p => ({ ...p, category: 'opensource' })),
   ...companyProducts.map(p => ({ title: p.title, desc: p.description, link: p.href, category: 'professional', tags: ['Neosurge'], stores: p.stores, external: true })),
   ...closedProjects.filter(p => !personalProducts.includes(p)).map(p => ({ ...p, category: 'professional' })),
 ]
-const filtered = computed(() => records.filter(p => (active.value === 'all' || p.category === active.value) && `${p.title} ${p.desc} ${p.tags.join(' ')}`.toLowerCase().includes(search.value.trim().toLowerCase())))
+// Personal products with public source also show under Open source.
+const inCategory = p => active.value === 'all' || p.category === active.value || (active.value === 'opensource' && p.category === 'products' && p.link.includes('github.com'))
+const filtered = computed(() => records.filter(p => inCategory(p) && `${p.title} ${p.desc} ${p.tags.join(' ')}`.toLowerCase().includes(search.value.trim().toLowerCase())))
 const categoryLabel = id => categories.find(category => category.id === id)?.label
 useHead({ title: 'Projects | Bongi Satyendra', meta: [{ name: 'description', content: 'Personal products to use, open-source repositories to explore, and professional work at Neosurge and IIIT Kota.' }], link: [{ rel: 'canonical', href: 'https://satyendra.in/projects' }] })
 </script>

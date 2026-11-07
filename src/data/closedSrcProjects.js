@@ -1,5 +1,35 @@
 const closedSrcProjects = [
     {
+        "link": "https://kv.devh.in",
+        "deployment_url": "https://kv.devh.in",
+        "title": "kv.devh.in",
+        "desc": "HTTP key-value store for feature flags, remote config and small JSON. No SDK, and reads are free.",
+        "featured": true,
+        "detail": [
+            "Write a key with PUT and a token, then read it back with a plain GET from anywhere.",
+            "REST and Connect RPC APIs, with curl, JavaScript and Python examples.",
+            "Plans from Hobby to Scale, with values up to 2 KB and free reads on every plan.",
+            "Hitting a write or storage limit returns HTTP 429 instead of an overage bill."
+        ],
+        "tags": ["API", "Key-Value Store", "SaaS", "Backend", "Connect RPC"]
+    },
+    {
+        "link": "https://play.google.com/store/apps/details?id=in.devh.getui",
+        "slug": "getui",
+        "deployment_url": "https://play.google.com/store/apps/details?id=in.devh.getui",
+        "title": "GetUI",
+        "desc": "Android app that recreates any screen's layout as clean Tailwind and Lucide code using Gemini.",
+        "featured": true,
+        "detail": [
+            "Reads the on-screen layout through Android's Accessibility Service and turns the raw XML into a visual recreation.",
+            "Runs on Gemini with your own API key. Nothing is stored or sent to our servers.",
+            "Useful for inspecting layouts, accessibility labels and UI hierarchies.",
+            "A Quick Settings tile captures any screen in one tap, and saved dumps can be revisited later."
+        ],
+        "tags": ["Android", "Gemini", "Accessibility", "Tailwind CSS", "Developer Tools"],
+        "stores": [{ "label": "Google Play", "href": "https://play.google.com/store/apps/details?id=in.devh.getui" }]
+    },
+    {
         "link": "https://devh.in",
         "deployment_url": "https://devh.in",
         "title": "DevH API Gateway",

@@ -84,7 +84,7 @@ export const includedRoutes = (paths, routes) => {
     const projectRoutes = allProjects.map(p => {
         if (!p.link) return null
         const parts = p.link.split('/')
-        const name = parts[parts.length - 1] || parts[parts.length - 2]
+        const name = p.slug || parts[parts.length - 1] || parts[parts.length - 2]
         return `/projects/${name}`
     }).filter(p => p !== null)
 

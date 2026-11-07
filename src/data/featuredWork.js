@@ -1,9 +1,10 @@
 // Editorial selections use the same project records as the project directory.
 import projects from './projects.js'
 import closedProjects from './closedSrcProjects.js'
-export const projectPath = (project) => `/projects/${project.link.split('/').filter(Boolean).pop()}`
-export const personalProducts = ['GemHub', 'Edge Proxy & Image Cache', 'DevH API Gateway']
-  .map(title => closedProjects.find(project => project.title === title))
+export const projectPath = (project) => `/projects/${project.slug || project.link.split('/').filter(Boolean).pop()}`
+// The first three appear in the home page explorer, in this order.
+export const personalProducts = ['Tincan', 'Edge Proxy & Image Cache', 'DevH API Gateway', 'kv.devh.in', 'GetUI', 'GemHub']
+  .map(title => [...projects, ...closedProjects].find(project => project.title === title))
 export const selectedOpenSource = ['NFC Gatekeeper', 'envman', 'Attend']
   .map(title => projects.find(project => project.title === title))
 export const companyProducts = [

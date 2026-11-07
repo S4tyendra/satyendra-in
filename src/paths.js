@@ -8,6 +8,7 @@ export const fileSystem = {
                 path: "/projects",
                 children: {
                     // Open Source Projects
+                    "tincan": { type: "file", path: "/projects/tincan" },
                     "generate.gitignore": { type: "file", path: "/projects/generate.gitignore" },
                     "newscan-ai": { type: "file", path: "/projects/newscan-ai" },
                     "multifeatures": { type: "file", path: "/projects/multifeatures" },
@@ -25,6 +26,8 @@ export const fileSystem = {
                     "iiitk-docker-manager": { type: "file", path: "/projects/iiitk-docker-manager" },
                     "s.devh.in": { type: "file", path: "/projects/s.devh.in" },
                     // Closed Source Projects
+                    "kv.devh.in": { type: "file", path: "/projects/kv.devh.in" },
+                    "getui": { type: "file", path: "/projects/getui" },
                     "devh-api-gateway": { type: "file", path: "/projects/devh-api-gateway" },
                     "iiitk-web-infrastructure": { type: "file", path: "/projects/iiitk-web-infrastructure" },
                     "edge-proxy-image-cache": { type: "file", path: "/projects/edge-proxy-image-cache" },

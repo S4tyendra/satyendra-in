@@ -38,7 +38,7 @@
                         <polyline points="15 3 21 3 21 9" />
                         <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
-                    Visit website
+                    {{ project.deployment_url.includes('play.google.com') ? 'Get it on Google Play' : 'Visit website' }}
                 </a>
             </div>
         </header>
@@ -122,7 +122,7 @@ const project = computed(() => {
         if (!p.link) return false;
         const parts = p.link.split('/')
         const name = parts[parts.length - 1] || parts[parts.length - 2] // handle trailing slash
-        return name === repoName.value || p.title.toLowerCase().replace(/\s+/g, '-') === repoName.value
+        return p.slug === repoName.value || name === repoName.value || p.title.toLowerCase().replace(/\s+/g, '-') === repoName.value
     })
 })
 

@@ -1,5 +1,19 @@
 const projects = [
     {
+        "link": "https://github.com/s4tyendra/tincan",
+        "deployment_url": "https://tincan.devh.in",
+        "title": "Tincan",
+        "desc": "Private rooms for two: peer-to-peer video calls, screen sharing, chat, file transfer and games in the browser.",
+        "detail": [
+            "Everything runs over one WebRTC connection between the two browsers. A small Go server only does signaling and STUN, with no TURN relay.",
+            "Screen sharing with tab or system audio, and camera quality from 360p to 1080p.",
+            "File transfer with Cauchy Reed-Solomon coding, 16 data and 4 parity shards per block, over unreliable data channels.",
+            "Resumable transfers: blocks are content-addressed with SHA-256 and kept in IndexedDB, so a file continues after a drop, even in another room.",
+            "PIN-protected rooms, a live lobby, and four games: Tic-tac-toe, Three pieces, Connect four and Quoridor."
+        ],
+        "tags": ["WebRTC", "Go", "TypeScript", "React", "Astro", "P2P"]
+    },
+    {
         "link": "https://github.com/s4tyendra/generate.gitignore",
         "title": "generate.gitignore",
         "desc": "Modern tool to generate .gitignore files using Cloudflare Workers and React.",
